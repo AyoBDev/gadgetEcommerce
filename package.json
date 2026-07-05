@@ -34,7 +34,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@playwright/test": "^1.61.1",
-    "@swc-node/register": "^1.11.1",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
