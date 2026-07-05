@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Box from '@mui/material/Box';
 import { ThemeRegistry } from '@/components/ThemeRegistry';
+import { TopNavBar } from '@/components/TopNavBar';
+import { TrustBanner } from '@/components/TrustBanner';
+import { Footer } from '@/components/Footer';
+import { WhatsAppFab } from '@/components/WhatsAppButton';
 import '../globals.css';
 
 const inter = Inter({
@@ -19,11 +24,19 @@ export const metadata: Metadata = {
   description: '300+ tested preowned laptops with 7-day warranty. Nationwide delivery across Nigeria.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function StorefrontLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-NG" className={inter.variable}>
       <body>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ThemeRegistry>
+          <TopNavBar />
+          <Box sx={{ pt: 10 }}>
+            <TrustBanner />
+            <main>{children}</main>
+            <Footer />
+          </Box>
+          <WhatsAppFab />
+        </ThemeRegistry>
       </body>
     </html>
   );
