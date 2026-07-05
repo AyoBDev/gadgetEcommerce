@@ -12,4 +12,3 @@ worktrees/
 coverage/
 playwright-report/
 test-results/
-src/payload-types.ts

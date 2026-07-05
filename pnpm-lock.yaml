@@ -87,6 +87,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^7.1.1
         version: 7.1.1(eslint@9.39.4)
+      lexical:
+        specifier: 0.41.0
+        version: 0.41.0
       typescript:
         specifier: ^5
         version: 5.9.3

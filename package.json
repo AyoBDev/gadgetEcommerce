@@ -42,6 +42,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.11",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "lexical": "0.41.0",
     "typescript": "^5",
     "vitest": "^4.1.9"
   }

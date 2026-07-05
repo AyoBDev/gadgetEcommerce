@@ -1,36 +1,14 @@
 import type { Metadata } from 'next';
+import type { Laptop, Setting } from '@/payload-types';
 import { koboToNaira } from '@/lib/money';
 
-type MediaRef = { url?: string | null; alt?: string | null } | number | null | undefined;
-
-type CategoryRef = { id: number; name: string; slug: string } | number | null | undefined;
-
-export type LaptopSeoInput = {
-  id: number;
-  title: string;
-  slug: string;
-  price: number;
-  stock: number;
-  brand?: CategoryRef;
-  specs?: { processor?: string | null; ram?: number | null; storage?: string | null } | null;
-  gallery?: { image: MediaRef }[] | null;
-  seo?: { metaTitle?: string | null; metaDescription?: string | null } | null;
-};
-
-export type SettingsSeoInput = {
-  businessName: string;
-  businessAddress?: string | null;
-  businessPhone?: string | null;
-  supportEmail: string;
-};
-
-function firstImageUrl(laptop: LaptopSeoInput): string | undefined {
+function firstImageUrl(laptop: Laptop): string | undefined {
   const first = laptop.gallery?.[0]?.image;
   if (first && typeof first === 'object' && 'url' in first) return first.url ?? undefined;
   return undefined;
 }
 
-function defaultDescription(laptop: LaptopSeoInput): string {
+function defaultDescription(laptop: Laptop): string {
   const specs = laptop.specs ?? {};
   const parts = [
     specs.processor,
@@ -40,7 +18,7 @@ function defaultDescription(laptop: LaptopSeoInput): string {
   return `Buy ${laptop.title}${parts.length ? ' — ' + parts.join(', ') : ''}. Preowned laptop in Nigeria with 7-day warranty.`;
 }
 
-export function buildLaptopMetadata(laptop: LaptopSeoInput): Metadata {
+export function buildLaptopMetadata(laptop: Laptop): Metadata {
   const title = laptop.seo?.metaTitle ?? laptop.title;
   const description = laptop.seo?.metaDescription ?? defaultDescription(laptop);
   const ogImage = firstImageUrl(laptop);
@@ -57,7 +35,7 @@ export function buildLaptopMetadata(laptop: LaptopSeoInput): Metadata {
   };
 }
 
-export function buildProductJsonLd(laptop: LaptopSeoInput, serverUrl: string) {
+export function buildProductJsonLd(laptop: Laptop, serverUrl: string) {
   const brand = typeof laptop.brand === 'object' ? laptop.brand?.name : undefined;
   const image = firstImageUrl(laptop);
   return {
@@ -79,7 +57,7 @@ export function buildProductJsonLd(laptop: LaptopSeoInput, serverUrl: string) {
   };
 }
 
-export function buildOrganizationJsonLd(settings: SettingsSeoInput, serverUrl: string) {
+export function buildOrganizationJsonLd(settings: Setting, serverUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
