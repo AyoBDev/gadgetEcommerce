@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getPayloadClient } from '@/lib/payload';
+import type { Laptop } from '@/payload-types';
 
 describe('Categories slug hook', () => {
   it('auto-generates slug from name on create', async () => {
@@ -28,14 +29,17 @@ describe('Laptops slug hook', () => {
     const payload = await getPayloadClient();
     const brand = await payload.create({
       collection: 'categories',
-      data: { name: 'HP', type: 'brand', icon: 'laptop_mac' },
+      data: { name: 'HP Test Brand', type: 'brand', icon: 'laptop_mac' },
     });
     const useCase = await payload.create({
       collection: 'categories',
-      data: { name: 'Programming', type: 'useCase', icon: 'code' },
+      data: { name: 'Programming Test', type: 'useCase', icon: 'code' },
     });
     const laptop = await payload.create({
       collection: 'laptops',
+      // slug is intentionally omitted to exercise the auto-generation hook;
+      // the type marks it required since it can't express "populated by a
+      // beforeValidate hook".
       data: {
         title: 'HP EliteBook 840 G5 Core i5 8th Gen',
         brand: brand.id,
@@ -45,7 +49,7 @@ describe('Laptops slug hook', () => {
         stock: 1,
         status: 'draft',
         warrantyDays: 7,
-      },
+      } as unknown as Laptop,
     });
     expect(laptop.slug).toBe('hp-elitebook-840-g5-core-i5-8th-gen');
     await payload.delete({ collection: 'laptops', id: laptop.id });

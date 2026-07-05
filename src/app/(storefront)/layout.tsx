@@ -27,6 +27,12 @@ export const metadata: Metadata = {
 export default function StorefrontLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-NG" className={inter.variable}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+      </head>
       <body>
         <ThemeRegistry>
           <TopNavBar />

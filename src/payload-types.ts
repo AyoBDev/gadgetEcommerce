@@ -20,6 +20,11 @@ export interface Config {
   };
 }
 
+declare module 'payload' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  export interface GeneratedTypes extends Config {}
+}
+
 export interface User {
   id: number;
   name: string;
