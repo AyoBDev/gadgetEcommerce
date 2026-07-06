@@ -13,7 +13,6 @@ import { ProductCard } from '@/components/ProductCard';
 import { SmartFinder } from '@/components/SmartFinder';
 import { WhyBuyFromUs } from '@/components/WhyBuyFromUs';
 import { CompareTeaser } from '@/components/CompareTeaser';
-import { BuyingGuides } from '@/components/BuyingGuides';
 import { Testimonials } from '@/components/Testimonials';
 import { buildOrganizationJsonLd } from '@/lib/seo';
 
@@ -79,7 +78,6 @@ export default async function Home() {
 
       <WhyBuyFromUs />
       <CompareTeaser />
-      <BuyingGuides />
       <Testimonials />
     </>
   );

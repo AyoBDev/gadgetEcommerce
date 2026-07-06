@@ -27,57 +27,64 @@ export function CompareTeaser() {
               See detailed specs side-by-side to make the right choice.
             </Typography>
           </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center" sx={{ width: '100%', flex: 1 }}>
-            <Box
-              component="select"
-              sx={{
-                width: '100%',
-                flex: 1,
-                py: 1.5,
-                px: 2,
-                borderRadius: 2,
-                border: 1,
-                borderColor: 'divider',
-                fontFamily: 'inherit',
-                fontSize: 16,
-              }}
-              defaultValue=""
+          <Stack spacing={2} alignItems="center" sx={{ width: '100%', flex: 1 }}>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              alignItems="center"
+              sx={{ width: '100%' }}
             >
-              <option value="" disabled>Select laptop A</option>
-            </Box>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                bgcolor: 'grey.200',
-                color: 'text.secondary',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <CompareArrowsIcon fontSize="small" />
-            </Box>
-            <Box
-              component="select"
-              sx={{
-                width: '100%',
-                flex: 1,
-                py: 1.5,
-                px: 2,
-                borderRadius: 2,
-                border: 1,
-                borderColor: 'divider',
-                fontFamily: 'inherit',
-                fontSize: 16,
-              }}
-              defaultValue=""
-            >
-              <option value="" disabled>Select laptop B</option>
-            </Box>
-            <Button variant="contained" sx={{ width: { xs: '100%', sm: 'auto' }, flexShrink: 0 }}>
+              <Box
+                component="select"
+                sx={{
+                  width: '100%',
+                  flex: 1,
+                  py: 1.5,
+                  px: 2,
+                  borderRadius: 2,
+                  border: 1,
+                  borderColor: 'divider',
+                  fontFamily: 'inherit',
+                  fontSize: 16,
+                }}
+                defaultValue=""
+              >
+                <option value="" disabled>Select laptop A</option>
+              </Box>
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  bgcolor: 'grey.200',
+                  color: 'text.secondary',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <CompareArrowsIcon fontSize="small" sx={{ transform: { xs: 'rotate(90deg)', sm: 'none' } }} />
+              </Box>
+              <Box
+                component="select"
+                sx={{
+                  width: '100%',
+                  flex: 1,
+                  py: 1.5,
+                  px: 2,
+                  borderRadius: 2,
+                  border: 1,
+                  borderColor: 'divider',
+                  fontFamily: 'inherit',
+                  fontSize: 16,
+                }}
+                defaultValue=""
+              >
+                <option value="" disabled>Select laptop B</option>
+              </Box>
+            </Stack>
+            <Button variant="contained" fullWidth sx={{ width: { xs: '100%', sm: 'auto' }, alignSelf: { xs: 'stretch', sm: 'flex-end' } }}>
               Compare now
             </Button>
           </Stack>
