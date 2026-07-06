@@ -25,6 +25,7 @@
     "@payloadcms/next": "^3.85.2",
     "@payloadcms/richtext-lexical": "^3.85.2",
     "@payloadcms/storage-s3": "^3.85.2",
+    "@payloadcms/ui": "3.85.2",
     "next": "15.4.11",
     "payload": "^3.85.2",
     "react": "19.1.0",
@@ -43,6 +44,7 @@
     "eslint-config-next": "15.4.11",
     "eslint-plugin-react-hooks": "^7.1.1",
     "lexical": "0.41.0",
+    "sass": "1.77.4",
     "typescript": "^5",
     "vitest": "^4.1.9"
   }
