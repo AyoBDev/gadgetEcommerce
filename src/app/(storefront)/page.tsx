@@ -22,7 +22,7 @@ export const revalidate = 300;
 export default async function Home() {
   const payload = await getPayloadClient();
 
-  const [categoriesRes, dealsRes, settings] = await Promise.all([
+  const [categoriesRes, dealsRes, settings, brandsRes, useCasesRes] = await Promise.all([
     payload.find({ collection: 'categories', limit: 8, sort: 'name' }),
     payload.find({
       collection: 'laptops',
@@ -31,6 +31,8 @@ export default async function Home() {
       sort: '-updatedAt',
     }),
     payload.findGlobal({ slug: 'settings' }),
+    payload.find({ collection: 'categories', where: { type: { equals: 'brand' } }, limit: 50, sort: 'name' }),
+    payload.find({ collection: 'categories', where: { type: { equals: 'useCase' } }, limit: 50, sort: 'name' }),
   ]);
 
   const orgLd = buildOrganizationJsonLd(settings, process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000');
@@ -38,7 +40,7 @@ export default async function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
-      <HeroSection />
+      <HeroSection brands={brandsRes.docs} useCases={useCasesRes.docs} />
 
       <Box sx={{ bgcolor: 'background.paper', py: 8 }}>
         <Container maxWidth="xl">

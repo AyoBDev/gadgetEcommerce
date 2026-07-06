@@ -7,11 +7,13 @@ import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
+import { QuickFinder } from '@/components/QuickFinder';
+import type { Category } from '@/payload-types';
 
 const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
 const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi, I want to buy a preowned laptop. Can you help me choose?')}`;
 
-export function HeroSection() {
+export function HeroSection({ brands, useCases }: { brands: Category[]; useCases: Category[] }) {
   return (
     <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
       <Grid container spacing={4} alignItems="center">
@@ -23,6 +25,7 @@ export function HeroSection() {
                 300+ laptops in stock · 7-day warranty · Nationwide delivery
               </Typography>
             </Stack>
+            <QuickFinder brands={brands} useCases={useCases} />
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <Button variant="contained" size="large" component={Link} href="/laptops" fullWidth>
                 Browse all laptops
