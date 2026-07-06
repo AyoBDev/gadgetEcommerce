@@ -11,6 +11,10 @@ import { HeroSection } from '@/components/HeroSection';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ProductCard } from '@/components/ProductCard';
 import { SmartFinder } from '@/components/SmartFinder';
+import { WhyBuyFromUs } from '@/components/WhyBuyFromUs';
+import { CompareTeaser } from '@/components/CompareTeaser';
+import { BuyingGuides } from '@/components/BuyingGuides';
+import { Testimonials } from '@/components/Testimonials';
 import { buildOrganizationJsonLd } from '@/lib/seo';
 
 export const revalidate = 300;
@@ -70,6 +74,11 @@ export default async function Home() {
           </Grid>
         </Container>
       </Box>
+
+      <WhyBuyFromUs />
+      <CompareTeaser />
+      <BuyingGuides />
+      <Testimonials />
     </>
   );
 }

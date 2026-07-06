@@ -44,9 +44,10 @@ export function ProductCard({ laptop }: { laptop: Laptop }) {
         </Link>
       </Box>
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Typography component={Link} href={`/laptops/${laptop.slug}`} variant="h3"
-          sx={{ color: 'text.primary', textDecoration: 'none', mb: 1, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-          {laptop.title}
+        <Typography component="h3" variant="h3" sx={{ mb: 1 }}>
+          <Link href={`/laptops/${laptop.slug}`} style={{ color: 'inherit', textDecoration: 'none', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+            {laptop.title}
+          </Link>
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }}>
           {laptop.specs?.ram && <Chip label={`${laptop.specs.ram}GB RAM`} size="small" />}
