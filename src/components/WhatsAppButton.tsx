@@ -3,10 +3,8 @@
 import Fab from '@mui/material/Fab';
 import ChatIcon from '@mui/icons-material/Chat';
 
-const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
-
-export function WhatsAppFab() {
-  const href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi, I need help choosing a laptop.')}`;
+export function WhatsAppFab({ whatsappNumber }: { whatsappNumber: string }) {
+  const href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi, I need help choosing a laptop.')}`;
   return (
     <Fab
       component="a"
