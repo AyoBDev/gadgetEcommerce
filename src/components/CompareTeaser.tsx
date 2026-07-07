@@ -1,12 +1,36 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import { useStore } from '@/components/StoreProvider';
 
-export function CompareTeaser() {
+export type CompareOption = { id: number; title: string };
+
+export function CompareTeaser({ options }: { options: CompareOption[] }) {
+  const router = useRouter();
+  const { toggleCompare, compare } = useStore();
+  const [a, setA] = useState('');
+  const [b, setB] = useState('');
+
+  function compareNow() {
+    const ids = [a, b].map(Number).filter((n) => Number.isFinite(n) && n > 0);
+    for (const id of ids) {
+      if (!compare.includes(id)) toggleCompare(id);
+    }
+    router.push('/compare');
+  }
+
+  const canCompare = a !== '' && b !== '' && a !== b;
+
   return (
     <Box sx={{ bgcolor: 'grey.100', py: 8 }}>
       <Container maxWidth="xl">
@@ -34,23 +58,11 @@ export function CompareTeaser() {
               alignItems="center"
               sx={{ width: '100%' }}
             >
-              <Box
-                component="select"
-                sx={{
-                  width: '100%',
-                  flex: 1,
-                  py: 1.5,
-                  px: 2,
-                  borderRadius: 2,
-                  border: 1,
-                  borderColor: 'divider',
-                  fontFamily: 'inherit',
-                  fontSize: 16,
-                }}
-                defaultValue=""
-              >
-                <option value="" disabled>Select laptop A</option>
-              </Box>
+              <TextField select label="Laptop A" size="small" fullWidth value={a} onChange={(e) => setA(e.target.value)}>
+                {options.map((o) => (
+                  <MenuItem key={o.id} value={String(o.id)} disabled={String(o.id) === b}>{o.title}</MenuItem>
+                ))}
+              </TextField>
               <Box
                 sx={{
                   width: 40,
@@ -66,25 +78,18 @@ export function CompareTeaser() {
               >
                 <CompareArrowsIcon fontSize="small" sx={{ transform: { xs: 'rotate(90deg)', sm: 'none' } }} />
               </Box>
-              <Box
-                component="select"
-                sx={{
-                  width: '100%',
-                  flex: 1,
-                  py: 1.5,
-                  px: 2,
-                  borderRadius: 2,
-                  border: 1,
-                  borderColor: 'divider',
-                  fontFamily: 'inherit',
-                  fontSize: 16,
-                }}
-                defaultValue=""
-              >
-                <option value="" disabled>Select laptop B</option>
-              </Box>
+              <TextField select label="Laptop B" size="small" fullWidth value={b} onChange={(e) => setB(e.target.value)}>
+                {options.map((o) => (
+                  <MenuItem key={o.id} value={String(o.id)} disabled={String(o.id) === a}>{o.title}</MenuItem>
+                ))}
+              </TextField>
             </Stack>
-            <Button variant="contained" fullWidth sx={{ width: { xs: '100%', sm: 'auto' }, alignSelf: { xs: 'stretch', sm: 'flex-end' } }}>
+            <Button
+              variant="contained"
+              disabled={!canCompare}
+              onClick={compareNow}
+              sx={{ width: { xs: '100%', sm: 'auto' }, alignSelf: { xs: 'stretch', sm: 'flex-end' } }}
+            >
               Compare now
             </Button>
           </Stack>

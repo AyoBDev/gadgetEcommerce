@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Box from '@mui/material/Box';
 import { ThemeRegistry } from '@/components/ThemeRegistry';
+import { StoreProvider } from '@/components/StoreProvider';
 import { TopNavBar } from '@/components/TopNavBar';
 import { TrustBanner } from '@/components/TrustBanner';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFab } from '@/components/WhatsAppButton';
+import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 import '../globals.css';
 
 const inter = Inter({
@@ -24,7 +26,10 @@ export const metadata: Metadata = {
   description: '300+ tested preowned laptops with 7-day warranty. Nationwide delivery across Nigeria.',
 };
 
-export default function StorefrontLayout({ children }: { children: React.ReactNode }) {
+export default async function StorefrontLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSettings();
+  const whatsappNumber = resolveWhatsAppNumber(settings);
+
   return (
     <html lang="en-NG" className={inter.variable}>
       <head>
@@ -35,13 +40,15 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <ThemeRegistry>
-          <TopNavBar />
-          <Box sx={{ pt: 10 }}>
-            <TrustBanner />
-            <main>{children}</main>
-            <Footer />
-          </Box>
-          <WhatsAppFab />
+          <StoreProvider>
+            <TopNavBar whatsappNumber={whatsappNumber} />
+            <Box sx={{ pt: 10 }}>
+              <TrustBanner />
+              <main>{children}</main>
+              <Footer settings={settings} />
+            </Box>
+            <WhatsAppFab whatsappNumber={whatsappNumber} />
+          </StoreProvider>
         </ThemeRegistry>
       </body>
     </html>

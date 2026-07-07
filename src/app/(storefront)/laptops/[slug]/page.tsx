@@ -13,12 +13,14 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { getPayloadClient } from '@/lib/payload';
 import { LaptopGallery } from '@/components/LaptopGallery';
 import { LaptopSpecsTable } from '@/components/LaptopSpecsTable';
+import { ProductDetailActions } from '@/components/ProductDetailActions';
 import { buildLaptopMetadata, buildProductJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo';
 import { formatNaira } from '@/lib/money';
+import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
+import { buildWhatsAppLink } from '@/lib/whatsapp';
 import type { Media } from '@/payload-types';
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
-const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient();
@@ -47,13 +49,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const laptop = res.docs[0];
   if (!laptop) notFound();
 
+  const settings = await getSettings();
+  const whatsappNumber = resolveWhatsAppNumber(settings);
+
   const productLd = buildProductJsonLd(laptop, SERVER_URL);
   const breadcrumbLd = buildBreadcrumbJsonLd([
     { name: 'Home', url: SERVER_URL },
     { name: 'Laptops', url: `${SERVER_URL}/laptops` },
     { name: laptop.title, url: `${SERVER_URL}/laptops/${laptop.slug}` },
   ]);
-  const waHref = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}) — ${SERVER_URL}/laptops/${laptop.slug}`)}`;
+  const waHref = buildWhatsAppLink(
+    whatsappNumber,
+    `Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}) — ${SERVER_URL}/laptops/${laptop.slug}`,
+  );
   const gallery = (laptop.gallery ?? []).filter(
     (g): g is { image: Media; id?: string | null } => typeof g.image === 'object',
   );
@@ -100,6 +108,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   WhatsApp inquiry
                 </Button>
               </Stack>
+              <ProductDetailActions laptopId={laptop.id} />
               <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
                 <Typography variant="caption">
                   Note: online checkout is coming soon. For now, tap <strong>WhatsApp inquiry</strong> to place your order.

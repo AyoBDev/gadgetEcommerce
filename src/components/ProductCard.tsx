@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
@@ -10,9 +12,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
 import { formatNaira } from '@/lib/money';
+import { buildWhatsAppLink } from '@/lib/whatsapp';
+import { ProductCardActions } from '@/components/ProductCardActions';
 import type { Laptop } from '@/payload-types';
-
-const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
 
 function conditionLabel(condition: Laptop['condition']) {
   return { 'grade-a': 'Grade A', 'grade-b': 'Grade B', 'grade-c': 'Grade C' }[condition];
@@ -23,12 +25,14 @@ function discountPercent(price: number, compareAt: number | null | undefined): n
   return Math.round(((compareAt - price) / compareAt) * 100);
 }
 
-export function ProductCard({ laptop }: { laptop: Laptop }) {
+export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsappNumber: string }) {
   const image = typeof laptop.gallery?.[0]?.image === 'object' ? laptop.gallery[0].image : null;
   const imgUrl = image?.sizes?.card?.url ?? image?.url ?? '/laptop-placeholder.jpg';
   const discount = discountPercent(laptop.price, laptop.compareAtPrice);
-  const waMsg = encodeURIComponent(`Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}). Is it still available?`);
-  const waHref = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+  const waHref = buildWhatsAppLink(
+    whatsappNumber,
+    `Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}). Is it still available?`,
+  );
 
   return (
     <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', height: '100%', '&:hover': { boxShadow: 3 } }}>
@@ -42,6 +46,7 @@ export function ProductCard({ laptop }: { laptop: Laptop }) {
         <Link href={`/laptops/${laptop.slug}`} style={{ display: 'block', position: 'absolute', inset: 0 }}>
           <Image src={imgUrl ?? '/laptop-placeholder.jpg'} alt={image?.alt ?? laptop.title} fill sizes="(max-width: 600px) 50vw, 25vw" style={{ objectFit: 'contain' }} />
         </Link>
+        <ProductCardActions laptopId={laptop.id} />
       </Box>
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <Typography component="h3" variant="h3" sx={{ mb: 1 }}>

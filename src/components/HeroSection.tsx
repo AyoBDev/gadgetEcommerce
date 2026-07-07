@@ -8,12 +8,11 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
 import { QuickFinder } from '@/components/QuickFinder';
+import { buildWhatsAppLink } from '@/lib/whatsapp';
 import type { Category } from '@/payload-types';
 
-const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
-const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hi, I want to buy a preowned laptop. Can you help me choose?')}`;
-
-export function HeroSection({ brands, useCases }: { brands: Category[]; useCases: Category[] }) {
+export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Category[]; useCases: Category[]; whatsappNumber: string }) {
+  const waHref = buildWhatsAppLink(whatsappNumber, 'Hi, I want to buy a preowned laptop. Can you help me choose?');
   return (
     <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
       <Grid container spacing={4} alignItems="center">
@@ -32,7 +31,7 @@ export function HeroSection({ brands, useCases }: { brands: Category[]; useCases
               </Button>
               <Button variant="contained" size="large" startIcon={<ChatIcon />}
                 sx={{ bgcolor: 'secondary.main', '&:hover': { bgcolor: 'secondary.dark' } }}
-                component="a" href={WA_HREF} target="_blank" rel="noopener" fullWidth>
+                component="a" href={waHref} target="_blank" rel="noopener" fullWidth>
                 WhatsApp us
               </Button>
             </Stack>

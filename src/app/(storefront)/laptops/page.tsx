@@ -8,6 +8,7 @@ import { getPayloadClient } from '@/lib/payload';
 import { LaptopFilters } from '@/components/LaptopFilters';
 import { ProductCard } from '@/components/ProductCard';
 import { buildBreadcrumbJsonLd } from '@/lib/seo';
+import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const bits: string[] = [];
   if (p.brand) bits.push(`${p.brand.toUpperCase()} laptops`);
   else bits.push('Preowned laptops');
-  if (p.useCase) bits.push(`for ${p.useCase.replace('-', ' ')}`);
+  if (p.useCase) bits.push(`for ${p.useCase.replaceAll('-', ' ')}`);
   const title = bits.join(' ');
   const description = `Browse ${title.toLowerCase()} in Nigeria. 7-day warranty. Nationwide delivery.`;
   return { title, description, alternates: { canonical: '/laptops' } };
@@ -49,11 +50,13 @@ export default async function LaptopsPage({ searchParams }: { searchParams: Prom
 
   const query = andClauses.length ? { and: [where, ...andClauses] } : where;
 
-  const [brandsRes, useCasesRes, laptopsRes] = await Promise.all([
+  const [brandsRes, useCasesRes, laptopsRes, settings] = await Promise.all([
     payload.find({ collection: 'categories', where: { type: { equals: 'brand' } }, limit: 50, sort: 'name' }),
     payload.find({ collection: 'categories', where: { type: { equals: 'useCase' } }, limit: 50, sort: 'name' }),
     payload.find({ collection: 'laptops', where: query, limit: 24, sort: '-updatedAt' }),
+    getSettings(),
   ]);
+  const whatsappNumber = resolveWhatsAppNumber(settings);
 
   const breadcrumb = buildBreadcrumbJsonLd([
     { name: 'Home', url: process.env.NEXT_PUBLIC_SERVER_URL ?? '' },
@@ -78,7 +81,7 @@ export default async function LaptopsPage({ searchParams }: { searchParams: Prom
             ) : (
               <Grid container spacing={3}>
                 {laptopsRes.docs.map((laptop) => (
-                  <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 4 }}><ProductCard laptop={laptop} /></Grid>
+                  <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 4 }}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Grid>
                 ))}
               </Grid>
             )}
