@@ -16,6 +16,16 @@ export const Laptops: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin',
   },
   hooks: {
+    beforeChange: [
+      ({ data }) => {
+        // Stamp publishedAt the first time a laptop becomes published, so
+        // admin-created laptops don't end up with a null publish date.
+        if (data?.status === 'published' && !data.publishedAt) {
+          data.publishedAt = new Date().toISOString();
+        }
+        return data;
+      },
+    ],
     afterChange: [
       async ({ doc }) => {
         try {
@@ -68,9 +78,11 @@ export const Laptops: CollectionConfig = {
         { name: 'os', type: 'text' },
       ],
     },
-    { name: 'gallery', type: 'array', minRows: 1, fields: [
-      { name: 'image', type: 'upload', relationTo: 'media', required: true },
-    ]},
+    { name: 'gallery', type: 'array',
+      admin: { description: 'Product photos. Optional, but strongly recommended for published laptops.' },
+      fields: [
+        { name: 'image', type: 'upload', relationTo: 'media', required: true },
+      ]},
     { name: 'description', type: 'richText' },
     { name: 'warrantyDays', type: 'number', defaultValue: 7, required: true, min: 0 },
     { name: 'stock', type: 'number', defaultValue: 1, required: true, min: 0 },
@@ -89,6 +101,7 @@ export const Laptops: CollectionConfig = {
         { name: 'ogImage', type: 'upload', relationTo: 'media' },
       ],
     },
-    { name: 'publishedAt', type: 'date', admin: { position: 'sidebar' } },
+    { name: 'publishedAt', type: 'date',
+      admin: { position: 'sidebar', description: 'Auto-set when first published; override if needed.' } },
   ],
 };

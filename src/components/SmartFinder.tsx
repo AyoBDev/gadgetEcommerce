@@ -9,10 +9,9 @@ import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { formatNaira } from '@/lib/money';
+import type { Category } from '@/payload-types';
 
-const USE_CASES = ['student', 'programming', 'gaming', 'business', 'video-editing'] as const;
-
-export function SmartFinder() {
+export function SmartFinder({ useCases }: { useCases: Category[] }) {
   const router = useRouter();
   const [useCase, setUseCase] = useState<string | null>(null);
   const [budget, setBudget] = useState<number>(500_000);
@@ -33,16 +32,18 @@ export function SmartFinder() {
         </Stack>
         <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', borderRadius: 2, p: 4, textAlign: 'left' }}>
           <Stack spacing={4}>
-            <Stack spacing={2}>
-              <Typography variant="h3">What&apos;s your primary purpose?</Typography>
-              <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
-                {USE_CASES.map((uc) => (
-                  <Chip key={uc} label={uc.replace('-', ' ')} clickable
-                    color={useCase === uc ? 'primary' : 'default'} variant={useCase === uc ? 'filled' : 'outlined'}
-                    onClick={() => setUseCase(uc)} />
-                ))}
+            {useCases.length > 0 && (
+              <Stack spacing={2}>
+                <Typography variant="h3">What&apos;s your primary purpose?</Typography>
+                <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                  {useCases.map((uc) => (
+                    <Chip key={uc.id} label={uc.name} clickable
+                      color={useCase === uc.slug ? 'primary' : 'default'} variant={useCase === uc.slug ? 'filled' : 'outlined'}
+                      onClick={() => setUseCase((prev) => (prev === uc.slug ? null : uc.slug ?? null))} />
+                  ))}
+                </Stack>
               </Stack>
-            </Stack>
+            )}
             <Stack spacing={2}>
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h3">Budget</Typography>
