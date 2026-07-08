@@ -1,0 +1,36 @@
+// Custom admin Nav styles.
+//
+// The component reuses Payload's own global `nav__*` classes (rendered as plain
+// class-name strings in the JSX) so active-link highlighting, spacing, and the
+// mobile hamburger keep working for free. This module only layers on the small
+// icon-specific tweaks, scoped with :global so they attach to those shared
+// classes rather than being hashed by CSS Modules. All colors come from
+// Payload's theme custom properties — no hard-coded values.
+
+:global {
+  .nav__link {
+    align-items: center;
+    display: flex;
+    gap: var(--base, 0.5rem);
+
+    svg {
+      color: var(--theme-elevation-500);
+      flex-shrink: 0;
+      transition: color 150ms ease;
+    }
+
+    &:hover svg {
+      color: var(--theme-elevation-800);
+    }
+  }
+
+  // Active item: tint the icon with the theme text color to match the label.
+  .nav__link:has(.nav__link-indicator) svg {
+    color: var(--theme-text);
+  }
+
+  // Keep the icon aligned with the label when an active indicator is present.
+  .nav__link-label {
+    color: inherit;
+  }
+}

@@ -21,6 +21,7 @@ export default buildConfig({
     user: 'users',
     meta: { title: 'Jaysmart Admin', titleSuffix: '— Jaysmart' },
     components: {
+      Nav: '@/components/admin/Nav#default',
       beforeDashboard: ['@/components/admin/DashboardStats#default'],
     },
   },
