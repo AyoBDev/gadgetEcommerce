@@ -9,6 +9,7 @@ import {
   Logout,
   NavGroup,
   useConfig,
+  useEntityVisibility,
   useNav,
   useTranslation,
 } from '@payloadcms/ui'
@@ -103,6 +104,7 @@ const CustomNav: React.FC = () => {
   const { config } = useConfig()
   const pathname = usePathname()
   const { hydrated, navOpen, navRef, setNavOpen, shouldAnimate } = useNav()
+  const { isEntityVisible } = useEntityVisibility()
 
   const {
     admin: {
@@ -126,8 +128,24 @@ const CustomNav: React.FC = () => {
     }
   }
 
-  // The client config already excludes hidden entities, so no filtering needed.
+  // Payload strips `admin.hidden` from the client config (it's a server-only
+  // property — see `serverOnlyCollectionAdminProperties` in
+  // payload/dist/collections/config/client.js), so it can't be checked here
+  // directly. Visibility is instead computed server-side
+  // (`getVisibleEntities` in @payloadcms/ui) and provided via
+  // `EntityVisibilityProvider`/`useEntityVisibility`, which is how Payload's
+  // own default nav excludes internal collections (payload-preferences,
+  // payload-migrations, payload-locked-documents, payload-kvs, etc). We
+  // replicate that here instead of iterating the raw config unfiltered.
+  // We also mirror `groupNavItems`' handling of `admin.group === false` by
+  // skipping such entities entirely (rather than falling back to General).
   for (const collection of collections) {
+    if (!isEntityVisible({ collectionSlug: collection.slug })) {
+      continue
+    }
+    if (collection.admin?.group === false) {
+      continue
+    }
     pushEntry(collection.admin?.group as string | undefined, {
       href: formatAdminURL({ adminRoute, path: `/collections/${collection.slug}` }),
       id: `nav-${collection.slug}`,
@@ -136,6 +154,12 @@ const CustomNav: React.FC = () => {
   }
 
   for (const global of globals) {
+    if (!isEntityVisible({ globalSlug: global.slug })) {
+      continue
+    }
+    if (global.admin?.group === false) {
+      continue
+    }
     pushEntry(global.admin?.group as string | undefined, {
       href: formatAdminURL({ adminRoute, path: `/globals/${global.slug}` }),
       id: `nav-global-${global.slug}`,
