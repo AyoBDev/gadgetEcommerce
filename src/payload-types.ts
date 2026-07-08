@@ -14,6 +14,7 @@ export interface Config {
     media: Media;
     categories: Category;
     laptops: Laptop;
+    orders: Order;
   };
   globals: {
     settings: Setting;
@@ -107,6 +108,20 @@ export interface Laptop {
     ogImage?: (number | Media) | null;
   };
   publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface Order {
+  id: number;
+  laptop: number | Laptop;
+  salePrice: number;
+  buyerName?: string | null;
+  buyerPhone?: string | null;
+  saleDate: string;
+  paymentStatus?: 'pending' | 'paid' | null;
+  deliveryStatus?: 'pending' | 'delivered' | null;
+  orderLabel?: string | null;
   updatedAt: string;
   createdAt: string;
 }

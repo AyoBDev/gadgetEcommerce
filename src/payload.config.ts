@@ -10,6 +10,7 @@ import { Users } from '@/collections/Users';
 import { Media } from '@/collections/Media';
 import { Categories } from '@/collections/Categories';
 import { Laptops } from '@/collections/Laptops';
+import { Orders } from '@/collections/Orders';
 import { Settings } from '@/globals/Settings';
 
 const filename = fileURLToPath(import.meta.url);
@@ -21,7 +22,7 @@ export default buildConfig({
     meta: { title: 'Jaysmart Admin', titleSuffix: '— Jaysmart' },
   },
   editor: lexicalEditor(),
-  collections: [Users, Media, Categories, Laptops],
+  collections: [Users, Media, Categories, Laptops, Orders],
   globals: [Settings],
   secret: process.env.PAYLOAD_SECRET ?? '',
   sharp,
