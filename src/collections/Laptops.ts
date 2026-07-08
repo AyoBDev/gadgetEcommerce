@@ -5,6 +5,7 @@ import { generateSlug } from '@/lib/slug';
 export const Laptops: CollectionConfig = {
   slug: 'laptops',
   admin: {
+    group: 'Catalog',
     useAsTitle: 'title',
     defaultColumns: ['title', 'brand', 'price', 'status', 'stock', 'updatedAt'],
     listSearchableFields: ['title', 'slug', 'specs.processor'],

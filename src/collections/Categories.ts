@@ -3,7 +3,7 @@ import { generateSlug } from '@/lib/slug';
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'type', 'slug'] },
+  admin: { group: 'Catalog', useAsTitle: 'name', defaultColumns: ['name', 'type', 'slug'] },
   access: {
     read: () => true,
     create: ({ req }) => Boolean(req.user),

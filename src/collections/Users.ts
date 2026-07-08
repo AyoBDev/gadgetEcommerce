@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
     tokenExpiration: 60 * 60 * 8,
     cookies: { sameSite: 'Lax', secure: process.env.NODE_ENV === 'production' },
   },
-  admin: { useAsTitle: 'email', defaultColumns: ['email', 'name', 'role'] },
+  admin: { group: 'Admin', useAsTitle: 'email', defaultColumns: ['email', 'name', 'role'] },
   access: {
     read: ({ req }) => Boolean(req.user),
     create: ({ req }) => req.user?.role === 'admin',

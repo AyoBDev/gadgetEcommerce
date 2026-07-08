@@ -2,7 +2,7 @@ import type { GlobalConfig } from 'payload';
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
-  admin: { group: 'Configuration' },
+  admin: { group: 'Store' },
   access: {
     read: () => true,
     update: ({ req }) => req.user?.role === 'admin',

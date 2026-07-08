@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  admin: { useAsTitle: 'alt' },
+  admin: { group: 'Catalog', useAsTitle: 'alt' },
   access: {
     read: () => true,
     create: ({ req }) => Boolean(req.user),
