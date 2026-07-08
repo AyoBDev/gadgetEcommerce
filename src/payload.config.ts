@@ -20,6 +20,9 @@ export default buildConfig({
   admin: {
     user: 'users',
     meta: { title: 'Jaysmart Admin', titleSuffix: '— Jaysmart' },
+    components: {
+      beforeDashboard: ['@/components/admin/DashboardStats#default'],
+    },
   },
   editor: lexicalEditor(),
   collections: [Users, Media, Categories, Laptops, Orders],
