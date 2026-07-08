@@ -35,19 +35,29 @@ export const Orders: CollectionConfig = {
         // Only the initial sale adjusts inventory. Editing an order later does
         // NOT re-adjust stock, to avoid double-counting.
         if (operation !== 'create') return;
+        const laptopId = typeof doc.laptop === 'object' ? doc.laptop.id : doc.laptop;
         try {
-          const laptopId = typeof doc.laptop === 'object' ? doc.laptop.id : doc.laptop;
           const laptop = await req.payload.findByID({ collection: 'laptops', id: laptopId });
           if (!laptop) return;
           const next = applySaleToStock({ stock: laptop.stock, status: laptop.status });
           await req.payload.update({
             collection: 'laptops',
             id: laptopId,
+            // Cast is coupled to Laptop.status's literal union: applySaleToStock
+            // returns a generic `status: string`, so it can't be inferred here.
             data: next as { stock: number; status: 'draft' | 'published' | 'sold' },
             req,
           });
-        } catch {
+        } catch (err) {
           // Inventory sync is best-effort; never fail the sale record itself.
+          // Log so an order-vs-inventory divergence (sale recorded, stock not
+          // decremented) is observable instead of silently swallowed.
+          req.payload.logger.error({
+            err,
+            msg: 'Stock adjustment failed after order create; laptop stock was not decremented',
+            orderId: doc.id,
+            laptopId,
+          });
         }
       },
     ],
