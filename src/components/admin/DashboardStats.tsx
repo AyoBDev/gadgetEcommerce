@@ -5,16 +5,19 @@ import { formatNaira } from '@/lib/money';
 import { computeRevenue, monthStart } from '@/lib/dashboard-stats';
 import styles from './DashboardStats.module.scss';
 
+// `where` is typed as Payload's exported `Where` (not the brief's `object`) so this typechecks against the installed version.
 async function countLaptops(payload: Awaited<ReturnType<typeof getPayload>>, where: Where) {
   const res = await payload.count({ collection: 'laptops', where });
   return res.totalDocs;
 }
 
+const DASH = '—';
+
 export default async function DashboardStats() {
   const payload = await getPayload({ config });
   const now = new Date();
 
-  const [published, outOfStock, lowStock, monthOrders, pending] = await Promise.all([
+  const [publishedResult, outOfStockResult, lowStockResult, monthOrdersResult, pendingResult] = await Promise.allSettled([
     countLaptops(payload, { status: { equals: 'published' } }),
     countLaptops(payload, { and: [{ status: { equals: 'published' } }, { stock: { equals: 0 } }] }),
     countLaptops(payload, { and: [{ status: { equals: 'published' } }, { stock: { greater_than: 0 } }, { stock: { less_than_equal: 2 } }] }),
@@ -22,15 +25,45 @@ export default async function DashboardStats() {
     payload.count({ collection: 'orders', where: { deliveryStatus: { equals: 'pending' } } }),
   ]);
 
-  const revenue = computeRevenue(monthOrders.docs.map((o) => ({ salePrice: o.salePrice })));
+  const logFailure = (stat: string, err: unknown) => {
+    if (typeof payload.logger?.error === 'function') {
+      payload.logger.error({ err, msg: 'dashboard stat query failed', stat });
+    } else {
+      console.error('dashboard stat query failed', stat, err);
+    }
+  };
+
+  const published = publishedResult.status === 'fulfilled' ? String(publishedResult.value) : DASH;
+  if (publishedResult.status === 'rejected') logFailure('published', publishedResult.reason);
+
+  const outOfStock = outOfStockResult.status === 'fulfilled' ? String(outOfStockResult.value) : DASH;
+  if (outOfStockResult.status === 'rejected') logFailure('outOfStock', outOfStockResult.reason);
+
+  const lowStock = lowStockResult.status === 'fulfilled' ? String(lowStockResult.value) : DASH;
+  if (lowStockResult.status === 'rejected') logFailure('lowStock', lowStockResult.reason);
+
+  const monthOrdersCount = monthOrdersResult.status === 'fulfilled' ? String(monthOrdersResult.value.totalDocs) : DASH;
+  if (monthOrdersResult.status === 'rejected') logFailure('monthOrders', monthOrdersResult.reason);
+
+  const revenue =
+    monthOrdersResult.status === 'fulfilled'
+      ? formatNaira(computeRevenue(monthOrdersResult.value.docs.map((o) => ({ salePrice: o.salePrice }))))
+      : DASH;
+
+  const pending = pendingResult.status === 'fulfilled' ? String(pendingResult.value.totalDocs) : DASH;
+  if (pendingResult.status === 'rejected') logFailure('pending', pendingResult.reason);
 
   const cards = [
-    { label: 'Published', value: String(published), href: '/admin/collections/laptops?where[status][equals]=published' },
-    { label: 'Out of stock', value: String(outOfStock), href: '/admin/collections/laptops?where[stock][equals]=0' },
-    { label: 'Low stock (1–2)', value: String(lowStock), href: '/admin/collections/laptops' },
-    { label: 'Sales this month', value: String(monthOrders.totalDocs), href: '/admin/collections/orders' },
-    { label: 'Revenue this month', value: formatNaira(revenue), href: '/admin/collections/orders' },
-    { label: 'Pending deliveries', value: String(pending.totalDocs), href: '/admin/collections/orders?where[deliveryStatus][equals]=pending' },
+    { label: 'Published', value: published, href: '/admin/collections/laptops?where[status][equals]=published' },
+    { label: 'Out of stock', value: outOfStock, href: '/admin/collections/laptops?where[stock][equals]=0' },
+    {
+      label: 'Low stock (1–2)',
+      value: lowStock,
+      href: '/admin/collections/laptops?where[and][0][status][equals]=published&where[and][1][stock][greater_than]=0&where[and][2][stock][less_than_equal]=2',
+    },
+    { label: 'Sales this month', value: monthOrdersCount, href: '/admin/collections/orders' },
+    { label: 'Revenue this month', value: revenue, href: '/admin/collections/orders' },
+    { label: 'Pending deliveries', value: pending, href: '/admin/collections/orders?where[deliveryStatus][equals]=pending' },
   ];
 
   return (
