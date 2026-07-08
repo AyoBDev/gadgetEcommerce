@@ -14,41 +14,91 @@
 // classes rather than being hashed by CSS Modules. All colors come from
 // Payload's theme custom properties — no hard-coded values.
 
-// --- Page shell: lay out nav + content as a row ---
-// Payload's default template makes `.template-default` a flex row so the
-// sidebar occupies the left column and content flows to its right. Replacing
-// the Nav drops that rule, so we re-assert it here. `min-width: 0` on the
-// content wrap prevents flex overflow from long tables.
+// --- Page shell: nav + content as a two-column grid ---
+// Payload's default template lays the page out as a CSS grid whose FIRST
+// column is the nav. On desktop the nav is persistent (always the left
+// column). On mobile it collapses to a 0-width column and the nav becomes an
+// off-canvas drawer toggled by `--nav-open` (the app-header hamburger drives
+// that class via `useNav()`). Replacing the Nav dropped these rules, so we
+// re-assert them. Mirrors @payloadcms/next 3.85's template CSS; re-check on
+// upgrade.
 :global(.template-default) {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: var(--nav-width, 275px) auto;
+  isolation: isolate;
+  min-height: 100vh;
+  position: relative;
 }
 
 :global(.template-default__wrap) {
-  flex-grow: 1;
   min-width: 0;
 }
 
-// The mobile top bar (hamburger) is only for narrow screens; hide on desktop.
+// The nav's own header row (holds the mobile close button) must not occupy a
+// grid cell, or it steals the content column and pushes content under the nav.
+// Take it out of flow; it's only relevant to the mobile drawer.
 :global(.nav__header) {
   display: none;
 }
 
-// --- Sidebar layout (the <aside class="nav"> wrapper) ---
+// --- Sidebar (the <aside class="nav"> wrapper) ---
+// Sticky within its grid column, full viewport height, clipped so it hides
+// cleanly when the column collapses to 0.
 :global(.nav) {
   --nav-width: 275px;
 
   background: var(--theme-bg);
   border-right: 1px solid var(--theme-elevation-100);
   box-sizing: border-box;
-  flex-shrink: 0;
   height: 100vh;
-  left: 0;
   overflow: hidden;
   position: sticky;
   top: 0;
   width: var(--nav-width);
+}
+
+// On phones the sidebar becomes a fixed off-canvas drawer: a 0-width grid
+// column can't clip a sticky element, so instead we take the nav out of flow,
+// slide it off-screen by default, and slide it in when `--nav-open` is set.
+// The app-header hamburger toggles that class.
+@media (max-width: 768px) {
+  :global(.template-default),
+  :global(.template-default--nav-hydrated),
+  :global(.template-default--nav-hydrated.template-default--nav-open),
+  :global(.template-default--nav-open) {
+    // Content spans the full width on mobile; the drawer floats over it.
+    grid-template-columns: 0 auto;
+  }
+
+  :global(.nav) {
+    --nav-width: min(85vw, 320px);
+
+    border-right: 1px solid var(--theme-elevation-100);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+    height: 100dvh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform var(--nav-trans-time, 200ms) ease;
+    width: var(--nav-width);
+    // Sit above the admin app header so the drawer is unobstructed when open.
+    z-index: 100;
+  }
+
+  :global(.template-default--nav-open .nav) {
+    transform: translateX(0);
+  }
+
+  // Dimmed backdrop behind the open drawer; tapping it is handled by Payload's
+  // own nav-overlay, this is purely the visual scrim.
+  :global(.template-default--nav-open)::before {
+    background: var(--theme-overlay, rgba(0, 0, 0, 0.5));
+    content: '';
+    inset: 0;
+    position: fixed;
+    z-index: 90;
+  }
 }
 
 // Scroll container fills the sidebar and scrolls independently.
