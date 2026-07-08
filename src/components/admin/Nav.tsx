@@ -172,6 +172,11 @@ const CustomNav: React.FC = () => {
   const dashboardHref = formatAdminURL({ adminRoute, path: '' }) || adminRoute
   const dashboardActive = pathname === dashboardHref || pathname === adminRoute
 
+  // The `nav__*` class contracts and `<aside>`/wrapper structure below are
+  // copied from @payloadcms/next 3.85's `NavWrapper`/`DefaultNav` so active
+  // styling, the mobile drawer, and animation keep working. These are private
+  // Payload internals with no type contract — re-diff `NavWrapper`/`DefaultNav`
+  // against this file on any Payload upgrade.
   const wrapperClasses = [
     baseClass,
     navOpen && `${baseClass}--nav-open`,
@@ -209,6 +214,16 @@ const CustomNav: React.FC = () => {
               )
             })}
 
+            {/*
+              Intentional trade-off: the default Payload nav renders a
+              `SettingsMenuButton` here (the quick appearance/theme + language
+              popup). That component is not exported from `@payloadcms/ui` and
+              its menu contents are assembled server-side, so a custom client
+              Nav can't reproduce it cleanly. We ship Account + Logout instead.
+              Theme is still switchable from the Account page
+              (/admin/account -> Appearance: Automatic/Light/Dark), which is the
+              product-accepted fallback for the quick toggle.
+            */}
             <div className={`${baseClass}__controls`}>
               <Link
                 className={`${baseClass}__link`}
