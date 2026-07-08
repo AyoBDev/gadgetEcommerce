@@ -1,16 +1,103 @@
 // Custom admin Nav styles.
 //
-// The component reuses Payload's own global `nav__*` classes (rendered as plain
-// class-name strings in the JSX) so active-link highlighting, spacing, and the
-// mobile hamburger keep working for free. This module only layers on the small
-// icon-specific tweaks, scoped with per-selector :global(...) so they attach to
-// those shared classes rather than being hashed by CSS Modules. All colors come
-// from Payload's theme custom properties — no hard-coded values.
+// This component REPLACES Payload's default Nav via `admin.components.Nav`.
+// Because we swap out Payload's own Nav element, its nav stylesheet (which
+// gives the sidebar its fixed position, width, height, and content offset) is
+// no longer loaded — so this module must supply that sidebar layout itself.
+// The layout values below mirror @payloadcms/next 3.85's compiled nav CSS
+// (`--nav-width: 275px`, `position: sticky; height: 100vh`, etc.) so the
+// custom nav sits in the layout exactly like the native one. Re-check these
+// against Payload's nav CSS on any Payload upgrade.
+//
+// The component still renders Payload's `nav__*` class names on the JSX, and
+// selectors here are per-selector `:global(...)` so they attach to those shared
+// classes rather than being hashed by CSS Modules. All colors come from
+// Payload's theme custom properties — no hard-coded values.
 
+// --- Page shell: lay out nav + content as a row ---
+// Payload's default template makes `.template-default` a flex row so the
+// sidebar occupies the left column and content flows to its right. Replacing
+// the Nav drops that rule, so we re-assert it here. `min-width: 0` on the
+// content wrap prevents flex overflow from long tables.
+:global(.template-default) {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
+:global(.template-default__wrap) {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+// The mobile top bar (hamburger) is only for narrow screens; hide on desktop.
+:global(.nav__header) {
+  display: none;
+}
+
+// --- Sidebar layout (the <aside class="nav"> wrapper) ---
+:global(.nav) {
+  --nav-width: 275px;
+
+  background: var(--theme-bg);
+  border-right: 1px solid var(--theme-elevation-100);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: 100vh;
+  left: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  width: var(--nav-width);
+}
+
+// Scroll container fills the sidebar and scrolls independently.
+:global(.nav__scroll) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  padding: calc(var(--base) * 1.5) calc(var(--base) * 0.75) calc(var(--base) * 2);
+}
+
+:global(.nav__wrap) {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: calc(var(--base) * 0.25);
+  width: 100%;
+}
+
+// Account + Logout pinned to the bottom of the sidebar.
+:global(.nav__controls) {
+  border-top: 1px solid var(--theme-elevation-100);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--base) * 0.25);
+  margin-top: auto;
+  padding-top: calc(var(--base) * 0.5);
+}
+
+// --- Group headings ---
+:global(.nav-group__label) {
+  color: var(--theme-elevation-450);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// --- Nav links (icon + label rows) ---
 :global(.nav__link) {
   align-items: center;
+  border-radius: 4px;
+  color: var(--theme-elevation-800);
   display: flex;
-  gap: var(--base, 0.5rem);
+  gap: calc(var(--base) * 0.5);
+  padding: calc(var(--base) * 0.4) calc(var(--base) * 0.5);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
 
   svg {
     color: var(--theme-elevation-500);
@@ -18,17 +105,25 @@
     transition: color 150ms ease;
   }
 
-  &:hover svg {
-    color: var(--theme-elevation-800);
+  &:hover {
+    background: var(--theme-elevation-50);
+
+    svg {
+      color: var(--theme-elevation-800);
+    }
   }
 }
 
-// Active item: tint the icon with the theme text color to match the label.
-:global(.nav__link):has(:global(.nav__link-indicator)) svg {
+// Active item: highlight background + tint the icon to match the label.
+:global(.nav__link):has(:global(.nav__link-indicator)) {
+  background: var(--theme-elevation-100);
   color: var(--theme-text);
+
+  svg {
+    color: var(--theme-text);
+  }
 }
 
-// Keep the icon aligned with the label when an active indicator is present.
 :global(.nav__link-label) {
   color: inherit;
 }
