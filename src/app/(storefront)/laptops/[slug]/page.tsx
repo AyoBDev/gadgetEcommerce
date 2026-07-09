@@ -27,7 +27,7 @@ import CompareCallout from '@/components/product/CompareCallout';
 import WhatsAppCallout from '@/components/product/WhatsAppCallout';
 import AddonsSection from '@/components/product/AddonsSection';
 import RelatedProducts from '@/components/product/RelatedProducts';
-import type { Addon, Media } from '@/payload-types';
+import type { Media } from '@/payload-types';
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
 
@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     payload.find({ collection: 'addons', where: { active: { equals: true } }, limit: 50 }),
   ]);
   const related = relatedRes.docs;
-  const addons = addonsRes.docs as Addon[];
+  const addons = addonsRes.docs;
 
   const productLd = buildProductJsonLd(laptop, SERVER_URL);
   const breadcrumbLd = buildBreadcrumbJsonLd([
