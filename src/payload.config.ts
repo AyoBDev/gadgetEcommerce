@@ -11,6 +11,7 @@ import { Media } from '@/collections/Media';
 import { Categories } from '@/collections/Categories';
 import { Laptops } from '@/collections/Laptops';
 import { Orders } from '@/collections/Orders';
+import { Addons } from '@/collections/Addons';
 import { Settings } from '@/globals/Settings';
 
 const filename = fileURLToPath(import.meta.url);
@@ -26,7 +27,7 @@ export default buildConfig({
     },
   },
   editor: lexicalEditor(),
-  collections: [Users, Media, Categories, Laptops, Orders],
+  collections: [Users, Media, Categories, Laptops, Orders, Addons],
   globals: [Settings],
   secret: process.env.PAYLOAD_SECRET ?? '',
   sharp,

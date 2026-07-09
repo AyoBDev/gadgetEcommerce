@@ -15,6 +15,7 @@ export interface Config {
     categories: Category;
     laptops: Laptop;
     orders: Order;
+    addons: Addon;
   };
   globals: {
     settings: Setting;
@@ -122,6 +123,16 @@ export interface Order {
   paymentStatus?: 'pending' | 'paid' | null;
   deliveryStatus?: 'pending' | 'delivered' | null;
   orderLabel?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface Addon {
+  id: number;
+  name: string;
+  price: number;
+  icon?: string | null;
+  active?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
