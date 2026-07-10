@@ -12,7 +12,7 @@ export function CategoryCard({ category }: { category: Category }) {
 
   return (
     <Paper component={Link} href={href} variant="outlined"
-      sx={{ p: 3, textDecoration: 'none', display: 'block', transition: 'box-shadow 200ms', '&:hover': { boxShadow: 2 } }}>
+      sx={{ p: 3, textDecoration: 'none', display: 'block', transition: 'border-color 200ms', '&:hover': { borderColor: 'text.primary' } }}>
       <Stack spacing={2} alignItems="center">
         <Icon sx={{ fontSize: 40, color: 'primary.main' }}>{category.icon ?? 'laptop_mac'}</Icon>
         <Typography variant="button" sx={{ textAlign: 'center' }}>{category.name}</Typography>

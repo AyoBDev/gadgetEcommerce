@@ -21,7 +21,7 @@ const REASONS = [
 
 export function WhyBuyFromUs() {
   return (
-    <Container maxWidth="xl" sx={{ py: 8, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
+    <Container maxWidth="xl" sx={{ py: 10, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
       <Stack spacing={1} sx={{ textAlign: 'center', mb: 6 }}>
         <Typography variant="h2">Why Buy From Us</Typography>
         <Typography variant="body1" sx={{ color: 'text.secondary' }}>

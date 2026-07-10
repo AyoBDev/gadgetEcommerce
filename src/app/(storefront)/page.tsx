@@ -52,7 +52,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
       <HeroSection brands={brandsRes.docs} useCases={useCasesRes.docs} whatsappNumber={whatsappNumber} />
 
-      <Box sx={{ bgcolor: 'background.paper', py: 8 }}>
+      <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
         <Container maxWidth="xl">
           <Typography variant="h2" sx={{ mb: 4 }}>Shop by category</Typography>
           <Grid container spacing={3}>
@@ -63,11 +63,11 @@ export default async function Home() {
         </Container>
       </Box>
 
-      <Container maxWidth="xl" sx={{ py: 8 }}>
+      <Container maxWidth="xl" sx={{ py: 10 }}>
         <SmartFinder useCases={useCasesRes.docs} />
       </Container>
 
-      <Box sx={{ bgcolor: 'grey.50', py: 8 }}>
+      <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
         <Container maxWidth="xl">
           <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 4 }}>
             <Stack spacing={0.5}>

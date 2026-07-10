@@ -30,7 +30,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
                 Browse all laptops
               </Button>
               <Button variant="contained" size="large" startIcon={<ChatIcon />}
-                sx={{ bgcolor: 'secondary.main', '&:hover': { bgcolor: 'secondary.dark' } }}
+                sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.dark' } }}
                 component="a" href={waHref} target="_blank" rel="noopener" fullWidth>
                 WhatsApp us
               </Button>
@@ -38,7 +38,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
           </Stack>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Box sx={{ position: 'relative', height: { xs: 320, md: 500 }, borderRadius: 3, overflow: 'hidden', border: 1, borderColor: 'divider' }}>
+          <Box sx={{ position: 'relative', height: { xs: 320, md: 500 }, borderRadius: 2, overflow: 'hidden', border: 1, borderColor: 'divider' }}>
             <Image src="/hero-laptop.jpg" alt="A sleek preowned laptop on a clean desk" fill priority sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
           </Box>
         </Grid>

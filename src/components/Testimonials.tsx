@@ -33,7 +33,7 @@ const REVIEWS = [
 
 export function Testimonials() {
   return (
-    <Box sx={{ bgcolor: 'grey.50', py: 8, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
+    <Box sx={{ bgcolor: 'grey.50', py: 10, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
       <Container maxWidth="xl">
         <Typography variant="h2" sx={{ textAlign: 'center', mb: 6 }}>What our customers say</Typography>
         <Grid container spacing={3}>
