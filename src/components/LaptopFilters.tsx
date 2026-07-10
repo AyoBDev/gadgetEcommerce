@@ -21,27 +21,29 @@ export function LaptopFilters({ brands, useCases }: { brands: Category[]; useCas
   }
 
   return (
-    <Stack spacing={3}>
-      <Box>
-        <Typography variant="button" sx={{ mb: 1, display: 'block' }}>Brand</Typography>
-        <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
-          {brands.map((b) => (
-            <Chip key={b.id} label={b.name} clickable onClick={() => toggle('brand', b.slug ?? '')}
-              color={activeBrand === b.slug ? 'primary' : 'default'}
-              variant={activeBrand === b.slug ? 'filled' : 'outlined'} />
-          ))}
-        </Stack>
-      </Box>
-      <Box>
-        <Typography variant="button" sx={{ mb: 1, display: 'block' }}>Use case</Typography>
-        <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
-          {useCases.map((u) => (
-            <Chip key={u.id} label={u.name} clickable onClick={() => toggle('useCase', u.slug ?? '')}
-              color={activeUseCase === u.slug ? 'primary' : 'default'}
-              variant={activeUseCase === u.slug ? 'filled' : 'outlined'} />
-          ))}
-        </Stack>
-      </Box>
-    </Stack>
+    <Box sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 1, p: 2 }}>
+      <Stack spacing={3}>
+        <Box>
+          <Typography variant="button" sx={{ mb: 1, display: 'block' }}>Brand</Typography>
+          <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+            {brands.map((b) => (
+              <Chip key={b.id} label={b.name} clickable onClick={() => toggle('brand', b.slug ?? '')}
+                color={activeBrand === b.slug ? 'primary' : 'default'}
+                variant={activeBrand === b.slug ? 'filled' : 'outlined'} />
+            ))}
+          </Stack>
+        </Box>
+        <Box>
+          <Typography variant="button" sx={{ mb: 1, display: 'block' }}>Use case</Typography>
+          <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+            {useCases.map((u) => (
+              <Chip key={u.id} label={u.name} clickable onClick={() => toggle('useCase', u.slug ?? '')}
+                color={activeUseCase === u.slug ? 'primary' : 'default'}
+                variant={activeUseCase === u.slug ? 'filled' : 'outlined'} />
+            ))}
+          </Stack>
+        </Box>
+      </Stack>
+    </Box>
   );
 }

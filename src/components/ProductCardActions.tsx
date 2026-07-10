@@ -20,7 +20,8 @@ export function ProductCardActions({ laptopId }: { laptopId: number }) {
 
   const btnSx = {
     bgcolor: 'background.paper',
-    boxShadow: 1,
+    border: '1px solid',
+    borderColor: 'divider',
     '&:hover': { bgcolor: 'background.paper' },
   } as const;
 

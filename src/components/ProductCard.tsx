@@ -35,8 +35,8 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
   );
 
   return (
-    <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', height: '100%', '&:hover': { boxShadow: 3 } }}>
-      <Box sx={{ position: 'relative', height: 192, bgcolor: 'grey.100' }}>
+    <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', height: '100%', '&:hover': { borderColor: 'text.primary' } }}>
+      <Box sx={{ position: 'relative', height: 192, bgcolor: 'grey.50' }}>
         {discount !== null && (
           <Chip label={`-${discount}%`} color="error" size="small"
             sx={{ position: 'absolute', top: 8, left: 8, fontWeight: 700 }} />
@@ -70,7 +70,7 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
           <Stack direction="row" spacing={1}>
             <Button component={Link} href={`/laptops/${laptop.slug}`} variant="contained" fullWidth>Buy now</Button>
             <IconButton component="a" href={waHref} target="_blank" rel="noopener" aria-label="WhatsApp inquiry"
-              sx={{ bgcolor: 'secondary.main', color: 'white', '&:hover': { bgcolor: 'secondary.dark' } }}>
+              sx={{ bgcolor: 'success.main', color: 'white', '&:hover': { bgcolor: 'success.dark' } }}>
               <ChatIcon />
             </IconButton>
           </Stack>
