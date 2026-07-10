@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
@@ -25,11 +26,13 @@ export function Footer({ settings }: { settings: Setting }) {
   const businessName = settings.businessName || 'Jaysmart';
 
   return (
-    <Box component="footer" sx={{ bgcolor: 'grey.100', mt: 8, py: 6 }}>
+    <Box component="footer" sx={{ bgcolor: 'background.default', borderTop: 1, borderColor: 'divider', mt: 8, py: 6 }}>
       <Container maxWidth="xl">
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <Typography variant="h3" sx={{ color: 'primary.main', mb: 2 }}>Certified Preowned Laptops</Typography>
+            <Box sx={{ mb: 2, lineHeight: 0 }}>
+              <Image src="/logo.jpg" alt="Jaysmart Global Ventures" width={32} height={32} style={{ height: 32, width: 'auto' }} />
+            </Box>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
               © {YEAR} {businessName}. Certified &amp; verified.
             </Typography>
@@ -45,7 +48,7 @@ export function Footer({ settings }: { settings: Setting }) {
               <Stack spacing={1}>
                 {col.links.map((link) => (
                   <Typography key={link.href} component={Link} href={link.href} variant="caption"
-                    sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'secondary.main' } }}>
+                    sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                     {link.label}
                   </Typography>
                 ))}
@@ -57,18 +60,18 @@ export function Footer({ settings }: { settings: Setting }) {
             <Stack spacing={1}>
               {settings.supportEmail && (
                 <Typography component="a" href={`mailto:${settings.supportEmail}`} variant="caption"
-                  sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'secondary.main' } }}>
+                  sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                   {settings.supportEmail}
                 </Typography>
               )}
               {settings.businessPhone && (
                 <Typography component="a" href={`tel:${settings.businessPhone}`} variant="caption"
-                  sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'secondary.main' } }}>
+                  sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                   {settings.businessPhone}
                 </Typography>
               )}
               <Typography component={Link} href="/#privacy" variant="caption"
-                sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'secondary.main' } }}>
+                sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                 Privacy
               </Typography>
             </Stack>

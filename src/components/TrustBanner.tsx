@@ -14,13 +14,13 @@ const TRUST_ITEMS = [
 
 export function TrustBanner() {
   return (
-    <Box sx={{ bgcolor: 'grey.100', borderBottom: 1, borderColor: 'divider', py: 1.5 }}>
+    <Box sx={{ bgcolor: 'grey.50', borderBottom: 1, borderColor: 'divider', py: 1.5 }}>
       <Container maxWidth="xl">
         <Stack direction="row" spacing={{ xs: 3, md: 6 }} justifyContent="center">
           {TRUST_ITEMS.map((item) => (
             <Stack key={item.label} direction="row" spacing={1} alignItems="center">
-              <Box sx={{ color: 'primary.main' }}>{item.icon}</Box>
-              <Typography variant="button" sx={{ color: 'primary.main' }}>{item.label}</Typography>
+              <Box sx={{ color: 'text.secondary' }}>{item.icon}</Box>
+              <Typography variant="button" sx={{ color: 'text.secondary' }}>{item.label}</Typography>
             </Stack>
           ))}
         </Stack>

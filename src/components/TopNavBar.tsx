@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
@@ -47,10 +48,10 @@ export function TopNavBar({ whatsappNumber }: { whatsappNumber: string }) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h2" component={Link} href="/"
-              sx={{ color: 'primary.main', textDecoration: 'none', fontWeight: 700, fontSize: { xs: 18, md: 24 } }}>
-              Certified Preowned Laptops
-            </Typography>
+            <Box component={Link} href="/" sx={{ display: 'inline-flex', alignItems: 'center', lineHeight: 0 }} aria-label="Jaysmart home">
+              <Image src="/logo.jpg" alt="Jaysmart Global Ventures" width={40} height={40} priority
+                style={{ height: 40, width: 'auto' }} />
+            </Box>
           </Stack>
 
           <Stack direction="row" spacing={4} sx={{ display: { xs: 'none', md: 'flex' } }}>
