@@ -37,7 +37,7 @@ export function WhyBuyFromUs() {
                   width: 64,
                   height: 64,
                   borderRadius: '50%',
-                  bgcolor: '#d9e2ff',
+                  bgcolor: 'grey.100',
                   color: 'primary.main',
                   display: 'flex',
                   alignItems: 'center',

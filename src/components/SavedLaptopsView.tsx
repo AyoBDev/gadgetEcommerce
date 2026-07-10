@@ -87,9 +87,21 @@ export function SavedLaptopsView({
             <CircularProgress />
           </Box>
         ) : laptops.length === 0 ? (
-          <Stack spacing={3} sx={{ py: 6, alignItems: 'flex-start' }}>
+          <Stack
+            spacing={3}
+            sx={{
+              py: { xs: 6, md: 10 },
+              alignItems: 'center',
+              textAlign: 'center',
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: 2,
+            }}
+          >
             <Typography variant="body1" sx={{ color: 'text.secondary' }}>{emptyMsg}</Typography>
-            <Button variant="contained" component={Link} href="/laptops">Browse laptops</Button>
+            <Button variant="contained" color="primary" component={Link} href="/laptops">
+              Browse laptops
+            </Button>
           </Stack>
         ) : (
           <Grid container spacing={3}>
