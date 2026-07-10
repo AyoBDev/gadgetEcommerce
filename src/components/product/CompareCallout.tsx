@@ -10,7 +10,7 @@ export default function CompareCallout() {
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} alignItems={{ md: 'center' }} justifyContent="space-between">
         <Stack spacing={1}>
           <Typography variant="h2">Compare with similar laptops</Typography>
-          <Typography variant="body2" sx={{ opacity: 0.85 }}>
+          <Typography variant="body2">
             Not sure if this is the right fit? Compare specs side by side.
           </Typography>
         </Stack>
