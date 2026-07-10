@@ -63,7 +63,7 @@ export default function AddonsSection({
   if (addons.length === 0) return null;
 
   return (
-    <Paper sx={{ p: { xs: 3, md: 4 }, bgcolor: 'grey.50' }}>
+    <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: 'grey.50' }}>
       <Typography variant="h2" sx={{ mb: 3 }}>Essential Add-ons</Typography>
       <Grid container spacing={3}>
         {addons.map((addon) => {

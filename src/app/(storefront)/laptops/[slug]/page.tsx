@@ -141,7 +141,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   </Button>
                   <Button component="a" href={waHref} target="_blank" rel="noopener"
                     variant="contained" size="large" startIcon={<ChatIcon />} fullWidth
-                    sx={{ bgcolor: 'secondary.main', '&:hover': { bgcolor: 'secondary.dark' } }}>
+                    sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.dark' } }}>
                     WhatsApp inquiry
                   </Button>
                 </Stack>

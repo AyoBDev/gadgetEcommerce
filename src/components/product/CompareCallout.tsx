@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 
 export default function CompareCallout() {
   return (
-    <Paper sx={{ p: { xs: 3, md: 4 }, bgcolor: 'primary.main', color: 'primary.contrastText' }}>
+    <Paper variant="outlined" elevation={0} sx={{ p: { xs: 3, md: 4 }, bgcolor: 'primary.main', color: 'primary.contrastText', borderColor: 'primary.main' }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={3} alignItems={{ md: 'center' }} justifyContent="space-between">
         <Stack spacing={1}>
           <Typography variant="h2">Compare with similar laptops</Typography>

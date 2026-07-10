@@ -1,3 +1,4 @@
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,15 +19,17 @@ export function LaptopSpecsTable({ laptop }: { laptop: Laptop }) {
     ['Warranty', `${laptop.warrantyDays}-day warranty`],
   ];
   return (
-    <Table size="small">
-      <TableBody>
-        {rows.filter(([, v]) => v !== undefined).map(([k, v]) => (
-          <TableRow key={k}>
-            <TableCell sx={{ color: 'text.secondary', width: 180 }}>{k}</TableCell>
-            <TableCell><Typography variant="body2">{v}</Typography></TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <Paper variant="outlined" elevation={0}>
+      <Table size="small">
+        <TableBody>
+          {rows.filter(([, v]) => v !== undefined).map(([k, v]) => (
+            <TableRow key={k}>
+              <TableCell sx={{ color: 'text.secondary', width: 180 }}>{k}</TableCell>
+              <TableCell><Typography variant="body2">{v}</Typography></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
   );
 }

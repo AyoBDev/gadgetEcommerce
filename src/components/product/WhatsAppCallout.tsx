@@ -6,7 +6,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 
 export default function WhatsAppCallout({ href }: { href: string }) {
   return (
-    <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'grey.100' }}>
+    <Paper variant="outlined" sx={{ p: 4, textAlign: 'center', bgcolor: 'grey.50' }}>
       <Stack spacing={2} alignItems="center">
         <Typography variant="h2">Still confused? Chat with us before buying</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 640 }}>
@@ -14,7 +14,7 @@ export default function WhatsAppCallout({ href }: { href: string }) {
         </Typography>
         <Button component="a" href={href} target="_blank" rel="noopener" startIcon={<ChatIcon />}
           variant="contained" size="large"
-          sx={{ bgcolor: 'secondary.main', '&:hover': { bgcolor: 'secondary.dark' }, borderRadius: 999 }}>
+          sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.dark' }, borderRadius: 999 }}>
           Chat on WhatsApp
         </Button>
       </Stack>

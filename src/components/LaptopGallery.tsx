@@ -13,7 +13,7 @@ export function LaptopGallery({ images }: { images: { image: Media }[] }) {
   const mainUrl = main?.sizes?.hero?.url ?? main?.url ?? '';
   return (
     <Stack spacing={2}>
-      <Box sx={{ position: 'relative', aspectRatio: '3/2', bgcolor: 'grey.100', borderRadius: 2, overflow: 'hidden' }}>
+      <Box sx={{ position: 'relative', aspectRatio: '3/2', bgcolor: 'grey.50', border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden' }}>
         {main && <Image src={mainUrl} alt={main.alt} fill priority sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'contain' }} />}
       </Box>
       {images.length > 1 && (
@@ -23,7 +23,7 @@ export function LaptopGallery({ images }: { images: { image: Media }[] }) {
             return (
               <ButtonBase key={g.image.id} onClick={() => setActive(i)}
                 sx={{ position: 'relative', width: 80, height: 80, borderRadius: 1, overflow: 'hidden',
-                  border: 2, borderColor: i === active ? 'primary.main' : 'transparent' }}>
+                  bgcolor: 'grey.50', border: 2, borderColor: i === active ? 'primary.main' : 'transparent' }}>
                 <Image src={t} alt={g.image.alt} fill sizes="80px" style={{ objectFit: 'cover' }} />
               </ButtonBase>
             );
