@@ -12,3 +12,6 @@ worktrees/
 coverage/
 playwright-report/
 test-results/
+
+# Local Claude Code config
+.claude/
