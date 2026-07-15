@@ -6,17 +6,24 @@ const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const payload = await getPayloadClient();
-  const [laptops, categories] = await Promise.all([
-    payload.find({ collection: 'laptops', where: { status: { equals: 'published' } }, limit: 1000, depth: 0 }),
-    payload.find({ collection: 'categories', limit: 200, depth: 0 }),
-  ]);
-
   const now = new Date();
   const staticEntries: MetadataRoute.Sitemap = [
     { url: `${SERVER_URL}/`, lastModified: now, changeFrequency: 'daily', priority: 1 },
     { url: `${SERVER_URL}/laptops`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
   ];
+
+  // If the database isn't reachable/migrated yet at build time, return just the
+  // static routes; dynamic entries fill in once the sitemap revalidates.
+  let laptops, categories;
+  try {
+    const payload = await getPayloadClient();
+    [laptops, categories] = await Promise.all([
+      payload.find({ collection: 'laptops', where: { status: { equals: 'published' } }, limit: 1000, depth: 0 }),
+      payload.find({ collection: 'categories', limit: 200, depth: 0 }),
+    ]);
+  } catch {
+    return staticEntries;
+  }
 
   const laptopEntries: MetadataRoute.Sitemap = laptops.docs.map((l) => ({
     url: `${SERVER_URL}/laptops/${l.slug}`,

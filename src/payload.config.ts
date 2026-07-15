@@ -32,7 +32,16 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET ?? '',
   sharp,
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URL },
+    pool: {
+      connectionString: process.env.DATABASE_URL,
+      // Managed Postgres (Railway public URL, Supabase, etc.) terminates TLS
+      // with a self-signed cert. Set DATABASE_SSL=true to enable SSL without
+      // certificate verification. Leave unset for Railway's private network
+      // URL or local Postgres, which don't use SSL.
+      ...(process.env.DATABASE_SSL === 'true'
+        ? { ssl: { rejectUnauthorized: false } }
+        : {}),
+    },
   }),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

@@ -32,9 +32,16 @@ import type { Media } from '@/payload-types';
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
 
 export async function generateStaticParams() {
-  const payload = await getPayloadClient();
-  const res = await payload.find({ collection: 'laptops', where: { status: { equals: 'published' } }, limit: 500 });
-  return res.docs.map((l) => ({ slug: l.slug }));
+  // Runs at build time. If the database isn't reachable/migrated yet (e.g. a
+  // fresh deploy where migrations run in the same build), fall back to no
+  // prerendered params — pages are then rendered on demand at request time.
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({ collection: 'laptops', where: { status: { equals: 'published' } }, limit: 500 });
+    return res.docs.map((l) => ({ slug: l.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
