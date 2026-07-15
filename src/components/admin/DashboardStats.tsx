@@ -76,11 +76,16 @@ export default async function DashboardStats() {
           </a>
         ))}
       </div>
+      {/* Plain <a> is intentional: these navigate within Payload's admin app
+          (a separate routing context from the Next.js storefront pages), so
+          next/link is not appropriate here. */}
+      {/* eslint-disable @next/next/no-html-link-for-pages */}
       <div className={styles.actions}>
         <a className={styles.action} href="/admin/collections/orders/create">Record a sale</a>
         <a className={styles.action} href="/admin/collections/laptops/create">Add laptop</a>
         <a className={styles.action} href="/" target="_blank" rel="noreferrer">View storefront</a>
       </div>
+      {/* eslint-enable @next/next/no-html-link-for-pages */}
     </div>
   );
 }

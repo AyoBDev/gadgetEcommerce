@@ -24,7 +24,7 @@ import Inventory2 from '@mui/icons-material/Inventory2'
 import PointOfSale from '@mui/icons-material/PointOfSale'
 import Storefront from '@mui/icons-material/Storefront'
 
-import './Nav.module.scss'
+import './Nav.scss'
 
 const baseClass = 'nav'
 
