@@ -5,8 +5,12 @@ in S3-compatible object storage.
 
 ## What's already configured
 
-- **`railway.json`** — build runs `pnpm migrate && pnpm build`, start runs
-  `pnpm start`, health check hits `/api/health`.
+- **`railway.json`** — build runs `pnpm build`, start runs
+  `pnpm migrate && pnpm start`, health check hits `/api/health`.
+  Migrations run at **start**, not build: Railway's builder is not on the
+  private network, so the database is only reachable from the deployed
+  container. The build itself needs no database (dynamic pages render on
+  demand).
 - **`.nvmrc` / `engines`** — pins Node ≥ 20.9 for Nixpacks.
 - **`packageManager`** — pins pnpm so Railway installs with it.
 - **Database migrations** live in `src/migrations/` and run automatically on
@@ -31,9 +35,10 @@ in S3-compatible object storage.
    | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | first admin login (seeded on first boot) |
    | `S3_BUCKET`, `S3_REGION`, `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | object storage for media (AWS S3, Cloudflare R2, …) |
 
-4. **Deploy.** The build runs migrations against the Postgres plugin, compiles
-   the app, and starts it. The health check waits for `/api/health` (which
-   verifies DB connectivity) to return 200.
+4. **Deploy.** The build compiles the app (no database needed); on start the
+   container runs migrations against the Postgres plugin and then serves the
+   app. The health check waits for `/api/health` (which verifies DB
+   connectivity) to return 200.
 
 ## Media storage (required)
 
