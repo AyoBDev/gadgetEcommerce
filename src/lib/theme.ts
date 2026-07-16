@@ -30,6 +30,7 @@ export const theme = createTheme({
   typography: {
     fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif',
     h1: {
+      fontFamily: 'var(--font-space-grotesk), "Space Grotesk", var(--font-inter), sans-serif',
       fontSize: '32px',
       lineHeight: '40px',
       letterSpacing: '-0.02em',
@@ -37,16 +38,29 @@ export const theme = createTheme({
       '@media (min-width:900px)': { fontSize: '48px', lineHeight: '56px' },
     },
     h2: {
+      fontFamily: 'var(--font-space-grotesk), "Space Grotesk", var(--font-inter), sans-serif',
       fontSize: '20px',
       lineHeight: '28px',
       fontWeight: 700,
       '@media (min-width:900px)': { fontSize: '24px', lineHeight: '32px' },
     },
-    h3: { fontSize: '20px', lineHeight: '28px', fontWeight: 700 },
+    h3: {
+      fontFamily: 'var(--font-space-grotesk), "Space Grotesk", var(--font-inter), sans-serif',
+      fontSize: '20px',
+      lineHeight: '28px',
+      fontWeight: 700,
+    },
     body1: { fontSize: '18px', lineHeight: '28px', fontWeight: 400 },
     body2: { fontSize: '16px', lineHeight: '24px', fontWeight: 400 },
     caption: { fontSize: '14px', lineHeight: '20px', fontWeight: 400 },
-    button: { fontSize: '12px', lineHeight: '16px', letterSpacing: '0.05em', fontWeight: 700, textTransform: 'uppercase' },
+    button: {
+      fontFamily: 'var(--font-space-grotesk), "Space Grotesk", var(--font-inter), sans-serif',
+      fontSize: '12px',
+      lineHeight: '16px',
+      letterSpacing: '0.05em',
+      fontWeight: 700,
+      textTransform: 'uppercase',
+    },
   },
   components: {
     MuiButton: {

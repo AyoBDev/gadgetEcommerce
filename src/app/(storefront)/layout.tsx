@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import Box from '@mui/material/Box';
 import { ThemeRegistry } from '@/components/ThemeRegistry';
 import { StoreProvider } from '@/components/StoreProvider';
@@ -17,6 +17,13 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['500', '700'],
+  display: 'swap',
+  variable: '--font-space-grotesk',
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'),
   title: {
@@ -31,7 +38,7 @@ export default async function StorefrontLayout({ children }: { children: React.R
   const whatsappNumber = resolveWhatsAppNumber(settings);
 
   return (
-    <html lang="en-NG" className={inter.variable}>
+    <html lang="en-NG" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         <link
           rel="stylesheet"
