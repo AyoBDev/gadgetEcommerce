@@ -21,7 +21,7 @@ const REVIEWS = [
     name: 'Chima E.',
     location: 'Abuja, NG',
     rating: 5,
-    quote: 'I was skeptical about buying preowned, but the 7-day warranty gave me peace of mind. Delivery to Abuja was fast, and the MacBook works perfectly.',
+    quote: 'I was skeptical about buying UK used, but the 7-day warranty gave me peace of mind. Delivery to Abuja was fast, and the MacBook works perfectly.',
   },
   {
     initial: 'F',

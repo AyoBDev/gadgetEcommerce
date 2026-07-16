@@ -26,7 +26,7 @@ export function WhyBuyFromUs() {
       <Stack spacing={1} sx={{ textAlign: 'center', mb: 6 }}>
         <SectionHeading center>Why Buy From Us</SectionHeading>
         <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-          Nigeria&apos;s most trusted preowned laptop retailer
+          Nigeria&apos;s most trusted UK used laptop retailer
         </Typography>
       </Stack>
       <Grid container spacing={4} justifyContent="center">

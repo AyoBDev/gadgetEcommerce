@@ -18,7 +18,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const p = await searchParams;
   const bits: string[] = [];
   if (p.brand) bits.push(`${p.brand.toUpperCase()} laptops`);
-  else bits.push('Preowned laptops');
+  else bits.push('UK Used laptops');
   if (p.useCase) bits.push(`for ${p.useCase.replaceAll('-', ' ')}`);
   const title = bits.join(' ');
   const description = `Browse ${title.toLowerCase()} in Nigeria. 7-day warranty. Nationwide delivery.`;
@@ -68,7 +68,7 @@ export default async function LaptopsPage({ searchParams }: { searchParams: Prom
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <Stack spacing={4}>
         <Stack spacing={1}>
-          <Typography variant="h1" sx={{ fontSize: { xs: 32, md: 48 } }}>Shop preowned laptops</Typography>
+          <Typography variant="h1" sx={{ fontSize: { xs: 32, md: 48 } }}>Shop UK used laptops</Typography>
           <Typography variant="body1" sx={{ color: 'text.secondary' }}>{laptopsRes.totalDocs} in stock</Typography>
         </Stack>
         <Grid container spacing={4}>

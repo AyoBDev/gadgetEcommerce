@@ -15,7 +15,7 @@ function defaultDescription(laptop: Laptop): string {
     specs.ram ? `${specs.ram}GB RAM` : undefined,
     specs.storage,
   ].filter(Boolean);
-  return `Buy ${laptop.title}${parts.length ? ' — ' + parts.join(', ') : ''}. Preowned laptop in Nigeria with 7-day warranty.`;
+  return `Buy ${laptop.title}${parts.length ? ' — ' + parts.join(', ') : ''}. UK Used laptop in Nigeria with 7-day warranty.`;
 }
 
 export function buildLaptopMetadata(laptop: Laptop): Metadata {
