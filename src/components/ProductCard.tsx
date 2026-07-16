@@ -35,7 +35,12 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
   );
 
   return (
-    <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', height: '100%', '&:hover': { borderColor: 'text.primary' } }}>
+    <Card variant="outlined" sx={{
+      display: 'flex', flexDirection: 'column', height: '100%',
+      transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+      '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 12px 24px -12px rgba(17, 17, 17, 0.18)', borderColor: 'primary.main' },
+      '@media (prefers-reduced-motion: reduce)': { transition: 'none', '&:hover': { transform: 'none' } },
+    }}>
       <Box sx={{ position: 'relative', height: 192, bgcolor: 'grey.50' }}>
         {discount !== null && (
           <Chip label={`-${discount}%`} color="error" size="small"

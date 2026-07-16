@@ -64,7 +64,7 @@ export default async function LaptopsPage({ searchParams }: { searchParams: Prom
   ]);
 
   return (
-    <Container maxWidth="xl" sx={{ py: { xs: 4, md: 8 } }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <Stack spacing={4}>
         <Stack spacing={1}>

@@ -30,7 +30,20 @@ export const theme = createTheme({
     MuiButton: {
       defaultProps: { disableElevation: true },
       styleOverrides: {
-        root: { borderRadius: 8, paddingBlock: 12, paddingInline: 24, boxShadow: 'none' },
+        root: {
+          borderRadius: 8,
+          paddingBlock: 12,
+          paddingInline: 24,
+          boxShadow: 'none',
+          transition: 'background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease',
+          '&:hover': { transform: 'scale(1.02)' },
+          '&:active': { transform: 'scale(0.99)' },
+          '@media (prefers-reduced-motion: reduce)': {
+            transition: 'none',
+            '&:hover': { transform: 'none' },
+            '&:active': { transform: 'none' },
+          },
+        },
       },
     },
     MuiCard: {

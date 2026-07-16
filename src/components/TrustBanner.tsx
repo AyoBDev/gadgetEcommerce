@@ -15,7 +15,7 @@ const TRUST_ITEMS = [
 export function TrustBanner() {
   return (
     <Box sx={{ bgcolor: 'grey.50', borderBottom: 1, borderColor: 'divider', py: 1.5 }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Stack direction="row" spacing={{ xs: 3, md: 6 }} justifyContent="center">
           {TRUST_ITEMS.map((item) => (
             <Stack key={item.label} direction="row" spacing={1} alignItems="center">

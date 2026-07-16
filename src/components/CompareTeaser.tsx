@@ -33,7 +33,7 @@ export function CompareTeaser({ options }: { options: CompareOption[] }) {
 
   return (
     <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Paper
           variant="outlined"
           sx={{

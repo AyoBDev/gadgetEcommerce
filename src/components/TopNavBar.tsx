@@ -38,7 +38,7 @@ export function TopNavBar({ whatsappNumber }: { whatsappNumber: string }) {
 
   return (
     <AppBar position="fixed" color="inherit" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar sx={{ minHeight: 80, justifyContent: 'space-between', gap: 2 }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <IconButton

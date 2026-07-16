@@ -14,7 +14,7 @@ import type { Category } from '@/payload-types';
 export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Category[]; useCases: Category[]; whatsappNumber: string }) {
   const waHref = buildWhatsAppLink(whatsappNumber, 'Hi, I want to buy a preowned laptop. Can you help me choose?');
   return (
-    <Container maxWidth="xl" sx={{ py: { xs: 6, md: 12 } }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 6, md: 12 } }}>
       <Grid container spacing={4} alignItems="center">
         <Grid size={{ xs: 12, md: 6 }}>
           <Stack spacing={4}>

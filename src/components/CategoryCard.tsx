@@ -12,7 +12,12 @@ export function CategoryCard({ category }: { category: Category }) {
 
   return (
     <Paper component={Link} href={href} variant="outlined"
-      sx={{ p: 3, textDecoration: 'none', display: 'block', transition: 'border-color 200ms', '&:hover': { borderColor: 'text.primary' } }}>
+      sx={{
+        p: 3, textDecoration: 'none', display: 'block',
+        transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+        '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 12px 24px -12px rgba(17, 17, 17, 0.18)', borderColor: 'primary.main' },
+        '@media (prefers-reduced-motion: reduce)': { transition: 'none', '&:hover': { transform: 'none' } },
+      }}>
       <Stack spacing={2} alignItems="center">
         <Icon sx={{ fontSize: 40, color: 'primary.main' }}>{category.icon ?? 'laptop_mac'}</Icon>
         <Typography variant="button" sx={{ textAlign: 'center' }}>{category.name}</Typography>

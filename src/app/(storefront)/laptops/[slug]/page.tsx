@@ -27,6 +27,7 @@ import CompareCallout from '@/components/product/CompareCallout';
 import WhatsAppCallout from '@/components/product/WhatsAppCallout';
 import AddonsSection from '@/components/product/AddonsSection';
 import RelatedProducts from '@/components/product/RelatedProducts';
+import { Reveal } from '@/components/Reveal';
 import type { Media } from '@/payload-types';
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
@@ -107,7 +108,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     <>
       <script key="product-ld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
       <script key="breadcrumb-ld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-      <Container maxWidth="xl" sx={{ py: { xs: 4, md: 8 } }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
         <Breadcrumbs sx={{ mb: 3 }}>
           <Link href="/">Home</Link>
           <Link href="/laptops">Laptops</Link>
@@ -162,22 +163,26 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </Grid>
           </Grid>
 
-          <KeySpecs laptop={laptop} />
+          <Reveal><KeySpecs laptop={laptop} /></Reveal>
 
           {laptop.description && (
-            <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 } }}>
-              <Typography variant="h2" sx={{ mb: 3, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
-                Product Description
-              </Typography>
-              <RichText data={laptop.description} />
-            </Paper>
+            <Reveal>
+              <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 } }}>
+                <Typography variant="h2" sx={{ mb: 3, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
+                  Product Description
+                </Typography>
+                <RichText data={laptop.description} />
+              </Paper>
+            </Reveal>
           )}
 
-          <AddonsSection addons={addons} whatsappNumber={whatsappNumber}
-            laptopTitle={laptop.title} laptopPrice={laptop.price} url={url} />
-          <CompareCallout />
-          <RelatedProducts laptops={related} whatsappNumber={whatsappNumber} />
-          <WhatsAppCallout href={waHref} />
+          <Reveal>
+            <AddonsSection addons={addons} whatsappNumber={whatsappNumber}
+              laptopTitle={laptop.title} laptopPrice={laptop.price} url={url} />
+          </Reveal>
+          <Reveal><CompareCallout /></Reveal>
+          <Reveal><RelatedProducts laptops={related} whatsappNumber={whatsappNumber} /></Reveal>
+          <Reveal><WhatsAppCallout href={waHref} /></Reveal>
         </Stack>
       </Container>
     </>

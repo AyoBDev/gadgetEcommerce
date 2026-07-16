@@ -27,7 +27,7 @@ export function Footer({ settings }: { settings: Setting }) {
 
   return (
     <Box component="footer" sx={{ bgcolor: 'background.default', borderTop: 1, borderColor: 'divider', mt: 8, py: 6 }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>
             <Box sx={{ mb: 2, lineHeight: 0 }}>

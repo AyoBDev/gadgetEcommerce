@@ -14,6 +14,7 @@ import { SmartFinder } from '@/components/SmartFinder';
 import { WhyBuyFromUs } from '@/components/WhyBuyFromUs';
 import { CompareTeaser } from '@/components/CompareTeaser';
 import { Testimonials } from '@/components/Testimonials';
+import { Reveal } from '@/components/Reveal';
 import { buildOrganizationJsonLd } from '@/lib/seo';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 
@@ -56,22 +57,27 @@ export default async function Home() {
       <HeroSection brands={brandsRes.docs} useCases={useCasesRes.docs} whatsappNumber={whatsappNumber} />
 
       <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
-        <Container maxWidth="xl">
-          <Typography variant="h2" sx={{ mb: 4 }}>Shop by category</Typography>
-          <Grid container spacing={3}>
-            {categoriesRes.docs.map((c) => (
-              <Grid key={c.id} size={{ xs: 6, md: 3 }}><CategoryCard category={c} /></Grid>
-            ))}
-          </Grid>
+        <Container maxWidth="lg">
+          <Reveal>
+            <Typography variant="h2" sx={{ mb: 4 }}>Shop by category</Typography>
+            <Grid container spacing={3}>
+              {categoriesRes.docs.map((c) => (
+                <Grid key={c.id} size={{ xs: 6, md: 3 }}><CategoryCard category={c} /></Grid>
+              ))}
+            </Grid>
+          </Reveal>
         </Container>
       </Box>
 
-      <Container maxWidth="xl" sx={{ py: 10 }}>
-        <SmartFinder useCases={useCasesRes.docs} />
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+        <Reveal>
+          <SmartFinder useCases={useCasesRes.docs} />
+        </Reveal>
       </Container>
 
       <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
+          <Reveal>
           <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 4 }}>
             <Stack spacing={0.5}>
               <Stack direction="row" spacing={1} alignItems="center">
@@ -87,12 +93,13 @@ export default async function Home() {
               <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 3 }}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Grid>
             ))}
           </Grid>
+          </Reveal>
         </Container>
       </Box>
 
-      <WhyBuyFromUs />
-      <CompareTeaser options={compareOptions} />
-      <Testimonials />
+      <Reveal><WhyBuyFromUs /></Reveal>
+      <Reveal><CompareTeaser options={compareOptions} /></Reveal>
+      <Reveal><Testimonials /></Reveal>
     </>
   );
 }
