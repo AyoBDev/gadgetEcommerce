@@ -20,7 +20,9 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
         <Grid size={{ xs: 12, md: 6 }}>
           <Stack spacing={4}>
             <Stack spacing={2}>
-              <Typography variant="h1">Buy Tested Preowned Laptops in Nigeria</Typography>
+              <Typography variant="h1">
+                Buy Tested Preowned <Box component="span" sx={{ color: 'primary.main' }}>Laptops</Box> in Nigeria
+              </Typography>
               <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                 300+ laptops in stock · 7-day warranty · Nationwide delivery
               </Typography>

@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { SectionHeading } from '@/components/SectionHeading';
 
 const REVIEWS = [
   {
@@ -35,7 +36,7 @@ export function Testimonials() {
   return (
     <Box sx={{ bgcolor: 'grey.50', py: 10, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
       <Container maxWidth="lg">
-        <Typography variant="h2" sx={{ textAlign: 'center', mb: 6 }}>What our customers say</Typography>
+        <SectionHeading center sx={{ mb: 6 }}>What our customers say</SectionHeading>
         <Grid container spacing={3}>
           {REVIEWS.map((review) => (
             <Grid key={review.name} size={{ xs: 12, md: 4 }}>

@@ -3,6 +3,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { SectionHeading } from '@/components/SectionHeading';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
@@ -23,7 +24,7 @@ export function WhyBuyFromUs() {
   return (
     <Container maxWidth="lg" sx={{ py: 10, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
       <Stack spacing={1} sx={{ textAlign: 'center', mb: 6 }}>
-        <Typography variant="h2">Why Buy From Us</Typography>
+        <SectionHeading center>Why Buy From Us</SectionHeading>
         <Typography variant="body1" sx={{ color: 'text.secondary' }}>
           Nigeria&apos;s most trusted preowned laptop retailer
         </Typography>

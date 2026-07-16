@@ -65,7 +65,7 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
         </Stack>
         <Box sx={{ mt: 'auto' }}>
           <Stack direction="row" spacing={1} alignItems="baseline" sx={{ mb: 2 }}>
-            <Typography variant="h2" sx={{ color: 'primary.main' }}>{formatNaira(laptop.price)}</Typography>
+            <Typography variant="h2" sx={{ color: 'primary.main', fontSize: { xs: 24, md: 28 }, letterSpacing: '-0.02em' }}>{formatNaira(laptop.price)}</Typography>
             {laptop.compareAtPrice && (
               <Typography variant="caption" sx={{ color: 'text.secondary', textDecoration: 'line-through' }}>
                 {formatNaira(laptop.compareAtPrice)}

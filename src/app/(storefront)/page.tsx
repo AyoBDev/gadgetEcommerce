@@ -15,6 +15,8 @@ import { WhyBuyFromUs } from '@/components/WhyBuyFromUs';
 import { CompareTeaser } from '@/components/CompareTeaser';
 import { Testimonials } from '@/components/Testimonials';
 import { Reveal } from '@/components/Reveal';
+import { SectionHeading } from '@/components/SectionHeading';
+import { StatsStrip } from '@/components/StatsStrip';
 import { buildOrganizationJsonLd } from '@/lib/seo';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 
@@ -56,16 +58,20 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
       <HeroSection brands={brandsRes.docs} useCases={useCasesRes.docs} whatsappNumber={whatsappNumber} />
 
+      <StatsStrip />
+
       <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
         <Container maxWidth="lg">
           <Reveal>
-            <Typography variant="h2" sx={{ mb: 4 }}>Shop by category</Typography>
-            <Grid container spacing={3}>
-              {categoriesRes.docs.map((c) => (
-                <Grid key={c.id} size={{ xs: 6, md: 3 }}><CategoryCard category={c} /></Grid>
-              ))}
-            </Grid>
+            <SectionHeading sx={{ mb: 4 }}>Shop by category</SectionHeading>
           </Reveal>
+          <Grid container spacing={3}>
+            {categoriesRes.docs.map((c, i) => (
+              <Grid key={c.id} size={{ xs: 6, md: 3 }}>
+                <Reveal delay={i * 75}><CategoryCard category={c} /></Reveal>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
 
@@ -78,22 +84,24 @@ export default async function Home() {
       <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
         <Container maxWidth="lg">
           <Reveal>
-          <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 4 }}>
-            <Stack spacing={0.5}>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <LocalFireDepartmentIcon color="error" />
-                <Typography variant="h2">Featured deals</Typography>
+            <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 4 }}>
+              <Stack spacing={0.5}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <LocalFireDepartmentIcon color="error" />
+                  <SectionHeading>Featured deals</SectionHeading>
+                </Stack>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>Limited-time offers on top-rated laptops</Typography>
               </Stack>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>Limited-time offers on top-rated laptops</Typography>
+              <Button component={Link} href="/laptops?deals=true">View all deals</Button>
             </Stack>
-            <Button component={Link} href="/laptops?deals=true">View all deals</Button>
-          </Stack>
+          </Reveal>
           <Grid container spacing={3}>
-            {dealsRes.docs.map((laptop) => (
-              <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 3 }}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Grid>
+            {dealsRes.docs.map((laptop, i) => (
+              <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 3 }}>
+                <Reveal delay={i * 75}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Reveal>
+              </Grid>
             ))}
           </Grid>
-          </Reveal>
         </Container>
       </Box>
 

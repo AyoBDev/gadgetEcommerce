@@ -47,6 +47,7 @@ export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: n
     <Box
       ref={ref}
       sx={{
+        height: '100%',
         opacity: hidden ? 0 : 1,
         transform: hidden ? 'translateY(24px)' : 'none',
         transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
