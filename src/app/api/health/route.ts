@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getPayloadClient } from '@/lib/payload';
 
+// Must run per request: without this, Next statically optimizes the GET
+// handler and bakes the BUILD-TIME result into the output — on builders with
+// no database access that would permanently serve a 500 and fail every
+// deploy health check.
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const payload = await getPayloadClient();

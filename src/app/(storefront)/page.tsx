@@ -17,7 +17,10 @@ import { Testimonials } from '@/components/Testimonials';
 import { buildOrganizationJsonLd } from '@/lib/seo';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 
-export const revalidate = 300;
+// Rendered at request time: the homepage is composed from live catalog queries,
+// and build machines (e.g. Railway's builder) cannot reach the database, so
+// build-time prerendering would fail. Matches /laptops, which is also dynamic.
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const payload = await getPayloadClient();
