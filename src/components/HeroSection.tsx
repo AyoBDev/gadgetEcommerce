@@ -40,7 +40,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ position: 'relative', height: { xs: 320, md: 500 }, borderRadius: 2, overflow: 'hidden', border: 1, borderColor: 'divider' }}>
-            <Image src="/hero-laptop.jpg" alt="A sleek preowned laptop on a clean desk" fill priority sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+            <Image src="/hero-laptop.jpg" alt="A certified preowned gold MacBook Air, tested and ready for delivery" fill priority sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
           </Box>
         </Grid>
       </Grid>
