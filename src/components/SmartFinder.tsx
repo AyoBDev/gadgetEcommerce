@@ -24,13 +24,13 @@ export function SmartFinder({ useCases }: { useCases: Category[] }) {
   }
 
   return (
-    <Box sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', borderRadius: 3, p: { xs: 4, md: 6 } }}>
+    <Box sx={{ bgcolor: 'tint.main', borderRadius: 3, p: { xs: 4, md: 6 } }}>
       <Stack spacing={4} sx={{ maxWidth: 720, mx: 'auto', textAlign: 'center' }}>
         <Stack spacing={1}>
-          <Typography variant="h2" sx={{ color: 'inherit' }}>Not sure what to buy?</Typography>
-          <Typography variant="body1">Get a personalized recommendation.</Typography>
+          <Typography variant="h2">Not sure what to buy?</Typography>
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>Get a personalized recommendation.</Typography>
         </Stack>
-        <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', borderRadius: 2, p: 4, textAlign: 'left' }}>
+        <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', border: 1, borderColor: 'divider', borderRadius: 2, p: 4, textAlign: 'left' }}>
           <Stack spacing={4}>
             {useCases.length > 0 && (
               <Stack spacing={2}>

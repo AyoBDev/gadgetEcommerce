@@ -26,7 +26,7 @@ export function Footer({ settings }: { settings: Setting }) {
   const businessName = settings.businessName || 'Jaysmart';
 
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.default', borderTop: 1, borderColor: 'divider', mt: 8, py: 6 }}>
+    <Box component="footer" sx={{ bgcolor: 'tint.main', borderTop: 1, borderColor: 'divider', mt: 8, py: 6 }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>

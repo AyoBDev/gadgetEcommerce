@@ -2,6 +2,15 @@
 
 import { createTheme } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    tint: { main: string };
+  }
+  interface PaletteOptions {
+    tint?: { main: string };
+  }
+}
+
 export const theme = createTheme({
   cssVariables: true,
   palette: {
@@ -14,12 +23,25 @@ export const theme = createTheme({
     text: { primary: '#111111', secondary: '#6B6B6B' },
     divider: '#EAEAEA',
     grey: { 50: '#FAFAFA', 100: '#F7F7F7' },
+    // Soft red-tinted surface derived from primary #E1232A — for hero/finder/footer washes.
+    tint: { main: '#FCF1F1' },
   },
   shape: { borderRadius: 8 },
   typography: {
     fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif',
-    h1: { fontSize: '48px', lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: 700 },
-    h2: { fontSize: '24px', lineHeight: '32px', fontWeight: 700 },
+    h1: {
+      fontSize: '32px',
+      lineHeight: '40px',
+      letterSpacing: '-0.02em',
+      fontWeight: 700,
+      '@media (min-width:900px)': { fontSize: '48px', lineHeight: '56px' },
+    },
+    h2: {
+      fontSize: '20px',
+      lineHeight: '28px',
+      fontWeight: 700,
+      '@media (min-width:900px)': { fontSize: '24px', lineHeight: '32px' },
+    },
     h3: { fontSize: '20px', lineHeight: '28px', fontWeight: 700 },
     body1: { fontSize: '18px', lineHeight: '28px', fontWeight: 400 },
     body2: { fontSize: '16px', lineHeight: '24px', fontWeight: 400 },
