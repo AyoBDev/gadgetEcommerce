@@ -60,6 +60,34 @@ redeploy.
 > revert the `payload-types.ts` change (`git checkout -- src/payload-types.ts`)
 > and keep only the new files under `src/migrations/`.
 
+## Bulk-importing laptops
+
+Use the seed script to create many laptops from a JSON file. `brand` and
+`category` are given **by name** — the script finds the matching Category (a
+`brand` / `useCase` respectively) or creates it, then links by id. Prices are in
+**kobo** (₦280,000 → `28000000`). Gallery images are added later in the admin.
+
+1. Copy `scripts/data/laptops.example.json` and fill in your laptops (see that
+   file for every field). Minimum per laptop: `title`, `brand`, `price`,
+   `condition`.
+2. Run it against whichever database you want to populate:
+
+   ```bash
+   # local
+   DATABASE_URL=postgres://…/jaysmart_dev \
+   PAYLOAD_SECRET=<secret> \
+     pnpm seed:laptops scripts/data/laptops.json
+
+   # Railway (public URL needs SSL)
+   DATABASE_URL='postgres://…public…' DATABASE_SSL=true \
+   PAYLOAD_SECRET='<your railway PAYLOAD_SECRET>' \
+     pnpm seed:laptops scripts/data/laptops.json
+   ```
+
+Re-running is safe: a laptop whose slug already exists is skipped (no
+duplicates), and existing categories are reused. Local data does **not** sync to
+Railway — run the script against the Railway database to populate the live site.
+
 ## Local production check
 
 To reproduce the Railway build locally against a fresh database:

@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Dell Latitude 7490 Core i7 8th Gen",
+    "brand": "Dell",
+    "category": "Business",
+    "price": 28000000,
+    "compareAtPrice": 31000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i7-8650U",
+      "ram": 16,
+      "storage": "512GB NVMe SSD",
+      "screenSize": 14,
+      "batteryHealth": 88,
+      "os": "Windows 11 Pro"
+    },
+    "warrantyDays": 7,
+    "stock": 3,
+    "status": "published"
+  },
+  {
+    "title": "HP EliteBook 840 G6 Core i5",
+    "brand": "HP",
+    "category": "Business",
+    "price": 24500000,
+    "condition": "grade-b",
+    "specs": {
+      "processor": "Intel Core i5-8265U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 14,
+      "batteryHealth": 82,
+      "os": "Windows 10 Pro"
+    },
+    "stock": 2,
+    "status": "published"
+  }
+]
