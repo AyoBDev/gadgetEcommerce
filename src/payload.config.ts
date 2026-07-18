@@ -57,7 +57,10 @@ export default buildConfig({
           accessKeyId: process.env.S3_ACCESS_KEY_ID ?? '',
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? '',
         },
-        forcePathStyle: true,
+        // Path-style works for most S3-compatible providers (MinIO, Tigris,
+        // Cloudflare R2). Set S3_FORCE_PATH_STYLE=false only if your provider
+        // requires virtual-hosted-style URLs.
+        forcePathStyle: process.env.S3_FORCE_PATH_STYLE !== 'false',
       },
     }),
   ],
