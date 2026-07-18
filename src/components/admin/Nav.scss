@@ -16,6 +16,31 @@
 // and these selectors must stay global to attach to Payload's markup.
 // All colors come from Payload's theme custom properties — no hard-coded values.
 
+// --- Minimal template (login, create-first-user, etc.) ---
+  // These auth views use `template-minimal`, a centered fixed-width box.
+  // Replacing Payload's Nav dropped this stylesheet too, so the login form
+  // was stretching full-width. Re-assert Payload 3.85's minimal-template CSS.
+  .template-minimal {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+    padding: 60px 1.5rem;
+    width: 100%;
+  }
+
+  .template-minimal--width-normal .template-minimal__wrap {
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .template-minimal--width-wide .template-minimal__wrap {
+    max-width: 960px;
+    width: 100%;
+  }
+
 // --- Page shell: nav + content as a two-column grid ---
   // Payload's default template lays the page out as a CSS grid whose FIRST
   // column is the nav. On desktop the nav is persistent (always the left
