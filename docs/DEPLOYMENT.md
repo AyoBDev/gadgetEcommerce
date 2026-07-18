@@ -78,7 +78,11 @@ Use the seed script to create many laptops from a JSON file. `brand` and
    PAYLOAD_SECRET=<secret> \
      pnpm seed:laptops scripts/data/laptops.json
 
-   # Railway (public URL needs SSL)
+   # Railway / any migrated DB (public URL needs SSL).
+   # ALWAYS set NODE_ENV=production against a migrated database — otherwise
+   # Payload runs dev "push" mode and writes a bogus `dev` row into
+   # payload_migrations that breaks the next `payload migrate` on deploy.
+   NODE_ENV=production \
    DATABASE_URL='postgres://…public…' DATABASE_SSL=true \
    PAYLOAD_SECRET='<your railway PAYLOAD_SECRET>' \
      pnpm seed:laptops scripts/data/laptops.json
@@ -87,6 +91,12 @@ Use the seed script to create many laptops from a JSON file. `brand` and
 Re-running is safe: a laptop whose slug already exists is skipped (no
 duplicates), and existing categories are reused. Local data does **not** sync to
 Railway — run the script against the Railway database to populate the live site.
+
+> If a deploy's health check hangs after seeding, check `payload_migrations`:
+> a row with `batch = -1` (name `dev`) means a seed ran in push mode. Delete it
+> and insert the real migration as applied:
+> `DELETE FROM payload_migrations WHERE batch = -1;`
+> `INSERT INTO payload_migrations (name, batch, updated_at, created_at) VALUES ('<migration-name>', 1, now(), now());`
 
 ## Local production check
 

@@ -13,7 +13,13 @@
  *   PAYLOAD_SECRET=local-dev-secret-32-chars-minimum-xx \
  *     pnpm seed:laptops scripts/data/laptops.json
  *
- *   # Railway (public URL needs SSL)
+ *   # Railway / any already-migrated database (public URL needs SSL).
+ *   # IMPORTANT: pass NODE_ENV=production so Payload connects in migration mode.
+ *   # Without it, Payload runs dev "push" and writes a `dev` row (batch -1) into
+ *   # payload_migrations, which then makes `payload migrate` a no-op-that-looks-
+ *   # applied and can break the deploy's start command. Against a migrated DB,
+ *   # always seed in production mode:
+ *   NODE_ENV=production \
  *   DATABASE_URL='postgres://…public…' DATABASE_SSL=true \
  *   PAYLOAD_SECRET='<your railway PAYLOAD_SECRET>' \
  *     pnpm seed:laptops scripts/data/laptops.json
