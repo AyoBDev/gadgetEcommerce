@@ -1,0 +1,200 @@
+[
+  {
+    "title": "Acer Aspire E1-531",
+    "brand": "Acer",
+    "category": "Everyday",
+    "price": 13000000,
+    "compareAtPrice": 15000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Pentium B960",
+      "ram": 4,
+      "storage": "500GB HDD",
+      "screenSize": 15.6,
+      "batteryHealth": 85,
+      "os": "Windows 10"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Dell Inspiron 3583",
+    "brand": "Dell",
+    "category": "Everyday",
+    "price": 18000000,
+    "compareAtPrice": 20000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5-8265U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 15.6,
+      "batteryHealth": 88,
+      "os": "Windows 10"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Apple MacBook Pro 2015",
+    "brand": "Apple",
+    "category": "Creative",
+    "price": 40000000,
+    "compareAtPrice": 45000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5 (Broadwell)",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 13.3,
+      "batteryHealth": 90,
+      "os": "macOS Monterey"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "HP EliteBook x360 1030 G3",
+    "brand": "HP",
+    "category": "Business",
+    "price": 44000000,
+    "compareAtPrice": 49000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5-8350U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 13.3,
+      "batteryHealth": 92,
+      "os": "Windows 11 Pro"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Lenovo ThinkPad Yoga X390",
+    "brand": "Lenovo",
+    "category": "Business",
+    "price": 29500000,
+    "compareAtPrice": 33000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5-8265U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 13.3,
+      "batteryHealth": 90,
+      "os": "Windows 11 Pro"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "HP Spectre x360 Convertible 13",
+    "brand": "HP",
+    "category": "Business",
+    "price": 26000000,
+    "compareAtPrice": 30000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i7-8550U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 13.3,
+      "batteryHealth": 89,
+      "os": "Windows 11"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Acer Aspire E5-575",
+    "brand": "Acer",
+    "category": "Everyday",
+    "price": 22000000,
+    "compareAtPrice": 25000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5-7200U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 15.6,
+      "batteryHealth": 86,
+      "os": "Windows 10"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Dell Latitude 3490",
+    "brand": "Dell",
+    "category": "Business",
+    "price": 30000000,
+    "compareAtPrice": 34000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5-8250U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 14,
+      "batteryHealth": 91,
+      "os": "Windows 11 Pro"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Asus X541NA",
+    "brand": "Asus",
+    "category": "Everyday",
+    "price": 13000000,
+    "compareAtPrice": 15000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Pentium N4200",
+      "ram": 4,
+      "storage": "500GB HDD",
+      "screenSize": 15.6,
+      "batteryHealth": 85,
+      "os": "Windows 10"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "HP ZBook 15 G5",
+    "brand": "HP",
+    "category": "Creative",
+    "price": 60000000,
+    "compareAtPrice": 68000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i7-8750H",
+      "ram": 16,
+      "storage": "512GB SSD",
+      "screenSize": 15.6,
+      "batteryHealth": 93,
+      "os": "Windows 11 Pro"
+    },
+    "stock": 1,
+    "status": "published"
+  },
+  {
+    "title": "Lenovo ThinkPad E590",
+    "brand": "Lenovo",
+    "category": "Business",
+    "price": 25000000,
+    "compareAtPrice": 28000000,
+    "condition": "grade-a",
+    "specs": {
+      "processor": "Intel Core i5-8265U",
+      "ram": 8,
+      "storage": "256GB SSD",
+      "screenSize": 15.6,
+      "batteryHealth": 88,
+      "os": "Windows 11 Pro"
+    },
+    "stock": 1,
+    "status": "published"
+  }
+]
