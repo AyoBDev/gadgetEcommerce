@@ -41,7 +41,7 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
       '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 12px 24px -12px rgba(17, 17, 17, 0.18)', borderColor: 'primary.main' },
       '@media (prefers-reduced-motion: reduce)': { transition: 'none', '&:hover': { transform: 'none' } },
     }}>
-      <Box sx={{ position: 'relative', height: 192, bgcolor: 'grey.50', overflow: 'hidden' }}>
+      <Box sx={{ position: 'relative', height: { xs: 240, sm: 192 }, bgcolor: 'grey.50', overflow: 'hidden' }}>
         {/* Image link sits at the base of the stack (z-index 0) so the chips and
             action buttons below it render on top. */}
         <Link href={`/laptops/${laptop.slug}`} style={{ display: 'block', position: 'absolute', inset: 0, zIndex: 0 }}>
