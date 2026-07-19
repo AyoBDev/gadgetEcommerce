@@ -22,6 +22,7 @@ export function ProductCardActions({ laptopId }: { laptopId: number }) {
     bgcolor: 'background.paper',
     border: '1px solid',
     borderColor: 'divider',
+    zIndex: 2,
     '&:hover': { bgcolor: 'background.paper' },
   } as const;
 
@@ -38,7 +39,7 @@ export function ProductCardActions({ laptopId }: { laptopId: number }) {
         </IconButton>
       </Tooltip>
       <Tooltip title={compareFull ? 'Compare list is full' : inCompare ? 'Remove from compare' : 'Add to compare'}>
-        <span style={{ position: 'absolute', bottom: 8, right: 48 }}>
+        <span style={{ position: 'absolute', bottom: 8, right: 48, zIndex: 2 }}>
           <IconButton
             size="small"
             aria-label={inCompare ? 'Remove from compare' : 'Add to compare'}

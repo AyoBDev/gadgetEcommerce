@@ -41,16 +41,18 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
       '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 12px 24px -12px rgba(17, 17, 17, 0.18)', borderColor: 'primary.main' },
       '@media (prefers-reduced-motion: reduce)': { transition: 'none', '&:hover': { transform: 'none' } },
     }}>
-      <Box sx={{ position: 'relative', height: 192, bgcolor: 'grey.50' }}>
+      <Box sx={{ position: 'relative', height: 192, bgcolor: 'grey.50', overflow: 'hidden' }}>
+        {/* Image link sits at the base of the stack (z-index 0) so the chips and
+            action buttons below it render on top. */}
+        <Link href={`/laptops/${laptop.slug}`} style={{ display: 'block', position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image src={imgUrl ?? '/laptop-placeholder.jpg'} alt={image?.alt ?? laptop.title} fill sizes="(max-width: 600px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
+        </Link>
         {discount !== null && (
           <Chip label={`-${discount}%`} color="error" size="small"
-            sx={{ position: 'absolute', top: 8, left: 8, fontWeight: 700 }} />
+            sx={{ position: 'absolute', top: 8, left: 8, fontWeight: 700, zIndex: 2 }} />
         )}
         <Chip label={conditionLabel(laptop.condition)} color="success" size="small"
-          sx={{ position: 'absolute', top: 8, right: 8, fontWeight: 700 }} />
-        <Link href={`/laptops/${laptop.slug}`} style={{ display: 'block', position: 'absolute', inset: 0 }}>
-          <Image src={imgUrl ?? '/laptop-placeholder.jpg'} alt={image?.alt ?? laptop.title} fill sizes="(max-width: 600px) 50vw, 25vw" style={{ objectFit: 'contain' }} />
-        </Link>
+          sx={{ position: 'absolute', top: 8, right: 8, fontWeight: 700, zIndex: 2 }} />
         <ProductCardActions laptopId={laptop.id} />
       </Box>
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
