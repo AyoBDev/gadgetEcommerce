@@ -32,7 +32,7 @@ export function CompareTeaser({ options }: { options: CompareOption[] }) {
   const canCompare = a !== '' && b !== '' && a !== b;
 
   return (
-    <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
+    <Box sx={{ bgcolor: 'grey.50', py: { xs: 6, md: 8 } }}>
       <Container maxWidth="lg">
         <Paper
           variant="outlined"

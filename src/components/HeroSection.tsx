@@ -51,7 +51,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
           background: 'radial-gradient(80% 40% at 50% 100%, rgba(225,35,42,0.06), transparent 70%)',
         }} />
       </Box>
-    <Container maxWidth="lg" sx={{ position: 'relative', py: { xs: 6, md: 12 } }}>
+    <Container maxWidth="lg" sx={{ position: 'relative', py: { xs: 5, md: 9 } }}>
       <Grid container spacing={4} alignItems="center">
         <Grid size={{ xs: 12, md: 6 }}>
           <Stack spacing={4}>

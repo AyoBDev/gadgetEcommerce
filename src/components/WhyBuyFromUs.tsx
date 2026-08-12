@@ -22,8 +22,8 @@ const REASONS = [
 
 export function WhyBuyFromUs() {
   return (
-    <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 }, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
-      <Stack spacing={1} sx={{ mb: 8, maxWidth: 640 }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 6, md: 9 }, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
+      <Stack spacing={1} sx={{ mb: 5, maxWidth: 640 }}>
         <SectionHeading>Why Buy From Us</SectionHeading>
         <Typography variant="body1" sx={{ color: 'text.secondary' }}>
           Nigeria&apos;s most trusted UK used laptop retailer.

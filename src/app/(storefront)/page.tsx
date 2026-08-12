@@ -60,7 +60,7 @@ export default async function Home() {
 
       <StatsStrip />
 
-      <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
+      <Box sx={{ bgcolor: 'background.paper', py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
           <Reveal>
             <SectionHeading sx={{ mb: 4 }}>Shop by category</SectionHeading>
@@ -75,13 +75,13 @@ export default async function Home() {
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ py: 10 }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <Reveal>
           <SmartFinder useCases={useCasesRes.docs} />
         </Reveal>
       </Container>
 
-      <Box sx={{ bgcolor: 'grey.50', py: 10 }}>
+      <Box sx={{ bgcolor: 'grey.50', py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
           <Reveal>
             <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 4 }}>
@@ -95,24 +95,12 @@ export default async function Home() {
               <Button component={Link} href="/laptops?deals=true">View all deals</Button>
             </Stack>
           </Reveal>
-          {/* Asymmetric grid — first deal is the hero card (wider), the rest stack in a compact column. */}
           <Grid container spacing={3}>
-            {dealsRes.docs.length > 0 && (
-              <Grid size={{ xs: 12, md: 8 }}>
-                <Reveal>
-                  <ProductCard laptop={dealsRes.docs[0]!} whatsappNumber={whatsappNumber} />
-                </Reveal>
+            {dealsRes.docs.map((laptop, i) => (
+              <Grid key={laptop.id} size={{ xs: 12, sm: 6, md: 3 }}>
+                <Reveal delay={i * 75}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Reveal>
               </Grid>
-            )}
-            <Grid size={{ xs: 12, md: 4 }}>
-              <Stack spacing={3} sx={{ height: '100%' }}>
-                {dealsRes.docs.slice(1, 4).map((laptop, i) => (
-                  <Reveal key={laptop.id} delay={(i + 1) * 75}>
-                    <ProductCard laptop={laptop} whatsappNumber={whatsappNumber} />
-                  </Reveal>
-                ))}
-              </Stack>
-            </Grid>
+            ))}
           </Grid>
         </Container>
       </Box>

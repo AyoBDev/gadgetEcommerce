@@ -48,7 +48,7 @@ export function Testimonials() {
   const active = REVIEWS[i]!;
 
   return (
-    <Box sx={{ bgcolor: 'grey.50', py: { xs: 8, md: 12 }, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
+    <Box sx={{ bgcolor: 'grey.50', py: { xs: 6, md: 9 }, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
       <Container maxWidth="lg">
         <SectionHeading sx={{ mb: 6 }}>What our customers say</SectionHeading>
         <Box
