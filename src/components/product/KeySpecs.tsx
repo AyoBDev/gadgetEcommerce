@@ -31,7 +31,7 @@ export default function KeySpecs({ laptop }: { laptop: Laptop }) {
           <Grid key={r.label} size={{ xs: 6, md: 3 }}>
             <Stack spacing={0.5}>
               <Typography variant="button" color="text.secondary">{r.label}</Typography>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>{r.value}</Typography>
+              <Typography className="num" sx={{ fontSize: 15, fontWeight: 700, color: 'text.primary', letterSpacing: '-0.01em' }}>{r.value}</Typography>
             </Stack>
           </Grid>
         ))}

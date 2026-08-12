@@ -65,10 +65,10 @@ export default async function Home() {
           <Reveal>
             <SectionHeading sx={{ mb: 4 }}>Shop by category</SectionHeading>
           </Reveal>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             {categoriesRes.docs.map((c, i) => (
-              <Grid key={c.id} size={{ xs: 6, md: 3 }}>
-                <Reveal delay={i * 75}><CategoryCard category={c} /></Reveal>
+              <Grid key={c.id} size={{ xs: 12, sm: 6, md: 3 }}>
+                <Reveal delay={i * 60}><CategoryCard category={c} /></Reveal>
               </Grid>
             ))}
           </Grid>
@@ -95,12 +95,24 @@ export default async function Home() {
               <Button component={Link} href="/laptops?deals=true">View all deals</Button>
             </Stack>
           </Reveal>
+          {/* Asymmetric grid — first deal is the hero card (wider), the rest stack in a compact column. */}
           <Grid container spacing={3}>
-            {dealsRes.docs.map((laptop, i) => (
-              <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 3 }}>
-                <Reveal delay={i * 75}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Reveal>
+            {dealsRes.docs.length > 0 && (
+              <Grid size={{ xs: 12, md: 8 }}>
+                <Reveal>
+                  <ProductCard laptop={dealsRes.docs[0]!} whatsappNumber={whatsappNumber} />
+                </Reveal>
               </Grid>
-            ))}
+            )}
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Stack spacing={3} sx={{ height: '100%' }}>
+                {dealsRes.docs.slice(1, 4).map((laptop, i) => (
+                  <Reveal key={laptop.id} delay={(i + 1) * 75}>
+                    <ProductCard laptop={laptop} whatsappNumber={whatsappNumber} />
+                  </Reveal>
+                ))}
+              </Stack>
+            </Grid>
           </Grid>
         </Container>
       </Box>

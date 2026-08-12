@@ -129,13 +129,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <Grid size={{ xs: 12, md: 5 }}>
               <Stack spacing={3}>
                 <Stack spacing={1}>
-                  <Typography variant="h1" sx={{ fontSize: { xs: 32, md: 44 } }}>{laptop.title}</Typography>
-                  {subtitle && <Typography variant="h3" color="text.secondary">{subtitle}</Typography>}
+                  <Typography variant="h1" sx={{ fontSize: { xs: 30, md: 40 }, letterSpacing: '-0.025em' }}>{laptop.title}</Typography>
+                  {subtitle && <Typography variant="h3" color="text.secondary" sx={{ fontWeight: 500 }}>{subtitle}</Typography>}
                 </Stack>
                 <Stack direction="row" spacing={2} alignItems="baseline">
-                  <Typography variant="h1" sx={{ color: 'primary.main', fontSize: 32 }}>{formatNaira(laptop.price)}</Typography>
+                  <Typography className="num" sx={{ color: 'primary.main', fontSize: { xs: 32, md: 40 }, fontWeight: 700, lineHeight: 1 }}>
+                    {formatNaira(laptop.price)}
+                  </Typography>
                   {laptop.compareAtPrice && (
-                    <Typography variant="body2" sx={{ color: 'text.secondary', textDecoration: 'line-through' }}>
+                    <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 15 }}>
                       {formatNaira(laptop.compareAtPrice)}
                     </Typography>
                   )}

@@ -31,11 +31,11 @@ export const theme = createTheme({
     fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif',
     h1: {
       fontFamily: 'var(--font-space-grotesk), "Space Grotesk", var(--font-inter), sans-serif',
-      fontSize: '32px',
+      fontSize: '34px',
       lineHeight: '40px',
-      letterSpacing: '-0.02em',
+      letterSpacing: '-0.03em',
       fontWeight: 700,
-      '@media (min-width:900px)': { fontSize: '48px', lineHeight: '56px' },
+      '@media (min-width:900px)': { fontSize: '56px', lineHeight: '60px', letterSpacing: '-0.035em' },
     },
     h2: {
       fontFamily: 'var(--font-space-grotesk), "Space Grotesk", var(--font-inter), sans-serif',
@@ -71,14 +71,19 @@ export const theme = createTheme({
           paddingBlock: 12,
           paddingInline: 24,
           boxShadow: 'none',
-          transition: 'background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease',
-          '&:hover': { transform: 'scale(1.02)' },
-          '&:active': { transform: 'scale(0.99)' },
+          // Spring-like ease-out for a slightly bouncy press. `cubic-bezier(.34,1.56,.64,1)` = mild overshoot.
+          transition: 'background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.28s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s ease',
+          '&:hover': { transform: 'translateY(-1px)' },
+          '&:active': { transform: 'scale(0.97)', transition: 'transform 0.08s ease' },
           '@media (prefers-reduced-motion: reduce)': {
-            transition: 'none',
+            transition: 'background-color 0.2s ease, color 0.2s ease',
             '&:hover': { transform: 'none' },
             '&:active': { transform: 'none' },
           },
+        },
+        containedPrimary: {
+          // Tinted red-glow shadow on hover for primary CTAs
+          '&:hover': { boxShadow: '0 8px 16px -8px rgba(225, 35, 42, 0.5)' },
         },
       },
     },

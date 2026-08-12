@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import Box from '@mui/material/Box';
 import { ThemeRegistry } from '@/components/ThemeRegistry';
 import { StoreProvider } from '@/components/StoreProvider';
@@ -19,9 +19,16 @@ const inter = Inter({
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  weight: ['500', '700'],
+  weight: ['500', '600', '700'],
   display: 'swap',
   variable: '--font-space-grotesk',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['500', '700'],
+  display: 'swap',
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
@@ -38,7 +45,7 @@ export default async function StorefrontLayout({ children }: { children: React.R
   const whatsappNumber = resolveWhatsAppNumber(settings);
 
   return (
-    <html lang="en-NG" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en-NG" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link
           rel="stylesheet"
@@ -46,12 +53,13 @@ export default async function StorefrontLayout({ children }: { children: React.R
         />
       </head>
       <body>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <ThemeRegistry>
           <StoreProvider>
             <TopNavBar whatsappNumber={whatsappNumber} />
             <Box sx={{ pt: 10 }}>
               <TrustBanner />
-              <main>{children}</main>
+              <main id="main-content">{children}</main>
               <Footer settings={settings} />
             </Box>
             <WhatsAppFab whatsappNumber={whatsappNumber} />

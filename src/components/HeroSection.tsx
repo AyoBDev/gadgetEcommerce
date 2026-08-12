@@ -14,7 +14,7 @@ import type { Category } from '@/payload-types';
 export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Category[]; useCases: Category[]; whatsappNumber: string }) {
   const waHref = buildWhatsAppLink(whatsappNumber, 'Hi, I want to buy a UK used laptop. Can you help me choose?');
   return (
-    <Box sx={{ position: 'relative', bgcolor: 'tint.main', overflow: 'hidden' }}>
+    <Box className="grain" sx={{ position: 'relative', bgcolor: 'tint.main', overflow: 'hidden' }}>
       {/* Frosted studio wash — spans the full hero band. Red-tinted, high-key,
           soft milky diffusions on both sides + subtle top bloom. */}
       <Box aria-hidden sx={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>

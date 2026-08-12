@@ -1,0 +1,85 @@
+/* Storefront globals — foundations that MUI theme can't set. */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  /* Better typographic defaults across the whole storefront */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* Balance headings so titles don't leave orphan words on the last line. */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Body copy: 'pretty' avoids single-word last lines without over-tightening. */
+p, li {
+  text-wrap: pretty;
+}
+
+/* Numeric UI — anywhere a class="num" appears (prices, counts, stats).
+   Also enable tabular figures so lists of numbers line up. */
+.num, [data-num] {
+  font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' on;
+  letter-spacing: -0.01em;
+}
+
+/* Focus ring — brand red, offset. Overrides browser default blue for
+   keyboard users; :focus-visible so mouse clicks don't get a ring. */
+:focus-visible {
+  outline: 2px solid #E1232A;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link — hidden until keyboard-focused, then it slides down at the top. */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 2000;
+  background: #111;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 16px; }
+
+/* Subtle grain texture — apply via className="grain" on tinted sections.
+   Data-URI SVG noise, absolute-positioned via ::after. */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}

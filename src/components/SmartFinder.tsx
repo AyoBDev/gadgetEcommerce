@@ -24,7 +24,7 @@ export function SmartFinder({ useCases }: { useCases: Category[] }) {
   }
 
   return (
-    <Box sx={{ bgcolor: 'tint.main', borderRadius: 3, p: { xs: 4, md: 6 } }}>
+    <Box className="grain" sx={{ bgcolor: 'tint.main', borderRadius: 3, p: { xs: 4, md: 6 } }}>
       <Stack spacing={4} sx={{ maxWidth: 720, mx: 'auto', textAlign: 'center' }}>
         <Stack spacing={1}>
           <Typography variant="h2">Not sure what to buy?</Typography>

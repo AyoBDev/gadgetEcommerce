@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
@@ -68,8 +69,10 @@ export default async function LaptopsPage({ searchParams }: { searchParams: Prom
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
       <Stack spacing={4}>
         <Stack spacing={1}>
-          <Typography variant="h1" sx={{ fontSize: { xs: 32, md: 48 } }}>Shop UK used laptops</Typography>
-          <Typography variant="body1" sx={{ color: 'text.secondary' }}>{laptopsRes.totalDocs} in stock</Typography>
+          <Typography variant="h1">Shop UK used laptops</Typography>
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+            <Box component="span" className="num" sx={{ color: 'text.primary', fontWeight: 700 }}>{laptopsRes.totalDocs}</Box> in stock
+          </Typography>
         </Stack>
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>

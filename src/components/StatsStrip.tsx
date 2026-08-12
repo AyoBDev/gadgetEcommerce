@@ -62,7 +62,11 @@ export function StatsStrip() {
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 6 }} justifyContent="space-evenly" alignItems="center">
           {STATS.map((stat) => (
             <Stack key={stat.label} spacing={0.5} alignItems="center">
-              <Typography variant="h1" component="p" sx={{ color: 'primary.main' }}>
+              <Typography
+                variant="h1" component="p"
+                className="num"
+                sx={{ color: 'primary.main', fontWeight: 700, fontSize: { xs: 44, md: 60 }, letterSpacing: '-0.04em', lineHeight: 1 }}
+              >
                 {format(stat.end * progress, stat.decimals)}
                 {stat.suffix}
               </Typography>
