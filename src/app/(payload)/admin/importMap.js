@@ -25,6 +25,7 @@ import { default as default_7b57228c6f06a06348e4c53967f631ca } from '@/component
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { default as Nav_9c1f4b2a7e6d4c3b8a5f0e1d2c3b4a59 } from '@/components/admin/Nav'
+import { default as ConversationThread_3d8e1a4b7c2f4e6a9b0c1d2e3f4a5b6c } from '@/components/admin/ConversationThread'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -54,5 +55,6 @@ export const importMap = {
   "@/components/admin/DashboardStats#default": default_7b57228c6f06a06348e4c53967f631ca,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
-  "@/components/admin/Nav#default": Nav_9c1f4b2a7e6d4c3b8a5f0e1d2c3b4a59
+  "@/components/admin/Nav#default": Nav_9c1f4b2a7e6d4c3b8a5f0e1d2c3b4a59,
+  "@/components/admin/ConversationThread#default": ConversationThread_3d8e1a4b7c2f4e6a9b0c1d2e3f4a5b6c
 }
