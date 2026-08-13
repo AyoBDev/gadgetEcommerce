@@ -6,7 +6,7 @@ import { StoreProvider } from '@/components/StoreProvider';
 import { TopNavBar } from '@/components/TopNavBar';
 import { TrustBanner } from '@/components/TrustBanner';
 import { Footer } from '@/components/Footer';
-import { WhatsAppFab } from '@/components/WhatsAppButton';
+import { ChatLauncher } from '@/components/chat/ChatLauncher';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 import '../globals.css';
 
@@ -54,7 +54,7 @@ export default async function StorefrontLayout({ children }: { children: React.R
               <main>{children}</main>
               <Footer settings={settings} />
             </Box>
-            <WhatsAppFab whatsappNumber={whatsappNumber} />
+            <ChatLauncher />
           </StoreProvider>
         </ThemeRegistry>
       </body>
