@@ -11,12 +11,21 @@ export function useChat(opts?: { laptop?: Laptop }) {
   const [unread, setUnread] = useState(0);
   const [status, setStatus] = useState<string>('open');
   const seen = useRef(0);
+  const pendingRef = useRef<Promise<string> | null>(null);
 
   const ensure = useCallback(async () => {
     if (convoId) return convoId;
-    const { conversationId } = await createConversation(opts?.laptop);
-    setConvoId(conversationId);
-    return conversationId;
+    if (pendingRef.current) return pendingRef.current;
+    const promise = createConversation(opts?.laptop)
+      .then(({ conversationId }) => {
+        setConvoId(conversationId);
+        return conversationId;
+      })
+      .finally(() => {
+        pendingRef.current = null;
+      });
+    pendingRef.current = promise;
+    return promise;
   }, [convoId, opts?.laptop]);
 
   const openChat = useCallback(async () => {
