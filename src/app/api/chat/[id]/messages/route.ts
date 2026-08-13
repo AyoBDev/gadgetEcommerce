@@ -14,20 +14,24 @@ async function tokenFromCookies() {
 
 export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
+  const conversationId = Number(id);
+  if (!Number.isInteger(conversationId)) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
   const token = await tokenFromCookies();
   const payload = await getPayloadClient();
-  const convo = await authorizeConversation(payload as any, id, token);
+  const convo = await authorizeConversation(payload as any, String(conversationId), token);
   if (!convo) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const msgs = await payload.find({
     collection: 'messages',
-    where: { conversation: { equals: id } },
+    where: { conversation: { equals: conversationId } },
     sort: 'createdAt',
     limit: 200,
     depth: 0,
   });
   // Buyer viewing clears their unread count.
-  await payload.update({ collection: 'conversations', id, data: { unreadForBuyer: 0 } });
+  await payload.update({ collection: 'conversations', id: conversationId, data: { unreadForBuyer: 0 } });
 
   return NextResponse.json({
     status: (convo as any).status ?? 'open',
@@ -37,13 +41,17 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
 
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
+  const conversationId = Number(id);
+  if (!Number.isInteger(conversationId)) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   if (!rateLimit(`chat-send:${ip}`, { limit: 30, windowMs: 60_000 })) {
     return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
   }
   const token = await tokenFromCookies();
   const payload = await getPayloadClient();
-  const convo = await authorizeConversation(payload as any, id, token);
+  const convo = await authorizeConversation(payload as any, String(conversationId), token);
   if (!convo) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const body = await req.json().catch(() => ({}));
@@ -52,8 +60,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
 
   const message = await payload.create({
     collection: 'messages',
-    // Payload coerces string ids from the URL param at runtime.
-    data: { conversation: id as unknown as number, sender: 'buyer', text },
+    data: { conversation: conversationId, sender: 'buyer', text },
   });
   return NextResponse.json({
     message: { id: message.id, sender: 'buyer', text: message.text, createdAt: message.createdAt },
