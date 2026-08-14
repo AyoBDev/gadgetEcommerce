@@ -4,14 +4,18 @@ import { createConversation, fetchMessages, sendMessage, type ChatMessage } from
 
 type Laptop = { id: number; title: string; price: number; url: string };
 
+const TYPING_THROTTLE_MS = 2000;
+
 export function useChat(opts?: { laptop?: Laptop }) {
   const [open, setOpen] = useState(false);
   const [convoId, setConvoId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [unread, setUnread] = useState(0);
   const [status, setStatus] = useState<string>('open');
+  const [adminTyping, setAdminTyping] = useState(false);
   const seen = useRef(0);
   const pendingRef = useRef<Promise<string> | null>(null);
+  const lastTypingNotifyRef = useRef(0);
 
   const ensure = useCallback(async () => {
     if (convoId) return convoId;
@@ -40,15 +44,28 @@ export function useChat(opts?: { laptop?: Laptop }) {
     setMessages((prev) => [...prev, m]);
   }, [ensure]);
 
+  const notifyTyping = useCallback(() => {
+    if (!convoId) return;
+    const now = Date.now();
+    if (now - lastTypingNotifyRef.current < TYPING_THROTTLE_MS) return;
+    lastTypingNotifyRef.current = now;
+    void fetch(`/api/chat/${convoId}/typing`, { method: 'POST', credentials: 'same-origin' }).catch(() => {
+      /* best-effort */
+    });
+  }, [convoId]);
+
   useEffect(() => {
     if (!convoId) return;
     let active = true;
     const tick = async () => {
       try {
-        const { messages: msgs, status: st } = await fetchMessages(convoId);
+        const result = await fetchMessages(convoId);
+        const { messages: msgs, status: st } = result;
+        const typing = (result as { adminTyping?: boolean }).adminTyping;
         if (!active) return;
         setMessages(msgs);
         setStatus(st);
+        setAdminTyping(Boolean(typing));
         const adminCount = msgs.filter((m) => m.sender === 'admin').length;
         if (!open && adminCount > seen.current) setUnread((u) => u + (adminCount - seen.current));
         seen.current = adminCount;
@@ -59,5 +76,5 @@ export function useChat(opts?: { laptop?: Laptop }) {
     return () => { active = false; clearInterval(iv); };
   }, [convoId, open]);
 
-  return { open, setOpen, openChat, messages, unread, status, send, ready: Boolean(convoId) };
+  return { open, setOpen, openChat, messages, unread, status, send, notifyTyping, adminTyping, ready: Boolean(convoId) };
 }

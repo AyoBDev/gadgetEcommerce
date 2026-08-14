@@ -18,7 +18,7 @@ export function ChatDrawer({
   chat: ReturnType<typeof useChat>;
   laptopSummary?: string;
 }) {
-  const { open, setOpen, messages, send } = chat;
+  const { open, setOpen, messages, send, notifyTyping, adminTyping } = chat;
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,6 +95,11 @@ export function ChatDrawer({
                 </Typography>
               </Box>
             ))}
+            {adminTyping && (
+              <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
+                Admin is typing…
+              </Typography>
+            )}
           </Stack>
         </Box>
         <Divider />
@@ -106,7 +111,10 @@ export function ChatDrawer({
             placeholder="Type a message"
             aria-label="Message"
             value={draft}
-            onChange={(e) => setDraft(e.target.value)}
+            onChange={(e) => {
+              setDraft(e.target.value);
+              notifyTyping();
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();

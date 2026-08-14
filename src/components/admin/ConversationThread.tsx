@@ -2,12 +2,25 @@
 
 import { Button, useDocumentInfo } from '@payloadcms/ui'
 import React from 'react'
+import { isTypingActive } from '@/lib/chat'
 
 type Message = {
   id: number | string
   sender: 'buyer' | 'admin'
   text: string
   createdAt: string
+}
+
+const TYPING_THROTTLE_MS = 2000
+
+const fetchConversation = async (
+  conversationId: number | string,
+): Promise<{ buyerTypingAt?: string | null } | null> => {
+  const res = await fetch(`/api/conversations/${conversationId}`, {
+    credentials: 'include',
+  })
+  if (!res.ok) return null
+  return res.json()
 }
 
 const fetchMessages = async (conversationId: number | string): Promise<Message[]> => {
@@ -35,6 +48,8 @@ const ConversationThread: React.FC = () => {
   const [error, setError] = React.useState<string | null>(null)
   const [draft, setDraft] = React.useState('')
   const [sending, setSending] = React.useState(false)
+  const [buyerTyping, setBuyerTyping] = React.useState(false)
+  const lastTypingNotifyRef = React.useRef(0)
 
   const loadMessages = React.useCallback(async () => {
     if (!id) return
@@ -73,6 +88,38 @@ const ConversationThread: React.FC = () => {
     }
     void clearUnread()
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+
+  // Poll the conversation for the buyer's typing heartbeat.
+  React.useEffect(() => {
+    if (!id) return
+    let active = true
+    const tick = async () => {
+      const convo = await fetchConversation(id)
+      if (!active || !convo) return
+      setBuyerTyping(isTypingActive(convo.buyerTypingAt))
+    }
+    void tick()
+    const iv = setInterval(tick, 2000)
+    return () => {
+      active = false
+      clearInterval(iv)
+    }
+  }, [id])
+
+  const notifyAdminTyping = React.useCallback(() => {
+    if (!id) return
+    const now = Date.now()
+    if (now - lastTypingNotifyRef.current < TYPING_THROTTLE_MS) return
+    lastTypingNotifyRef.current = now
+    void fetch(`/api/conversations/${id}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ adminTypingAt: new Date().toISOString() }),
+    }).catch(() => {
+      // Best-effort — a missed heartbeat just delays the buyer's indicator.
+    })
   }, [id])
 
   const handleSend = async () => {
@@ -163,13 +210,21 @@ const ConversationThread: React.FC = () => {
             </div>
           )
         })}
+        {buyerTyping && (
+          <div style={{ fontSize: '0.85rem', fontStyle: 'italic', color: 'var(--theme-elevation-500)' }}>
+            Buyer is typing…
+          </div>
+        )}
       </div>
 
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <input
           type="text"
           value={draft}
-          onChange={(event) => setDraft(event.target.value)}
+          onChange={(event) => {
+            setDraft(event.target.value)
+            notifyAdminTyping()
+          }}
           onKeyDown={(event) => {
             if (event.key === 'Enter' && !event.shiftKey) {
               event.preventDefault()

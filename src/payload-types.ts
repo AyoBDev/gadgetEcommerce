@@ -150,6 +150,8 @@ export interface Conversation {
   lastMessageAt?: string | null;
   unreadForAdmin?: number | null;
   unreadForBuyer?: number | null;
+  buyerTypingAt?: string | null;
+  adminTypingAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }

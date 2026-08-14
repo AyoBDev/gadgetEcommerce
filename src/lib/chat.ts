@@ -39,3 +39,10 @@ export type LaptopContext = { title: string; price: number; url: string };
 export function buildLaptopSummary(laptop: LaptopContext): string {
   return `${laptop.title} — ${formatNaira(laptop.price)}`;
 }
+
+export function isTypingActive(at: string | Date | null | undefined, ttlMs = 5000): boolean {
+  if (!at) return false;
+  const t = new Date(at).getTime();
+  if (Number.isNaN(t)) return false;
+  return Date.now() - t < ttlMs;
+}

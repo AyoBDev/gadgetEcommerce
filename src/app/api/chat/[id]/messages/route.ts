@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getPayloadClient } from '@/lib/payload';
 import { authorizeConversation, CHAT_COOKIE } from '@/lib/chat-server';
-import { sanitizeMessageText } from '@/lib/chat';
+import { sanitizeMessageText, isTypingActive } from '@/lib/chat';
 import { rateLimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
@@ -35,6 +35,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
 
   return NextResponse.json({
     status: (convo as any).status ?? 'open',
+    adminTyping: isTypingActive((convo as any).adminTypingAt),
     messages: msgs.docs.map((m: any) => ({ id: m.id, sender: m.sender, text: m.text, createdAt: m.createdAt })),
   });
 }

@@ -6,6 +6,7 @@ import {
   tokensMatch,
   sanitizeMessageText,
   buildLaptopSummary,
+  isTypingActive,
 } from '@/lib/chat';
 
 describe('generateVisitorToken', () => {
@@ -59,5 +60,14 @@ describe('buildLaptopSummary', () => {
   it('formats title and naira price', () => {
     expect(buildLaptopSummary({ title: 'Dell 7490', price: 28_000_000, url: 'https://x.ng/l/dell' }))
       .toBe('Dell 7490 — ₦280,000');
+  });
+});
+
+describe('isTypingActive', () => {
+  it('true within ttl, false beyond, false for empty', () => {
+    expect(isTypingActive(new Date().toISOString(), 5000)).toBe(true);
+    expect(isTypingActive(new Date(Date.now() - 10_000).toISOString(), 5000)).toBe(false);
+    expect(isTypingActive(undefined)).toBe(false);
+    expect(isTypingActive('not-a-date')).toBe(false);
   });
 });

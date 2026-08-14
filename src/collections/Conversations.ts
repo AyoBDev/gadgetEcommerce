@@ -42,5 +42,7 @@ export const Conversations: CollectionConfig = {
     { name: 'lastMessageAt', type: 'date', defaultValue: () => new Date().toISOString() },
     { name: 'unreadForAdmin', type: 'number', required: true, defaultValue: 0, min: 0 },
     { name: 'unreadForBuyer', type: 'number', required: true, defaultValue: 0, min: 0 },
+    { name: 'buyerTypingAt', type: 'date', admin: { hidden: true } },
+    { name: 'adminTypingAt', type: 'date', admin: { hidden: true } },
   ],
 };
