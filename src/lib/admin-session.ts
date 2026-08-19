@@ -2,7 +2,7 @@ import 'server-only';
 import { cookies } from 'next/headers';
 import { getPayloadClient } from '@/lib/payload';
 
-export type AdminUser = { id: number; role: string; email: string };
+export type AdminUser = { id: number; name: string; role: string; email: string };
 
 export async function getAdminUser(): Promise<AdminUser | null> {
   const token = (await cookies()).get('payload-token')?.value;
@@ -13,7 +13,7 @@ export async function getAdminUser(): Promise<AdminUser | null> {
     headers.set('cookie', `payload-token=${token}`);
     const { user } = await payload.auth({ headers });
     if (!user) return null;
-    return { id: user.id as number, role: user.role as string, email: user.email as string };
+    return { id: user.id as number, name: user.name as string, role: user.role as string, email: user.email as string };
   } catch {
     return null;
   }
