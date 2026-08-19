@@ -18,6 +18,8 @@ import ChatIcon from '@mui/icons-material/Chat';
 import ImageIcon from '@mui/icons-material/Image';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PeopleIcon from '@mui/icons-material/People';
+import CategoryIcon from '@mui/icons-material/Category';
+import ExtensionIcon from '@mui/icons-material/Extension';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -29,6 +31,8 @@ const NAV_ITEMS = [
   { label: 'Orders', href: '/admin-v2/orders', icon: ReceiptLongIcon },
   { label: 'Conversations', href: '/admin-v2/conversations', icon: ChatIcon },
   { label: 'Media', href: '/admin-v2/media', icon: ImageIcon },
+  { label: 'Categories', href: '/admin-v2/categories', icon: CategoryIcon },
+  { label: 'Add-ons', href: '/admin-v2/addons', icon: ExtensionIcon },
   { label: 'Settings', href: '/admin-v2/settings', icon: SettingsIcon },
   { label: 'Users', href: '/admin-v2/users', icon: PeopleIcon },
 ] as const;
