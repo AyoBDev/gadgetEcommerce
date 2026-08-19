@@ -1,7 +1,5 @@
-'use client';
-
-import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,9 +7,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { AdminPagination } from '@/components/admin/AdminPagination';
 
 export type AdminColumn<T> = {
   key: string;
@@ -42,19 +40,6 @@ export function AdminListTable<T>({
   toolbar,
   emptyText,
 }: AdminListTableProps<T>) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  function handlePageChange(_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) {
-    const params = new URLSearchParams(searchParams.toString());
-    if (newPage <= 0) {
-      params.delete('page');
-    } else {
-      params.set('page', String(newPage + 1));
-    }
-    router.push(`?${params.toString()}`);
-  }
-
   return (
     <Box>
       {toolbar && <Box sx={{ mb: 2 }}>{toolbar}</Box>}
@@ -65,13 +50,13 @@ export function AdminListTable<T>({
               {columns.map((c) => (
                 <TableCell key={c.key}>{c.label}</TableCell>
               ))}
-              <TableCell align="right">Actions</TableCell>
+              {rowHref && <TableCell align="right">Actions</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={columns.length + 1}>
+                <TableCell colSpan={columns.length + (rowHref ? 1 : 0)}>
                   <Typography color="text.secondary" sx={{ py: 2 }}>
                     {emptyText ?? 'No results.'}
                   </Typography>
@@ -79,36 +64,25 @@ export function AdminListTable<T>({
               </TableRow>
             )}
             {rows.map((row) => (
-              <TableRow
-                key={rowKey(row)}
-                hover
-                sx={{ cursor: rowHref ? 'pointer' : 'default' }}
-                onClick={rowHref ? () => router.push(rowHref(row)) : undefined}
-              >
+              <TableRow key={rowKey(row)} hover>
                 {columns.map((c) => (
                   <TableCell key={c.key}>{c.render(row)}</TableCell>
                 ))}
-                <TableCell align="right">
-                  {rowHref && (
-                    <Button size="small" component={Link} href={rowHref(row)} onClick={(e) => e.stopPropagation()}>
+                {rowHref && (
+                  <TableCell align="right">
+                    <Button size="small" component={Link} href={rowHref(row)}>
                       Edit
                     </Button>
-                  )}
-                </TableCell>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={totalDocs}
-        page={Math.max(0, page - 1)}
-        onPageChange={handlePageChange}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[]}
-        labelRowsPerPage=""
-      />
+      <Suspense fallback={null}>
+        <AdminPagination totalDocs={totalDocs} page={page} limit={limit} />
+      </Suspense>
     </Box>
   );
 }

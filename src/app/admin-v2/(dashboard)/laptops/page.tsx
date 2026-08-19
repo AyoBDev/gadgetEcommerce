@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { getPayloadClient } from '@/lib/payload';
 import type { Where } from 'payload';
 import { AdminListTable, type AdminColumn } from '@/components/admin/AdminListTable';
@@ -6,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
+import Link from 'next/link';
 import { formatNaira } from '@/lib/money';
 import type { Laptop, Category } from '@/payload-types';
 
@@ -64,14 +66,16 @@ export default async function AdminLaptopsPage({ searchParams }: { searchParams:
       key: 'title',
       label: 'Laptop',
       render: (row) => (
-        <Stack>
-          <Typography variant="body2" fontWeight={600}>
-            {row.title}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            /laptops/{row.slug}
-          </Typography>
-        </Stack>
+        <Link href={`/admin-v2/laptops/${row.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Stack>
+            <Typography variant="body2" fontWeight={600}>
+              {row.title}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              /laptops/{row.slug}
+            </Typography>
+          </Stack>
+        </Link>
       ),
     },
     {
@@ -117,7 +121,7 @@ export default async function AdminLaptopsPage({ searchParams }: { searchParams:
         totalDocs={result.totalDocs}
         page={page}
         limit={LIMIT}
-        toolbar={<LaptopListToolbar />}
+        toolbar={<Suspense fallback={null}><LaptopListToolbar /></Suspense>}
         emptyText="No laptops match these filters."
       />
     </Box>
