@@ -26,6 +26,7 @@ export type AdminFieldConfig = {
   helperText?: string;
   required?: boolean;
   hidden?: boolean;
+  defaultValue?: boolean;
 };
 
 type Props = {
@@ -42,9 +43,10 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
     const v: Record<string, string | boolean | number> = {};
     for (const f of fields) {
       const raw = initial[f.key];
-      if (f.type === 'checkbox') v[f.key] = raw === undefined ? false : Boolean(raw);
+      if (f.type === 'checkbox') v[f.key] = raw === undefined ? (f.defaultValue ?? false) : Boolean(raw);
       else if (f.type === 'number' || f.type === 'relationship') v[f.key] = raw == null ? '' : String(typeof raw === 'object' ? (raw as { id: number }).id : raw);
       else if (f.type === 'date') v[f.key] = raw == null ? new Date().toISOString().slice(0, 10) : String(raw).slice(0, 10);
+      else if (f.type === 'select') v[f.key] = raw == null ? (f.options?.[0]?.value ?? '') : String(raw);
       else v[f.key] = raw == null ? '' : String(raw);
     }
     return v;
@@ -72,14 +74,20 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
         continue;
       }
       if (f.type === 'number' || f.type === 'relationship') {
-        body[f.key] = val === '' ? null : Number(val);
+        const num = val === '' ? null : Number(val);
+        // On create, omit empty optional fields so Payload hooks (auto-slug)
+        // and defaultValues apply. On edit, send null to clear.
+        if (!id && num === null && !f.required) continue;
+        body[f.key] = num;
         continue;
       }
       if (f.type === 'date') {
         body[f.key] = val ? new Date(String(val)).toISOString() : null;
         continue;
       }
-      body[f.key] = String(val ?? '');
+      const str = String(val ?? '');
+      if (!id && str === '' && !f.required) continue;
+      body[f.key] = str;
     }
     const url = id ? `/api/${collection}/${id}` : `/api/${collection}`;
     const res = await fetch(url, {

@@ -43,7 +43,7 @@ test.describe('Storefront', () => {
 
   test('homepage renders hero, categories, and featured deals', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Preowned Laptops/i);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Laptops in Nigeria/i);
     await expect(page.getByText(/Shop by category/i)).toBeVisible();
     await expect(page.getByText(/Featured deals/i)).toBeVisible();
   });

@@ -8,7 +8,7 @@ export default async function AdminAddonNewPage() {
     { key: 'name', label: 'Name', type: 'text', required: true },
     { key: 'price', label: 'Price (kobo)', type: 'number', required: true, helperText: 'In kobo (Naira × 100)' },
     { key: 'icon', label: 'Icon', type: 'text', helperText: 'Supported keyword: work/bag, mouse, memory/ram, keyboard, headphones, cable/charger, storage/ssd, laptop' },
-    { key: 'active', label: 'Active on storefront', type: 'checkbox' },
+    { key: 'active', label: 'Active on storefront', type: 'checkbox', defaultValue: true },
   ];
 
   return (

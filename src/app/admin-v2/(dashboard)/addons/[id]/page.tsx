@@ -17,7 +17,7 @@ export default async function AdminAddonEditPage({ params }: Props) {
     { key: 'name', label: 'Name', type: 'text', required: true },
     { key: 'price', label: 'Price (kobo)', type: 'number', required: true },
     { key: 'icon', label: 'Icon', type: 'text' },
-    { key: 'active', label: 'Active on storefront', type: 'checkbox' },
+    { key: 'active', label: 'Active on storefront', type: 'checkbox', defaultValue: true },
   ];
 
   return (
