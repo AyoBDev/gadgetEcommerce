@@ -24,14 +24,16 @@ export function readOrCreateToken(store: CookieStore, isProd: boolean): { token:
 }
 
 export type PayloadLike = {
-  findByID(args: { collection: 'conversations'; id: string }): Promise<{ id: string; visitorTokenHash?: string } | null>;
+  findByID(
+    args: { collection: 'conversations'; id: string },
+  ): Promise<{ id: string; visitorTokenHash?: string; status?: string; adminTypingAt?: string } | null>;
 };
 
 export async function authorizeConversation(
   payload: PayloadLike,
   conversationId: string,
   rawToken: string | undefined,
-): Promise<{ id: string; visitorTokenHash?: string } | null> {
+): Promise<{ id: string; visitorTokenHash?: string; status?: string; adminTypingAt?: string } | null> {
   try {
     const convo = await payload.findByID({ collection: 'conversations', id: conversationId });
     if (!convo) return null;

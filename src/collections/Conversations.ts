@@ -7,11 +7,6 @@ export const Conversations: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'laptop', 'status', 'unreadForAdmin', 'lastMessageAt'],
     listSearchableFields: ['laptopSummary'],
-    components: {
-      edit: {
-        beforeDocumentControls: ['@/components/admin/ConversationThread'],
-      },
-    },
   },
   access: {
     // Buyers never touch this collection directly — only token-authorized

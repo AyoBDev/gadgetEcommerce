@@ -53,7 +53,7 @@ export function UserListToolbar() {
           <MenuItem value="staff">Staff</MenuItem>
         </Select>
       </FormControl>
-      <Button component={Link} href="/admin-v2/users/new" variant="contained" size="small">
+      <Button component={Link} href="/admin/users/new" variant="contained" size="small">
         Add user
       </Button>
     </Box>

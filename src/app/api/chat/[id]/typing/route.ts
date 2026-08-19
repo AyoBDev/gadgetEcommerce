@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getPayloadClient } from '@/lib/payload';
-import { authorizeConversation, CHAT_COOKIE } from '@/lib/chat-server';
+import { authorizeConversation, CHAT_COOKIE, type PayloadLike } from '@/lib/chat-server';
 import { rateLimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
@@ -23,7 +23,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   }
   const token = await tokenFromCookies();
   const payload = await getPayloadClient();
-  const convo = await authorizeConversation(payload as any, String(conversationId), token);
+  const convo = await authorizeConversation(payload as PayloadLike, String(conversationId), token);
   if (!convo) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   await payload.update({

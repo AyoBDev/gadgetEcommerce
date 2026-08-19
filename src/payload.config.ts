@@ -22,10 +22,6 @@ export default buildConfig({
   admin: {
     user: 'users',
     meta: { title: 'Jaysmart Admin', titleSuffix: '— Jaysmart' },
-    components: {
-      Nav: '@/components/admin/Nav#default',
-      beforeDashboard: ['@/components/admin/DashboardStats#default'],
-    },
   },
   collections: [Users, Media, Categories, Laptops, Orders, Addons, Conversations, Messages],
   globals: [Settings],

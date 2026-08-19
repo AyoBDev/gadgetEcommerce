@@ -68,7 +68,7 @@ export function LaptopListToolbar() {
         </Select>
       </FormControl>
       <Box sx={{ flexGrow: 1 }} />
-      <Button component={Link} href="/admin-v2/laptops/new" variant="contained">
+      <Button component={Link} href="/admin/laptops/new" variant="contained">
         Add laptop
       </Button>
     </Box>

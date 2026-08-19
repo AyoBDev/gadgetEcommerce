@@ -26,15 +26,15 @@ import LogoutIcon from '@mui/icons-material/Logout';
 const DRAWER_WIDTH = 240;
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', href: '/admin-v2', icon: DashboardIcon },
-  { label: 'Laptops', href: '/admin-v2/laptops', icon: LaptopMacIcon },
-  { label: 'Orders', href: '/admin-v2/orders', icon: ReceiptLongIcon },
-  { label: 'Conversations', href: '/admin-v2/conversations', icon: ChatIcon },
-  { label: 'Media', href: '/admin-v2/media', icon: ImageIcon },
-  { label: 'Categories', href: '/admin-v2/categories', icon: CategoryIcon },
-  { label: 'Add-ons', href: '/admin-v2/addons', icon: ExtensionIcon },
-  { label: 'Settings', href: '/admin-v2/settings', icon: SettingsIcon },
-  { label: 'Users', href: '/admin-v2/users', icon: PeopleIcon },
+  { label: 'Dashboard', href: '/admin', icon: DashboardIcon },
+  { label: 'Laptops', href: '/admin/laptops', icon: LaptopMacIcon },
+  { label: 'Orders', href: '/admin/orders', icon: ReceiptLongIcon },
+  { label: 'Conversations', href: '/admin/conversations', icon: ChatIcon },
+  { label: 'Media', href: '/admin/media', icon: ImageIcon },
+  { label: 'Categories', href: '/admin/categories', icon: CategoryIcon },
+  { label: 'Add-ons', href: '/admin/addons', icon: ExtensionIcon },
+  { label: 'Settings', href: '/admin/settings', icon: SettingsIcon },
+  { label: 'Users', href: '/admin/users', icon: PeopleIcon },
 ] as const;
 
 type AdminSidebarProps = {
@@ -51,7 +51,7 @@ export function AdminSidebar({ variant = 'permanent', open, onClose, onNavigate,
 
   async function handleLogout() {
     await fetch('/api/users/logout', { method: 'POST', credentials: 'include' });
-    router.push('/admin-v2/login');
+    router.push('/admin/login');
     router.refresh();
   }
 

@@ -65,7 +65,7 @@ export function OrderListToolbar() {
           <MenuItem value="delivered">Delivered</MenuItem>
         </Select>
       </FormControl>
-      <Button component={Link} href="/admin-v2/orders/new" variant="contained" size="small">
+      <Button component={Link} href="/admin/orders/new" variant="contained" size="small">
         Record a sale
       </Button>
     </Box>

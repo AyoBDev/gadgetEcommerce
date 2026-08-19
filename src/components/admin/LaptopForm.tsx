@@ -106,7 +106,7 @@ export function LaptopForm({ initial, brands, categories, media }: Props) {
         body: JSON.stringify(body),
       });
       if (res.ok) {
-        router.push('/admin-v2/laptops');
+        router.push('/admin/laptops');
         router.refresh();
       } else {
         const json = await res.json().catch(() => ({}));

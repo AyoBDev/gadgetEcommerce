@@ -40,7 +40,7 @@ async function fetchMessages(conversationId: number): Promise<Message[]> {
 
 export function ConversationInbox({ conversationId }: { conversationId: number }) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
@@ -49,11 +49,10 @@ export function ConversationInbox({ conversationId }: { conversationId: number }
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const loadMessages = useCallback(async () => {
-    setLoading(true);
-    setError(null);
     try {
       const docs = await fetchMessages(conversationId);
       setMessages(docs);
+      setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load messages');
     } finally {
@@ -62,8 +61,25 @@ export function ConversationInbox({ conversationId }: { conversationId: number }
   }, [conversationId]);
 
   useEffect(() => {
-    void loadMessages();
-  }, [loadMessages]);
+    let ignore = false;
+    const load = async () => {
+      try {
+        const docs = await fetchMessages(conversationId);
+        if (!ignore) {
+          setMessages(docs);
+          setError(null);
+        }
+      } catch (err) {
+        if (!ignore) setError(err instanceof Error ? err.message : 'Failed to load messages');
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+    void load();
+    return () => {
+      ignore = true;
+    };
+  }, [conversationId]);
 
   useEffect(() => {
     const clearUnread = async () => {
