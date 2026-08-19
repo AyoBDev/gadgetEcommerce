@@ -704,24 +704,24 @@ describe('Settings global PATCH', () => {
   ```
 
 **10b — Cutover to `/admin`:**
-- [ ] **Step 4: Delete the Payload admin UI**
+- [x] **Step 4: Delete the Payload admin UI**
   ```bash
   git rm -r "src/app/(payload)/admin"
   ```
   Keep `src/app/(payload)/api/[...slug]/route.ts`. Remove the `admin.components` block (`Nav`, `DashboardStats`, `beforeDashboard`) and `editor` from `src/payload.config.ts`. Delete dead `src/components/admin/Nav.tsx`, `Nav.scss`, `DashboardStats.tsx`, `DashboardStats.module.scss`.
-- [ ] **Step 5: Move `/admin-v2` → `/admin`**
+- [x] **Step 5: Move `/admin-v2` → `/admin`**
   ```bash
   git mv src/app/admin-v2 src/app/admin
   ```
   Update the login redirect and sidebar links to `/admin`.
-- [ ] **Step 6: Rewrite the CRITICAL e2e regression**
+- [x] **Step 6: Rewrite the CRITICAL e2e regression**
   Replace `tests/e2e/admin-publish.spec.ts` with the `/admin` version (login → dashboard → laptops). Delete the temp `admin-v2.spec.ts` or point it at `/admin`.
-- [ ] **Step 7: Full build + suite**
+- [x] **Step 7: Full build + suite**
   Run: `pnpm build && pnpm typecheck && pnpm exec vitest run tests/unit tests/integration && pnpm test:e2e`
   Expected: ALL PASS. Confirm no duplicate `/admin` route error.
-- [ ] **Step 8: Dep cleanup**
+- [x] **Step 8: Dep cleanup**
   Remove `@payloadcms/ui`, `@payloadcms/richtext-lexical`, `lexical` from `package.json` (verify nothing imports them: `pnpm exec grep -rn "richtext-lexical\|@payloadcms/ui" src --include='*.ts*'` must be empty). Keep `@payloadcms/storage-s3` (media). Reinstall: `pnpm install`.
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
   ```bash
   git add -A
   git commit -m "feat: cut over to custom MUI admin, remove Payload admin UI"
