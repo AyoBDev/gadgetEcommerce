@@ -15,3 +15,4 @@ test-results/
 
 # Local Claude Code config
 .claude/
+.gstack/

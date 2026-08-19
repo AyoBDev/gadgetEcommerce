@@ -2,18 +2,16 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import ChatIcon from '@mui/icons-material/Chat';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { getPayloadClient } from '@/lib/payload';
 import { LaptopGallery } from '@/components/LaptopGallery';
 import { ProductDetailActions } from '@/components/ProductDetailActions';
+import { ChatAboutLaptop } from '@/components/product/ChatAboutLaptop';
 import { buildLaptopMetadata, buildProductJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo';
 import { formatNaira } from '@/lib/money';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
@@ -145,20 +143,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <StockPill stock={laptop.stock} />
                 <TrustBox batteryHealth={laptop.specs?.batteryHealth} />
                 <Stack spacing={1.5}>
-                  <Button component="a" href={waHref} target="_blank" rel="noopener"
-                    variant="contained" size="large" disabled={laptop.stock === 0} fullWidth>
-                    {laptop.stock > 0 ? 'Buy Now' : 'Sold Out'}
-                  </Button>
-                  <Button component="a" href={waHref} target="_blank" rel="noopener"
-                    variant="contained" size="large" startIcon={<ChatIcon />} fullWidth
-                    sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.dark' } }}>
-                    WhatsApp inquiry
-                  </Button>
+                  <ChatAboutLaptop id={laptop.id} title={laptop.title} price={laptop.price} url={url}
+                    disabled={laptop.stock === 0} />
                 </Stack>
                 <ProductDetailActions laptopId={laptop.id} />
                 <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
                   <Typography variant="caption">
-                    Note: online checkout is coming soon. For now, tap <strong>WhatsApp inquiry</strong> to place your order.
+                    Note: online checkout is coming soon. For now, tap <strong>Chat with us</strong> to place your order.
                   </Typography>
                 </Box>
               </Stack>
@@ -173,7 +164,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <Typography variant="h2" sx={{ mb: 3, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
                   Product Description
                 </Typography>
-                <RichText data={laptop.description} />
+                <Typography sx={{ whiteSpace: 'pre-wrap' }}>{laptop.description}</Typography>
               </Paper>
             </Reveal>
           )}

@@ -6,8 +6,6 @@
  * definitions in `src/collections/*.ts` and `src/globals/*.ts` until the CLI
  * can be run successfully.
  */
-import type { SerializedEditorState } from 'lexical';
-
 export interface Config {
   collections: {
     users: User;
@@ -16,6 +14,8 @@ export interface Config {
     laptops: Laptop;
     orders: Order;
     addons: Addon;
+    conversations: Conversation;
+    messages: Message;
   };
   globals: {
     settings: Setting;
@@ -99,7 +99,7 @@ export interface Laptop {
     image: number | Media;
     id?: string | null;
   }[];
-  description?: SerializedEditorState | null;
+  description?: string | null;
   warrantyDays: number;
   stock: number;
   status: 'draft' | 'published' | 'sold';
@@ -133,6 +133,33 @@ export interface Addon {
   price: number;
   icon?: string | null;
   active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface Conversation {
+  id: number;
+  visitorTokenHash: string;
+  title?: string | null;
+  laptop?: (number | null) | Laptop;
+  laptopSummary?: string | null;
+  laptopUrl?: string | null;
+  status?: 'open' | 'resolved' | null;
+  lastMessageAt?: string | null;
+  unreadForAdmin?: number | null;
+  unreadForBuyer?: number | null;
+  buyerTypingAt?: string | null;
+  adminTypingAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface Message {
+  id: number;
+  conversation: number | Conversation;
+  sender: 'buyer' | 'admin';
+  text: string;
+  readAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
