@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { getPayloadClient } from '@/lib/payload';
 import { LaptopGallery } from '@/components/LaptopGallery';
 import { ProductDetailActions } from '@/components/ProductDetailActions';
@@ -165,7 +164,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <Typography variant="h2" sx={{ mb: 3, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
                   Product Description
                 </Typography>
-                <RichText data={laptop.description} />
+                <Typography sx={{ whiteSpace: 'pre-wrap' }}>{laptop.description}</Typography>
               </Paper>
             </Reveal>
           )}

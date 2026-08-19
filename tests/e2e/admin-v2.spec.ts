@@ -23,6 +23,20 @@ test.describe('Admin v2 smoke', () => {
     await expect(page.getByRole('link', { name: /add laptop/i })).toBeVisible();
   });
 
+  test('settings page saves and confirms', async ({ page }) => {
+    await page.goto('/admin-v2/login');
+    await page.getByLabel(/email/i).fill(email);
+    await page.getByLabel(/password/i).fill(password);
+    await page.getByRole('button', { name: /sign in/i }).click();
+    await page.waitForURL(/\/admin-v2\/?$/, { timeout: 15_000 });
+
+    await page.goto('/admin-v2/settings');
+    await expect(page.getByRole('heading', { name: /settings/i })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByLabel(/support email/i)).toBeVisible();
+    await page.getByRole('button', { name: /save settings/i }).click();
+    await expect(page.getByText(/settings saved/i)).toBeVisible();
+  });
+
   test('wrong password shows an error and stays on login', async ({ page }) => {
     await page.goto('/admin-v2');
     await page.getByLabel(/email/i).fill('nobody@nowhere.ng');
