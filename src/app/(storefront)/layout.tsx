@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Instrument_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import Box from '@mui/material/Box';
 import { ThemeRegistry } from '@/components/ThemeRegistry';
 import { StoreProvider } from '@/components/StoreProvider';
@@ -10,9 +10,9 @@ import { ChatLauncher } from '@/components/chat/ChatLauncher';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 import '../globals.css';
 
-const inter = Inter({
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
-  weight: ['400', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-inter',
 });
@@ -45,7 +45,7 @@ export default async function StorefrontLayout({ children }: { children: React.R
   const whatsappNumber = resolveWhatsAppNumber(settings);
 
   return (
-    <html lang="en-NG" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en-NG" className={`${instrumentSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link
           rel="stylesheet"

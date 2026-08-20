@@ -24,17 +24,17 @@ export function SmartFinder({ useCases }: { useCases: Category[] }) {
   }
 
   return (
-    <Box className="grain" sx={{ bgcolor: 'tint.main', borderRadius: 3, p: { xs: 4, md: 6 } }}>
+    <Box className="grain" sx={{ bgcolor: 'night.main', borderRadius: 3, p: { xs: 4, md: 6 } }}>
       <Stack spacing={4} sx={{ maxWidth: 720, mx: 'auto', textAlign: 'center' }}>
         <Stack spacing={1}>
-          <Typography variant="h2">Not sure what to buy?</Typography>
-          <Typography variant="body1" sx={{ color: 'text.secondary' }}>Get a personalized recommendation.</Typography>
+          <Typography variant="h2" sx={{ color: 'night.contrastText' }}>Not sure what to buy?</Typography>
+          <Typography variant="body1" sx={{ color: 'rgba(244,242,238,0.7)' }}>Get a personalized recommendation.</Typography>
         </Stack>
-        <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', border: 1, borderColor: 'divider', borderRadius: 2, p: 4, textAlign: 'left' }}>
+        <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', border: 1, borderColor: 'divider', borderRadius: 2, p: 4, textAlign: 'left', boxShadow: '0 1px 2px rgba(0,0,0,0.3), 0 16px 40px rgba(0,0,0,0.5)' }}>
           <Stack spacing={4}>
             {useCases.length > 0 && (
               <Stack spacing={2}>
-                <Typography variant="h3">What&apos;s your primary purpose?</Typography>
+                <Typography variant="h3" sx={{ fontSize: 18 }}>What&apos;s your primary purpose?</Typography>
                 <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
                   {useCases.map((uc) => (
                     <Chip key={uc.id} label={uc.name} clickable
@@ -46,7 +46,7 @@ export function SmartFinder({ useCases }: { useCases: Category[] }) {
             )}
             <Stack spacing={2}>
               <Stack direction="row" justifyContent="space-between">
-                <Typography variant="h3">Budget</Typography>
+                <Typography variant="h3" sx={{ fontSize: 18 }}>Budget</Typography>
                 <Typography variant="button" sx={{ color: 'primary.main' }}>{formatNaira(budget * 100)}</Typography>
               </Stack>
               <Slider value={budget} onChange={(_, v) => setBudget(v as number)} min={100_000} max={1_000_000} step={50_000} />
