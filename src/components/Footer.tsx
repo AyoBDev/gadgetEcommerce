@@ -26,29 +26,29 @@ export function Footer({ settings }: { settings: Setting }) {
   const businessName = settings.businessName || 'Jaysmart';
 
   return (
-    <Box component="footer" className="grain" sx={{ bgcolor: 'tint.main', borderTop: 1, borderColor: 'divider', mt: 8, py: 6 }}>
+    <Box component="footer" className="grain" sx={{ bgcolor: 'night.main', color: 'night.contrastText', borderTop: 1, borderColor: 'rgba(255,255,255,0.08)', mt: 8, py: 6 }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>
             <Box sx={{ mb: 2, lineHeight: 0 }}>
               <Image src="/logo.jpg" alt="Jaysmart Global Ventures" width={32} height={32} style={{ height: 32, width: 'auto' }} />
             </Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+            <Typography variant="caption" sx={{ color: 'rgba(244,242,238,0.7)', display: 'block' }}>
               © {YEAR} {businessName}. Certified &amp; verified.
             </Typography>
             {settings.businessAddress && (
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1 }}>
+              <Typography variant="caption" sx={{ color: 'rgba(244,242,238,0.7)', display: 'block', mt: 1 }}>
                 {settings.businessAddress}
               </Typography>
             )}
           </Grid>
           {COLUMNS.map((col) => (
             <Grid key={col.title} size={{ xs: 6, md: 3 }}>
-              <Typography variant="button" sx={{ display: 'block', mb: 2 }}>{col.title}</Typography>
+              <Typography variant="button" sx={{ display: 'block', mb: 2, color: 'rgba(244,242,238,0.6)' }}>{col.title}</Typography>
               <Stack spacing={1}>
                 {col.links.map((link) => (
                   <Typography key={link.href} component={Link} href={link.href} variant="caption"
-                    sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
+                    sx={{ color: 'rgba(244,242,238,0.85)', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                     {link.label}
                   </Typography>
                 ))}
@@ -56,22 +56,22 @@ export function Footer({ settings }: { settings: Setting }) {
             </Grid>
           ))}
           <Grid size={{ xs: 12, md: 3 }}>
-            <Typography variant="button" sx={{ display: 'block', mb: 2 }}>Contact</Typography>
+            <Typography variant="button" sx={{ display: 'block', mb: 2, color: 'rgba(244,242,238,0.6)' }}>Contact</Typography>
             <Stack spacing={1}>
               {settings.supportEmail && (
                 <Typography component="a" href={`mailto:${settings.supportEmail}`} variant="caption"
-                  sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
+                  sx={{ color: 'rgba(244,242,238,0.85)', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                   {settings.supportEmail}
                 </Typography>
               )}
               {settings.businessPhone && (
                 <Typography component="a" href={`tel:${settings.businessPhone}`} variant="caption"
-                  sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
+                  sx={{ color: 'rgba(244,242,238,0.85)', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                   {settings.businessPhone}
                 </Typography>
               )}
               <Typography component={Link} href="/#privacy" variant="caption"
-                sx={{ color: 'text.secondary', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
+                sx={{ color: 'rgba(244,242,238,0.85)', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>
                 Privacy
               </Typography>
             </Stack>

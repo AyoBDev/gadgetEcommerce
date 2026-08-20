@@ -14,17 +14,17 @@ import type { Category } from '@/payload-types';
 export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Category[]; useCases: Category[]; whatsappNumber: string }) {
   const waHref = buildWhatsAppLink(whatsappNumber, 'Hi, I want to buy a UK used laptop. Can you help me choose?');
   return (
-    <Box className="grain" sx={{ position: 'relative', bgcolor: 'tint.main', overflow: 'hidden' }}>
-      {/* Frosted studio wash — spans the full hero band. Red-tinted, high-key,
-          soft milky diffusions on both sides + subtle top bloom. */}
+    <Box className="grain" sx={{ position: 'relative', bgcolor: 'night.main', color: 'night.contrastText', overflow: 'hidden' }}>
+      {/* Frosted studio wash — spans the full hero band. Red-tinted glows on a
+          near-black base, with a subtle top bloom. */}
       <Box aria-hidden sx={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-        {/* Left warm-red diffusion */}
+        {/* Left warm-red glow */}
         <Box sx={{
           position: 'absolute',
           left: '-15%', top: '10%',
           width: '55%', height: '90%',
           background:
-            'radial-gradient(60% 55% at 55% 45%, rgba(255,215,210,0.85) 0%, rgba(255,215,210,0.45) 35%, rgba(255,215,210,0) 72%)',
+            'radial-gradient(60% 55% at 55% 45%, rgba(225,35,42,0.22) 0%, rgba(225,35,42,0.10) 35%, rgba(225,35,42,0) 72%)',
           filter: 'blur(40px)',
           borderRadius: '50%',
           transform: 'rotate(-8deg)',
@@ -35,7 +35,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
           right: '-18%', top: '20%',
           width: '58%', height: '92%',
           background:
-            'radial-gradient(58% 52% at 42% 50%, rgba(250,240,240,0.9) 0%, rgba(250,240,240,0.5) 32%, rgba(250,240,240,0) 72%)',
+            'radial-gradient(58% 52% at 42% 50%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.03) 32%, rgba(255,255,255,0) 72%)',
           filter: 'blur(44px)',
           borderRadius: '50%',
           transform: 'rotate(10deg)',
@@ -43,12 +43,12 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
         {/* Top bloom — brightens the upper band to feel high-key */}
         <Box sx={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(70% 40% at 50% 0%, rgba(255,255,255,0.85), transparent 70%)',
+          background: 'radial-gradient(70% 40% at 50% 0%, rgba(255,255,255,0.06), transparent 70%)',
         }} />
         {/* Bottom red-tint deepen — anchors the section */}
         <Box sx={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(80% 40% at 50% 100%, rgba(225,35,42,0.06), transparent 70%)',
+          background: 'radial-gradient(80% 40% at 50% 100%, rgba(225,35,42,0.10), transparent 70%)',
         }} />
       </Box>
     <Container maxWidth="lg" sx={{ position: 'relative', py: { xs: 5, md: 9 } }}>
@@ -59,7 +59,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
               <Typography variant="h1">
                 Buy Tested UK Used <Box component="span" sx={{ color: 'primary.main' }}>Laptops</Box> in Nigeria
               </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body1" sx={{ color: 'rgba(244,242,238,0.75)' }}>
                 300+ laptops in stock · 7-day warranty · Nationwide delivery
               </Typography>
             </Stack>
@@ -84,7 +84,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
               left: '15%', right: '15%',
               bottom: { xs: 24, md: 40 },
               height: 30,
-              background: 'radial-gradient(50% 100% at 50% 50%, rgba(60,20,20,0.22), transparent 70%)',
+              background: 'radial-gradient(50% 100% at 50% 50%, rgba(0,0,0,0.5), transparent 70%)',
               filter: 'blur(8px)',
             }} />
             {/* The laptop, razor-sharp, floating dead-center */}
@@ -99,7 +99,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
                   alt="A certified UK used gold MacBook Air, tested and ready for delivery"
                   fill priority
                   sizes="(max-width: 900px) 100vw, 50vw"
-                  style={{ objectFit: 'contain', filter: 'drop-shadow(0 14px 26px rgba(0,0,0,0.14))' }}
+                  style={{ objectFit: 'contain', filter: 'drop-shadow(0 18px 32px rgba(0,0,0,0.5))' }}
                 />
               </Box>
             </Box>

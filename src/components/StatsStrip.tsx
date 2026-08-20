@@ -57,20 +57,20 @@ export function StatsStrip() {
   }, []);
 
   return (
-    <Box ref={ref} sx={{ borderTop: 1, borderBottom: 1, borderColor: 'divider', py: { xs: 4, md: 5 } }}>
+    <Box ref={ref} className="grain" sx={{ bgcolor: 'night.main', color: 'night.contrastText', py: { xs: 4, md: 5 } }}>
       <Container maxWidth="lg">
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 6 }} justifyContent="space-evenly" alignItems="center">
           {STATS.map((stat) => (
             <Stack key={stat.label} spacing={0.5} alignItems="center">
               <Typography
-                variant="h1" component="p"
+                component="p"
                 className="num"
-                sx={{ color: 'primary.main', fontWeight: 700, fontSize: { xs: 44, md: 60 }, letterSpacing: '-0.04em', lineHeight: 1 }}
+                sx={{ color: '#fff', fontWeight: 700, fontSize: { xs: 32, md: 40 }, letterSpacing: '-0.02em', lineHeight: 1 }}
               >
                 {format(stat.end * progress, stat.decimals)}
-                {stat.suffix}
+                <Box component="span" sx={{ color: 'primary.main' }}>{stat.suffix}</Box>
               </Typography>
-              <Typography variant="button" sx={{ color: 'text.secondary' }}>{stat.label}</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(244,242,238,0.7)' }}>{stat.label}</Typography>
             </Stack>
           ))}
         </Stack>
