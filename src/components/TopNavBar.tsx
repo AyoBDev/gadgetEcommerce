@@ -22,7 +22,7 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useStore } from '@/components/StoreProvider';
-import { buildWhatsAppLink } from '@/lib/whatsapp';
+import { useChatLauncher } from '@/components/chat/ChatContext';
 
 const NAV_LINKS = [
   { label: 'Shop', href: '/laptops' },
@@ -34,7 +34,7 @@ const NAV_LINKS = [
 export function TopNavBar({ whatsappNumber }: { whatsappNumber: string }) {
   const { wishlist, compare, isHydrated } = useStore();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const waHref = buildWhatsAppLink(whatsappNumber, 'Hi, I need help choosing a laptop.');
+  const { openChat } = useChatLauncher();
 
   return (
     <AppBar position="fixed" color="inherit" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -78,8 +78,8 @@ export function TopNavBar({ whatsappNumber }: { whatsappNumber: string }) {
                 </Badge>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Chat on WhatsApp">
-              <IconButton aria-label="Chat on WhatsApp" component="a" href={waHref} target="_blank" rel="noopener">
+            <Tooltip title="Chat with us">
+              <IconButton aria-label="Chat with us" onClick={() => openChat()}>
                 <ChatIcon />
               </IconButton>
             </Tooltip>
