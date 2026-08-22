@@ -59,11 +59,13 @@ export function ChatPanel({
       timeout={{ enter: 320, exit: 180 }}
       easing={{ enter: SPRING, exit: 'ease' }}
       mountOnEnter
-      unmountOnExit
     >
       <Box
         role="dialog"
         aria-label="Chat with us"
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') setOpen(false);
+        }}
         sx={{
           position: 'fixed',
           zIndex: 1300,
@@ -111,7 +113,7 @@ export function ChatPanel({
                   '@media (prefers-reduced-motion: reduce)': { animation: 'none' },
                 }}
               />
-              <Typography variant="h3" sx={{ fontSize: 18, color: 'common.white' }}>
+              <Typography variant="h3" sx={{ fontSize: 18 }}>
                 Chat with us
               </Typography>
             </Stack>
