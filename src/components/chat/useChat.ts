@@ -1,6 +1,6 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createConversation, fetchMessages, sendMessage, type ChatMessage } from '@/lib/chat-client';
+import { createConversation, fetchMessages, sendMessage, getExistingConversation, type ChatMessage } from '@/lib/chat-client';
 
 type Laptop = { id: number; title: string; price: number; url: string };
 
@@ -53,6 +53,24 @@ export function useChat(opts?: { laptop?: Laptop }) {
       /* best-effort */
     });
   }, [convoId]);
+
+  // On mount, silently restore an existing conversation (returning visitor).
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      if (convoId || pendingRef.current) return;
+      const restored = await getExistingConversation();
+      if (!active || !restored.conversationId) return;
+      // Don't clobber a conversation created in the meantime.
+      if (convoId || pendingRef.current) return;
+      setConvoId(restored.conversationId);
+      setMessages(restored.messages);
+      if (restored.status) setStatus(restored.status);
+      seen.current = restored.messages.filter((m) => m.sender === 'admin').length;
+    })();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!convoId) return;
