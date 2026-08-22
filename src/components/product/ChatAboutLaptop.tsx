@@ -2,7 +2,7 @@
 import Button from '@mui/material/Button';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useChat } from '@/components/chat/useChat';
-import { ChatDrawer } from '@/components/chat/ChatDrawer';
+import { ChatPanel } from '@/components/chat/ChatPanel';
 
 export function ChatAboutLaptop(props: { id: number; title: string; price: number; url: string; disabled?: boolean }) {
   const { id, title, price, url, disabled } = props;
@@ -19,7 +19,7 @@ export function ChatAboutLaptop(props: { id: number; title: string; price: numbe
       >
         Chat with us
       </Button>
-      <ChatDrawer chat={chat} laptopSummary={title} />
+      <ChatPanel chat={chat} laptopSummary={title} />
     </>
   );
 }
