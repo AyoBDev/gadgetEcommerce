@@ -17,7 +17,7 @@ const REASONS = [
   { icon: <PhotoCameraIcon />, label: 'Real Device Photos', copy: 'What you see is exactly what ships. No stock images, no surprises on delivery.' },
   { icon: <LocalShippingIcon />, label: 'Fast Nationwide Delivery', copy: 'Same-day dispatch in Lagos, 24–72 hours to every state in Nigeria.' },
   { icon: <LockIcon />, label: 'Secure Payment', copy: 'Pay on delivery in Lagos, or via verified bank transfer nationwide.' },
-  { icon: <SupportAgentIcon />, label: 'WhatsApp Support', copy: 'Real humans on WhatsApp, from picking the right model to after-sales help.' },
+  { icon: <SupportAgentIcon />, label: 'Chat Support', copy: 'Real humans on live chat, from picking the right model to after-sales help.' },
 ] as const;
 
 export function WhyBuyFromUs() {

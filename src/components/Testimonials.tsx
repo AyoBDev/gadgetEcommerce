@@ -28,7 +28,7 @@ const REVIEWS = [
     name: 'Fatima Y.',
     location: 'Kano, NG',
     rating: 4.5,
-    quote: 'Great customer service on WhatsApp. They helped me choose the right Dell laptop for my business needs and budget. Very professional.',
+    quote: 'Great customer service on live chat. They helped me choose the right Dell laptop for my business needs and budget. Very professional.',
   },
 ] as const;
 
