@@ -11,17 +11,17 @@ const Ctx = createContext<ChatCtx | null>(null);
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const chat = useChat();
-  const openChatWith = (_laptop?: Laptop) => {
+  const openChatWith = (laptop?: Laptop) => {
     // Laptop context is applied only for brand-new conversations by the
     // create path; a restored/existing conversation keeps its own context.
-    void chat.openChat();
+    void chat.openChat(laptop);
   };
   const value: ChatCtx = { ...chat, openChatWith };
   return (
     <Ctx.Provider value={value}>
       {children}
       <ChatLauncher />
-      <ChatPanel chat={chat} />
+      <ChatPanel chat={chat} laptopSummary={chat.laptopSummary} />
     </Ctx.Provider>
   );
 }

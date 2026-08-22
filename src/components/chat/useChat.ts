@@ -13,14 +13,16 @@ export function useChat(opts?: { laptop?: Laptop }) {
   const [unread, setUnread] = useState(0);
   const [status, setStatus] = useState<string>('open');
   const [adminTyping, setAdminTyping] = useState(false);
+  const [laptopSummary, setLaptopSummary] = useState<string | undefined>(opts?.laptop?.title);
   const seen = useRef(0);
   const pendingRef = useRef<Promise<string> | null>(null);
   const lastTypingNotifyRef = useRef(0);
+  const laptopRef = useRef<Laptop | undefined>(opts?.laptop);
 
   const ensure = useCallback(async () => {
     if (convoId) return convoId;
     if (pendingRef.current) return pendingRef.current;
-    const promise = createConversation(opts?.laptop)
+    const promise = createConversation(laptopRef.current)
       .then(({ conversationId }) => {
         setConvoId(conversationId);
         return conversationId;
@@ -30,9 +32,13 @@ export function useChat(opts?: { laptop?: Laptop }) {
       });
     pendingRef.current = promise;
     return promise;
-  }, [convoId, opts?.laptop]);
+  }, [convoId]);
 
-  const openChat = useCallback(async () => {
+  const openChat = useCallback(async (laptop?: Laptop) => {
+    if (laptop) {
+      laptopRef.current = laptop;
+      setLaptopSummary(laptop.title);
+    }
     await ensure();
     setUnread(0);
     setOpen(true);
@@ -94,5 +100,5 @@ export function useChat(opts?: { laptop?: Laptop }) {
     return () => { active = false; clearInterval(iv); };
   }, [convoId, open]);
 
-  return { open, setOpen, openChat, messages, unread, status, send, notifyTyping, adminTyping, ready: Boolean(convoId) };
+  return { open, setOpen, openChat, messages, unread, status, send, notifyTyping, adminTyping, laptopSummary, ready: Boolean(convoId) };
 }
