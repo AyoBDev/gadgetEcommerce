@@ -73,7 +73,10 @@ export function ChatPanel({
           right: { xs: 12, sm: 24 },
           left: { xs: 12, sm: 'auto' },
           width: { xs: 'auto', sm: 380 },
-          maxHeight: 'min(70vh, 600px)',
+          // Fixed height so the panel doesn't shrink/grow with message count —
+          // the message list scrolls internally instead.
+          height: { xs: 'calc(100dvh - 24px)', sm: 'min(70vh, 560px)' },
+          maxHeight: { xs: 'calc(100dvh - 24px)', sm: 'min(70vh, 560px)' },
           display: 'flex',
           flexDirection: 'column',
           bgcolor: 'background.paper',
