@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { createConversation, fetchMessages, sendMessage } from '@/lib/chat-client';
+import { createConversation, fetchMessages, sendMessage, getExistingConversation } from '@/lib/chat-client';
 
 beforeEach(() => { vi.restoreAllMocks(); });
 
@@ -29,5 +29,27 @@ describe('chat-client', () => {
       { status: 201 })));
     const m = await sendMessage('c1', 'yo');
     expect(m).toMatchObject({ id: 'm2', sender: 'buyer', text: 'yo' });
+  });
+
+  it('getExistingConversation returns the restored conversation on success', async () => {
+    const payload = { conversationId: '42', status: 'open', messages: [{ id: '1', sender: 'buyer' as const, text: 'hi', createdAt: 'x' }] };
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(
+      JSON.stringify(payload), { status: 200 })));
+    const res = await getExistingConversation();
+    expect(res.conversationId).toBe('42');
+    expect(res.messages).toHaveLength(1);
+  });
+
+  it('getExistingConversation returns null conversation on error (never throws)', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response('{}', { status: 500 })));
+    const res = await getExistingConversation();
+    expect(res.conversationId).toBeNull();
+    expect(res.messages).toEqual([]);
+  });
+
+  it('getExistingConversation returns null conversation on network throw', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('offline'); }));
+    const res = await getExistingConversation();
+    expect(res.conversationId).toBeNull();
   });
 });
