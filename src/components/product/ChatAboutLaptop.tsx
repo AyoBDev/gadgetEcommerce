@@ -1,25 +1,21 @@
 'use client';
 import Button from '@mui/material/Button';
 import ChatIcon from '@mui/icons-material/Chat';
-import { useChat } from '@/components/chat/useChat';
-import { ChatPanel } from '@/components/chat/ChatPanel';
+import { useChatLauncher } from '@/components/chat/ChatContext';
 
 export function ChatAboutLaptop(props: { id: number; title: string; price: number; url: string; disabled?: boolean }) {
   const { id, title, price, url, disabled } = props;
-  const chat = useChat({ laptop: { id, title, price, url } });
+  const { openChat } = useChatLauncher();
   return (
-    <>
-      <Button
-        onClick={() => void chat.openChat()}
-        variant="contained"
-        size="large"
-        startIcon={<ChatIcon />}
-        fullWidth
-        disabled={disabled}
-      >
-        Chat with us
-      </Button>
-      <ChatPanel chat={chat} laptopSummary={title} />
-    </>
+    <Button
+      onClick={() => openChat({ id, title, price, url })}
+      variant="contained"
+      size="large"
+      startIcon={<ChatIcon />}
+      fullWidth
+      disabled={disabled}
+    >
+      Chat with us
+    </Button>
   );
 }

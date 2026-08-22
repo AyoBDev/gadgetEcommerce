@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Instrument_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import Box from '@mui/material/Box';
 import { ThemeRegistry } from '@/components/ThemeRegistry';
 import { StoreProvider } from '@/components/StoreProvider';
 import { TopNavBar } from '@/components/TopNavBar';
 import { TrustBanner } from '@/components/TrustBanner';
 import { Footer } from '@/components/Footer';
-import { ChatLauncher } from '@/components/chat/ChatLauncher';
+import { ChatProvider } from '@/components/chat/ChatContext';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 import '../globals.css';
 
-const inter = Inter({
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
-  weight: ['400', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-inter',
 });
@@ -45,7 +45,7 @@ export default async function StorefrontLayout({ children }: { children: React.R
   const whatsappNumber = resolveWhatsAppNumber(settings);
 
   return (
-    <html lang="en-NG" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en-NG" className={`${instrumentSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link
           rel="stylesheet"
@@ -56,13 +56,14 @@ export default async function StorefrontLayout({ children }: { children: React.R
         <a href="#main-content" className="skip-link">Skip to content</a>
         <ThemeRegistry>
           <StoreProvider>
-            <TopNavBar whatsappNumber={whatsappNumber} />
-            <Box sx={{ pt: 10 }}>
-              <TrustBanner />
-              <main id="main-content">{children}</main>
-              <Footer settings={settings} />
-            </Box>
-            <ChatLauncher />
+            <ChatProvider>
+              <TopNavBar whatsappNumber={whatsappNumber} />
+              <Box sx={{ pt: 10 }}>
+                <TrustBanner />
+                <main id="main-content">{children}</main>
+                <Footer settings={settings} />
+              </Box>
+            </ChatProvider>
           </StoreProvider>
         </ThemeRegistry>
       </body>
