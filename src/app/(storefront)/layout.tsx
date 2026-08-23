@@ -6,7 +6,7 @@ import { StoreProvider } from '@/components/StoreProvider';
 import { TopNavBar } from '@/components/TopNavBar';
 import { TrustBanner } from '@/components/TrustBanner';
 import { Footer } from '@/components/Footer';
-import { ChatLauncher } from '@/components/chat/ChatLauncher';
+import { ChatProvider } from '@/components/chat/ChatContext';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 import '../globals.css';
 
@@ -56,13 +56,14 @@ export default async function StorefrontLayout({ children }: { children: React.R
         <a href="#main-content" className="skip-link">Skip to content</a>
         <ThemeRegistry>
           <StoreProvider>
-            <TopNavBar whatsappNumber={whatsappNumber} />
-            <Box sx={{ pt: 10 }}>
-              <TrustBanner />
-              <main id="main-content">{children}</main>
-              <Footer settings={settings} />
-            </Box>
-            <ChatLauncher />
+            <ChatProvider>
+              <TopNavBar whatsappNumber={whatsappNumber} />
+              <Box sx={{ pt: 10 }}>
+                <TrustBanner />
+                <main id="main-content">{children}</main>
+                <Footer settings={settings} />
+              </Box>
+            </ChatProvider>
           </StoreProvider>
         </ThemeRegistry>
       </body>

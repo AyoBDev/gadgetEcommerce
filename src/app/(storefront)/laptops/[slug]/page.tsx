@@ -15,7 +15,6 @@ import { ChatAboutLaptop } from '@/components/product/ChatAboutLaptop';
 import { buildLaptopMetadata, buildProductJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo';
 import { formatNaira } from '@/lib/money';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
-import { buildWhatsAppLink, buildInquiryMessage } from '@/lib/whatsapp';
 import { relatedLaptopsWhere } from '@/lib/related-laptops';
 import StockPill from '@/components/product/StockPill';
 import ConditionBadge from '@/components/product/ConditionBadge';
@@ -92,7 +91,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     { name: 'Laptops', url: `${SERVER_URL}/laptops` },
     { name: laptop.title, url },
   ]);
-  const waHref = buildWhatsAppLink(whatsappNumber, buildInquiryMessage({ title: laptop.title, price: laptop.price, url }));
   const gallery = (laptop.gallery ?? []).filter(
     (g): g is { image: Media; id?: string | null } => typeof g.image === 'object',
   );
@@ -171,11 +169,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           <Reveal>
             <AddonsSection addons={addons} whatsappNumber={whatsappNumber}
-              laptopTitle={laptop.title} laptopPrice={laptop.price} url={url} />
+              laptopId={laptop.id} laptopTitle={laptop.title} laptopPrice={laptop.price} url={url} />
           </Reveal>
           <Reveal><CompareCallout /></Reveal>
           <Reveal><RelatedProducts laptops={related} whatsappNumber={whatsappNumber} /></Reveal>
-          <Reveal><WhatsAppCallout href={waHref} /></Reveal>
+          <Reveal><WhatsAppCallout laptop={{ id: laptop.id, title: laptop.title, price: laptop.price, url }} /></Reveal>
         </Stack>
       </Container>
     </>

@@ -30,3 +30,24 @@ export async function sendMessage(id: string, text: string): Promise<ChatMessage
   const { message } = await res.json();
   return message;
 }
+
+export async function getExistingConversation(): Promise<{
+  conversationId: string | null;
+  status?: string;
+  laptopSummary?: string;
+  messages: ChatMessage[];
+}> {
+  try {
+    const res = await fetch('/api/chat', { credentials: 'same-origin' });
+    if (!res.ok) return { conversationId: null, messages: [] };
+    const data = await res.json();
+    return {
+      conversationId: data.conversationId ?? null,
+      status: data.status,
+      laptopSummary: data.laptopSummary,
+      messages: Array.isArray(data.messages) ? data.messages : [],
+    };
+  } catch {
+    return { conversationId: null, messages: [] };
+  }
+}

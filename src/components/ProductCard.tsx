@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
 import { formatNaira } from '@/lib/money';
-import { buildWhatsAppLink } from '@/lib/whatsapp';
+import { useChatLauncher } from '@/components/chat/ChatContext';
 import { ProductCardActions } from '@/components/ProductCardActions';
 import type { Laptop } from '@/payload-types';
 
@@ -24,14 +24,14 @@ function discountPercent(price: number, compareAt: number | null | undefined): n
   return Math.round(((compareAt - price) / compareAt) * 100);
 }
 
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
+
 export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsappNumber: string }) {
   const image = typeof laptop.gallery?.[0]?.image === 'object' ? laptop.gallery[0].image : null;
   const imgUrl = image?.sizes?.card?.url ?? image?.url ?? '/laptop-placeholder.jpg';
   const discount = discountPercent(laptop.price, laptop.compareAtPrice);
-  const waHref = buildWhatsAppLink(
-    whatsappNumber,
-    `Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}). Is it still available?`,
-  );
+  const { openChat } = useChatLauncher();
+  const laptopUrl = `${SERVER_URL}/laptops/${laptop.slug}`;
 
   // Small "SKU-style" tag from the slug for the tech feel — deterministic per product.
   const sku = `JS-${(laptop.slug ?? '').slice(0, 6).toUpperCase().replace(/[^A-Z0-9]/g, 'X') || 'XXXXXX'}`;
@@ -142,8 +142,10 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
           </Stack>
           <Stack direction="row" spacing={1}>
             <Button component={Link} href={`/laptops/${laptop.slug}`} variant="contained" fullWidth>Buy now</Button>
-            <IconButton component="a" href={waHref} target="_blank" rel="noopener" aria-label="WhatsApp inquiry"
-              sx={{ bgcolor: 'success.main', color: 'white', borderRadius: 1, '&:hover': { bgcolor: 'success.dark' } }}>
+            <IconButton
+              onClick={() => openChat({ id: laptop.id, title: laptop.title, price: laptop.price, url: laptopUrl })}
+              aria-label="Chat with us" color="primary"
+              sx={{ bgcolor: 'primary.main', color: 'white', borderRadius: 1, '&:hover': { bgcolor: 'primary.dark' } }}>
               <ChatIcon />
             </IconButton>
           </Stack>

@@ -1,6 +1,6 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createConversation, fetchMessages, sendMessage, type ChatMessage } from '@/lib/chat-client';
+import { createConversation, fetchMessages, sendMessage, getExistingConversation, type ChatMessage } from '@/lib/chat-client';
 
 type Laptop = { id: number; title: string; price: number; url: string };
 
@@ -13,14 +13,16 @@ export function useChat(opts?: { laptop?: Laptop }) {
   const [unread, setUnread] = useState(0);
   const [status, setStatus] = useState<string>('open');
   const [adminTyping, setAdminTyping] = useState(false);
+  const [laptopSummary, setLaptopSummary] = useState<string | undefined>(opts?.laptop?.title);
   const seen = useRef(0);
   const pendingRef = useRef<Promise<string> | null>(null);
   const lastTypingNotifyRef = useRef(0);
+  const laptopRef = useRef<Laptop | undefined>(opts?.laptop);
 
   const ensure = useCallback(async () => {
     if (convoId) return convoId;
     if (pendingRef.current) return pendingRef.current;
-    const promise = createConversation(opts?.laptop)
+    const promise = createConversation(laptopRef.current)
       .then(({ conversationId }) => {
         setConvoId(conversationId);
         return conversationId;
@@ -30,9 +32,13 @@ export function useChat(opts?: { laptop?: Laptop }) {
       });
     pendingRef.current = promise;
     return promise;
-  }, [convoId, opts?.laptop]);
+  }, [convoId]);
 
-  const openChat = useCallback(async () => {
+  const openChat = useCallback(async (laptop?: Laptop) => {
+    if (laptop) {
+      laptopRef.current = laptop;
+      setLaptopSummary(laptop.title);
+    }
     await ensure();
     setUnread(0);
     setOpen(true);
@@ -53,6 +59,25 @@ export function useChat(opts?: { laptop?: Laptop }) {
       /* best-effort */
     });
   }, [convoId]);
+
+  // On mount, silently restore an existing conversation (returning visitor).
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      if (convoId || pendingRef.current) return;
+      const restored = await getExistingConversation();
+      if (!active || !restored.conversationId) return;
+      // Don't clobber a conversation created in the meantime.
+      if (convoId || pendingRef.current) return;
+      setConvoId(restored.conversationId);
+      setMessages(restored.messages);
+      if (restored.status) setStatus(restored.status);
+      if (restored.laptopSummary) setLaptopSummary(restored.laptopSummary);
+      seen.current = restored.messages.filter((m) => m.sender === 'admin').length;
+    })();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!convoId) return;
@@ -76,5 +101,5 @@ export function useChat(opts?: { laptop?: Laptop }) {
     return () => { active = false; clearInterval(iv); };
   }, [convoId, open]);
 
-  return { open, setOpen, openChat, messages, unread, status, send, notifyTyping, adminTyping, ready: Boolean(convoId) };
+  return { open, setOpen, openChat, messages, unread, status, send, notifyTyping, adminTyping, laptopSummary, ready: Boolean(convoId) };
 }

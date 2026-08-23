@@ -18,7 +18,7 @@ import Storage from '@mui/icons-material/Storage';
 import Laptop from '@mui/icons-material/Laptop';
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import { formatNaira } from '@/lib/money';
-import { buildWhatsAppLink, buildAddonWhatsAppMessage } from '@/lib/whatsapp';
+import { useChatLauncher } from '@/components/chat/ChatContext';
 import type { Addon } from '@/payload-types';
 
 type IconComponent = React.ComponentType<SvgIconProps>;
@@ -52,14 +52,16 @@ function getAddonIcon(icon?: string | null): IconComponent {
 }
 
 export default function AddonsSection({
-  addons, whatsappNumber, laptopTitle, laptopPrice, url,
+  addons, whatsappNumber, laptopId, laptopTitle, laptopPrice, url,
 }: {
   addons: Addon[];
   whatsappNumber: string;
+  laptopId: number;
   laptopTitle: string;
   laptopPrice: number;
   url: string;
 }) {
+  const { openChat } = useChatLauncher();
   if (addons.length === 0) return null;
 
   return (
@@ -67,13 +69,6 @@ export default function AddonsSection({
       <Typography variant="h2" sx={{ mb: 3 }}>Essential Add-ons</Typography>
       <Grid container spacing={3}>
         {addons.map((addon) => {
-          const href = buildWhatsAppLink(
-            whatsappNumber,
-            buildAddonWhatsAppMessage({
-              title: laptopTitle, price: laptopPrice, url,
-              addonName: addon.name, addonPrice: addon.price,
-            }),
-          );
           const AddonIcon = getAddonIcon(addon.icon);
           return (
             <Grid key={addon.id} size={{ xs: 12, md: 4 }}>
@@ -90,7 +85,8 @@ export default function AddonsSection({
                       </Typography>
                     </Stack>
                   </Stack>
-                  <Button component="a" href={href} target="_blank" rel="noopener" variant="contained" size="small">
+                  <Button onClick={() => openChat({ id: laptopId, title: laptopTitle, price: laptopPrice, url })}
+                    variant="contained" size="small">
                     ADD
                   </Button>
                 </Stack>

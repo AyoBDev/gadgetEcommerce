@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
@@ -8,11 +10,11 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
 import { QuickFinder } from '@/components/QuickFinder';
-import { buildWhatsAppLink } from '@/lib/whatsapp';
+import { useChatLauncher } from '@/components/chat/ChatContext';
 import type { Category } from '@/payload-types';
 
 export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Category[]; useCases: Category[]; whatsappNumber: string }) {
-  const waHref = buildWhatsAppLink(whatsappNumber, 'Hi, I want to buy a UK used laptop. Can you help me choose?');
+  const { openChat } = useChatLauncher();
   return (
     <Box className="grain" sx={{ position: 'relative', bgcolor: 'night.main', color: 'night.contrastText', overflow: 'hidden' }}>
       {/* Frosted studio wash — spans the full hero band. Red-tinted glows on a
@@ -68,10 +70,9 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
               <Button variant="contained" size="large" component={Link} href="/laptops" fullWidth>
                 Browse all laptops
               </Button>
-              <Button variant="contained" size="large" startIcon={<ChatIcon />}
-                sx={{ bgcolor: 'success.main', '&:hover': { bgcolor: 'success.dark' } }}
-                component="a" href={waHref} target="_blank" rel="noopener" fullWidth>
-                WhatsApp us
+              <Button variant="contained" size="large" color="primary" startIcon={<ChatIcon />}
+                onClick={() => openChat()} fullWidth>
+                Chat with us
               </Button>
             </Stack>
           </Stack>
