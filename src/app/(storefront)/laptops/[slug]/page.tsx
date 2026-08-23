@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { getPayloadClient } from '@/lib/payload';
+import { StudioWash } from '@/components/StudioWash';
 import { LaptopGallery } from '@/components/LaptopGallery';
 import { ProductDetailActions } from '@/components/ProductDetailActions';
 import { ChatAboutLaptop } from '@/components/product/ChatAboutLaptop';
@@ -104,56 +105,77 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     <>
       <script key="product-ld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
       <script key="breadcrumb-ld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
-        <Breadcrumbs sx={{ mb: 3 }}>
-          <Link href="/">Home</Link>
-          <Link href="/laptops">Laptops</Link>
-          <Typography color="text.primary">{laptop.title}</Typography>
-        </Breadcrumbs>
 
-        <Stack spacing={{ xs: 6, md: 8 }}>
-          {/* Hero split */}
-          <Grid container spacing={{ xs: 4, md: 6 }}>
+      {/* Hero band — dark studio wash (matches homepage night hero) */}
+      <Box className="grain" sx={{ position: 'relative', bgcolor: 'night.main', color: 'night.contrastText', overflow: 'hidden' }}>
+        <StudioWash />
+        <Container maxWidth="lg" sx={{ position: 'relative', py: { xs: 4, md: 8 } }}>
+          <Breadcrumbs sx={{ mb: 3, color: 'rgba(244,242,238,0.6)', '& a': { color: 'rgba(244,242,238,0.85)' } }}>
+            <Link href="/">Home</Link>
+            <Link href="/laptops">Laptops</Link>
+            <Typography sx={{ color: 'night.contrastText' }}>{laptop.title}</Typography>
+          </Breadcrumbs>
+          <Grid container spacing={{ xs: 4, md: 6 }} alignItems="flex-start">
             <Grid size={{ xs: 12, md: 7 }}>
               <Box sx={{ position: 'relative' }}>
-                <Box sx={{ position: 'absolute', top: 16, left: 16, zIndex: 1 }}>
+                {/* floating ground shadow under the gallery (dark-appropriate) */}
+                <Box aria-hidden sx={{
+                  position: 'absolute', left: '12%', right: '12%', bottom: -8, height: 26,
+                  background: 'radial-gradient(50% 100% at 50% 50%, rgba(0,0,0,0.5), transparent 70%)',
+                  filter: 'blur(8px)', zIndex: 0,
+                }} />
+                <Box sx={{ position: 'absolute', top: 16, left: 16, zIndex: 2 }}>
                   <ConditionBadge condition={laptop.condition} />
                 </Box>
-                <LaptopGallery images={gallery} />
+                <Box sx={{ position: 'relative', zIndex: 1 }}>
+                  <LaptopGallery images={gallery} />
+                </Box>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
-              <Stack spacing={3}>
-                <Stack spacing={1}>
+              <Box sx={{ position: { md: 'sticky' }, top: { md: 96 } }}>
+                {/* Title + subtitle sit on the dark band with light text */}
+                <Stack spacing={1} sx={{ mb: 3 }}>
                   <Typography variant="h1" sx={{ fontSize: { xs: 30, md: 40 }, letterSpacing: '-0.025em' }}>{laptop.title}</Typography>
-                  {subtitle && <Typography variant="h3" color="text.secondary" sx={{ fontWeight: 500 }}>{subtitle}</Typography>}
+                  {subtitle && <Typography variant="h3" sx={{ fontWeight: 500, color: 'rgba(244,242,238,0.75)' }}>{subtitle}</Typography>}
                 </Stack>
-                <Stack direction="row" spacing={2} alignItems="baseline">
-                  <Typography className="num" sx={{ color: 'primary.main', fontSize: { xs: 32, md: 40 }, fontWeight: 700, lineHeight: 1 }}>
-                    {formatNaira(laptop.price)}
-                  </Typography>
-                  {laptop.compareAtPrice && (
-                    <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 15 }}>
-                      {formatNaira(laptop.compareAtPrice)}
-                    </Typography>
-                  )}
-                </Stack>
-                <StockPill stock={laptop.stock} />
-                <TrustBox batteryHealth={laptop.specs?.batteryHealth} />
-                <Stack spacing={1.5}>
-                  <ChatAboutLaptop id={laptop.id} title={laptop.title} price={laptop.price} url={url}
-                    disabled={laptop.stock === 0} />
-                </Stack>
-                <ProductDetailActions laptopId={laptop.id} />
-                <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
-                  <Typography variant="caption">
-                    Note: online checkout is coming soon. For now, tap <strong>Chat with us</strong> to place your order.
-                  </Typography>
+                {/* Whole buy panel on ONE paper card so its light-mode children read on the dark band */}
+                <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', border: 1, borderColor: 'divider', borderRadius: 2.5, p: { xs: 2.5, md: 3 } }}>
+                  <Stack spacing={2.5}>
+                    <Stack direction="row" spacing={2} alignItems="baseline">
+                      <Typography className="num" sx={{ color: 'primary.main', fontSize: { xs: 32, md: 40 }, fontWeight: 700, lineHeight: 1 }}>
+                        {formatNaira(laptop.price)}
+                      </Typography>
+                      {laptop.compareAtPrice && (
+                        <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 15 }}>
+                          {formatNaira(laptop.compareAtPrice)}
+                        </Typography>
+                      )}
+                    </Stack>
+                    <StockPill stock={laptop.stock} />
+                    <TrustBox batteryHealth={laptop.specs?.batteryHealth} />
+                    <Stack spacing={1.5}>
+                      <ChatAboutLaptop id={laptop.id} title={laptop.title} price={laptop.price} url={url}
+                        disabled={laptop.stock === 0} />
+                    </Stack>
+                    <ProductDetailActions laptopId={laptop.id} />
+                    {/* checkout note — already inside the paper card, so a plain tinted strip */}
+                    <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+                      <Typography variant="caption">
+                        Note: online checkout is coming soon. For now, tap <strong>Chat with us</strong> to place your order.
+                      </Typography>
+                    </Box>
+                  </Stack>
                 </Box>
-              </Stack>
+              </Box>
             </Grid>
           </Grid>
+        </Container>
+      </Box>
 
+      {/* body sections — Task 6 restyles these into bands */}
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+        <Stack spacing={{ xs: 6, md: 8 }}>
           <Reveal><KeySpecs laptop={laptop} /></Reveal>
 
           {laptop.description && (
