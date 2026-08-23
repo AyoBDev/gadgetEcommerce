@@ -72,6 +72,7 @@ export function useChat(opts?: { laptop?: Laptop }) {
       setConvoId(restored.conversationId);
       setMessages(restored.messages);
       if (restored.status) setStatus(restored.status);
+      if (restored.laptopSummary) setLaptopSummary(restored.laptopSummary);
       seen.current = restored.messages.filter((m) => m.sender === 'admin').length;
     })();
     return () => { active = false; };

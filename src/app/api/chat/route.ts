@@ -75,6 +75,7 @@ export async function GET(req: Request) {
     conversationId: String(convo.id),
     status: convo.status ?? 'open',
     adminTyping: isTypingActive(convo.adminTypingAt),
+    laptopSummary: convo.laptopSummary ?? undefined,
     messages: msgs.docs.map((m) => ({ id: m.id, sender: m.sender, text: m.text, createdAt: m.createdAt })),
   });
 }

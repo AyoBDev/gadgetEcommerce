@@ -34,6 +34,7 @@ export async function sendMessage(id: string, text: string): Promise<ChatMessage
 export async function getExistingConversation(): Promise<{
   conversationId: string | null;
   status?: string;
+  laptopSummary?: string;
   messages: ChatMessage[];
 }> {
   try {
@@ -43,6 +44,7 @@ export async function getExistingConversation(): Promise<{
     return {
       conversationId: data.conversationId ?? null,
       status: data.status,
+      laptopSummary: data.laptopSummary,
       messages: Array.isArray(data.messages) ? data.messages : [],
     };
   } catch {
