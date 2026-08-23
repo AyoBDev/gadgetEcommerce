@@ -26,6 +26,7 @@ import WhatsAppCallout from '@/components/product/WhatsAppCallout';
 import AddonsSection from '@/components/product/AddonsSection';
 import RelatedProducts from '@/components/product/RelatedProducts';
 import { Reveal } from '@/components/Reveal';
+import { SectionBand } from '@/components/SectionBand';
 import type { Media } from '@/payload-types';
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
@@ -173,31 +174,42 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </Container>
       </Box>
 
-      {/* body sections — Task 6 restyles these into bands */}
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
-        <Stack spacing={{ xs: 6, md: 8 }}>
-          <Reveal><KeySpecs laptop={laptop} /></Reveal>
+      {/* body sections — alternating design-system bands */}
+      <SectionBand tone="white">
+        <Reveal><KeySpecs laptop={laptop} /></Reveal>
+      </SectionBand>
 
-          {laptop.description && (
-            <Reveal>
-              <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 } }}>
-                <Typography variant="h2" sx={{ mb: 3, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
-                  Product Description
-                </Typography>
-                <Typography sx={{ whiteSpace: 'pre-wrap' }}>{laptop.description}</Typography>
-              </Paper>
-            </Reveal>
-          )}
-
+      {laptop.description && (
+        <SectionBand tone="grey">
           <Reveal>
-            <AddonsSection addons={addons} whatsappNumber={whatsappNumber}
-              laptopId={laptop.id} laptopTitle={laptop.title} laptopPrice={laptop.price} url={url} />
+            <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 } }}>
+              <Typography variant="h2" sx={{ mb: 3, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
+                Product Description
+              </Typography>
+              <Typography sx={{ whiteSpace: 'pre-wrap' }}>{laptop.description}</Typography>
+            </Paper>
           </Reveal>
-          <Reveal><CompareCallout /></Reveal>
-          <Reveal><RelatedProducts laptops={related} whatsappNumber={whatsappNumber} /></Reveal>
-          <Reveal><WhatsAppCallout laptop={{ id: laptop.id, title: laptop.title, price: laptop.price, url }} /></Reveal>
-        </Stack>
-      </Container>
+        </SectionBand>
+      )}
+
+      <SectionBand tone="white">
+        <Reveal>
+          <AddonsSection addons={addons} whatsappNumber={whatsappNumber}
+            laptopId={laptop.id} laptopTitle={laptop.title} laptopPrice={laptop.price} url={url} />
+        </Reveal>
+      </SectionBand>
+
+      <SectionBand tone="tint">
+        <Reveal><CompareCallout /></Reveal>
+      </SectionBand>
+
+      <SectionBand tone="white">
+        <Reveal><RelatedProducts laptops={related} whatsappNumber={whatsappNumber} /></Reveal>
+      </SectionBand>
+
+      <SectionBand tone="grey">
+        <Reveal><WhatsAppCallout laptop={{ id: laptop.id, title: laptop.title, price: laptop.price, url }} /></Reveal>
+      </SectionBand>
     </>
   );
 }
