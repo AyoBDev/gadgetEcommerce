@@ -84,7 +84,7 @@ export const Laptops: CollectionConfig = {
       fields: [
         { name: 'image', type: 'upload', relationTo: 'media', required: true },
       ]},
-    { name: 'description', type: 'richText' },
+    { name: 'description', type: 'textarea' },
     { name: 'warrantyDays', type: 'number', defaultValue: 7, required: true, min: 0 },
     { name: 'stock', type: 'number', defaultValue: 1, required: true, min: 0 },
     { name: 'status', type: 'select', required: true, defaultValue: 'draft', options: [

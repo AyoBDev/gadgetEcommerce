@@ -1,6 +1,5 @@
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { s3Storage } from '@payloadcms/storage-s3';
 import sharp from 'sharp';
 import path from 'path';
@@ -23,12 +22,7 @@ export default buildConfig({
   admin: {
     user: 'users',
     meta: { title: 'Jaysmart Admin', titleSuffix: '— Jaysmart' },
-    components: {
-      Nav: '@/components/admin/Nav#default',
-      beforeDashboard: ['@/components/admin/DashboardStats#default'],
-    },
   },
-  editor: lexicalEditor(),
   collections: [Users, Media, Categories, Laptops, Orders, Addons, Conversations, Messages],
   globals: [Settings],
   secret: process.env.PAYLOAD_SECRET ?? '',

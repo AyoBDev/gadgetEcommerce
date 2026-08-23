@@ -6,8 +6,6 @@
  * definitions in `src/collections/*.ts` and `src/globals/*.ts` until the CLI
  * can be run successfully.
  */
-import type { SerializedEditorState } from 'lexical';
-
 export interface Config {
   collections: {
     users: User;
@@ -101,7 +99,7 @@ export interface Laptop {
     image: number | Media;
     id?: string | null;
   }[];
-  description?: SerializedEditorState | null;
+  description?: string | null;
   warrantyDays: number;
   stock: number;
   status: 'draft' | 'published' | 'sold';

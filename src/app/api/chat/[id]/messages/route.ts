@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getPayloadClient } from '@/lib/payload';
-import { authorizeConversation, CHAT_COOKIE } from '@/lib/chat-server';
+import { authorizeConversation, CHAT_COOKIE, type PayloadLike } from '@/lib/chat-server';
 import { sanitizeMessageText, isTypingActive } from '@/lib/chat';
 import { rateLimit } from '@/lib/rate-limit';
 
@@ -20,7 +20,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
   }
   const token = await tokenFromCookies();
   const payload = await getPayloadClient();
-  const convo = await authorizeConversation(payload as any, String(conversationId), token);
+  const convo = await authorizeConversation(payload as PayloadLike, String(conversationId), token);
   if (!convo) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const msgs = await payload.find({
@@ -34,9 +34,9 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
   await payload.update({ collection: 'conversations', id: conversationId, data: { unreadForBuyer: 0 } });
 
   return NextResponse.json({
-    status: (convo as any).status ?? 'open',
-    adminTyping: isTypingActive((convo as any).adminTypingAt),
-    messages: msgs.docs.map((m: any) => ({ id: m.id, sender: m.sender, text: m.text, createdAt: m.createdAt })),
+    status: convo.status ?? 'open',
+    adminTyping: isTypingActive(convo.adminTypingAt),
+    messages: msgs.docs.map((m) => ({ id: m.id, sender: m.sender, text: m.text, createdAt: m.createdAt })),
   });
 }
 
@@ -52,7 +52,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   }
   const token = await tokenFromCookies();
   const payload = await getPayloadClient();
-  const convo = await authorizeConversation(payload as any, String(conversationId), token);
+  const convo = await authorizeConversation(payload as PayloadLike, String(conversationId), token);
   if (!convo) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const body = await req.json().catch(() => ({}));

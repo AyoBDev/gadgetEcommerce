@@ -33,9 +33,9 @@ export function QuickFinder({ brands, useCases }: { brands: Category[]; useCases
   }
 
   return (
-    <Box sx={{ bgcolor: 'background.paper', border: 1, borderColor: 'divider', borderRadius: 3, p: 3 }}>
+    <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', border: 1, borderColor: 'divider', borderRadius: 3, p: 3 }}>
       <Stack spacing={2}>
-        <Typography variant="h3">What do you need?</Typography>
+        <Typography variant="h3" sx={{ fontSize: 18 }}>What do you need?</Typography>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
           <TextField select label="Budget" size="small" fullWidth value={budget} onChange={(e) => setBudget(e.target.value)}>
             {BUDGETS.map((b) => (
