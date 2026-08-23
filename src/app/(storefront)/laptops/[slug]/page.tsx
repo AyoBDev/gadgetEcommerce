@@ -116,9 +116,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <Link href="/laptops">Laptops</Link>
             <Typography sx={{ color: 'night.contrastText' }}>{laptop.title}</Typography>
           </Breadcrumbs>
-          <Grid container spacing={{ xs: 4, md: 6 }} alignItems="flex-start">
-            <Grid size={{ xs: 12, md: 7 }}>
-              <Box sx={{ position: 'relative' }}>
+          <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box sx={{ position: 'relative', maxWidth: 520, mx: 'auto' }}>
                 {/* floating ground shadow under the gallery (dark-appropriate) */}
                 <Box aria-hidden sx={{
                   position: 'absolute', left: '12%', right: '12%', bottom: -8, height: 26,
@@ -133,7 +133,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </Box>
               </Box>
             </Grid>
-            <Grid size={{ xs: 12, md: 5 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Box>
                 {/* Title + subtitle sit on the dark band with light text */}
                 <Stack spacing={1} sx={{ mb: 3 }}>
