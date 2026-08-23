@@ -134,7 +134,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
-              <Box sx={{ position: { md: 'sticky' }, top: { md: 96 } }}>
+              <Box>
                 {/* Title + subtitle sit on the dark band with light text */}
                 <Stack spacing={1} sx={{ mb: 3 }}>
                   <Typography variant="h1" sx={{ fontSize: { xs: 30, md: 40 }, letterSpacing: '-0.025em' }}>{laptop.title}</Typography>
