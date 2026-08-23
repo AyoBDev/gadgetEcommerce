@@ -70,11 +70,11 @@ export function DealHero({ laptop, whatsappNumber }: { laptop: Laptop; whatsappN
         </Typography>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mt: 'auto' }}>
           <Stack direction="row" spacing={1} alignItems="baseline">
-            <Typography className="num" sx={{ color: 'primary.main', fontSize: 22, fontWeight: 700, lineHeight: 1 }}>
+            <Typography className="price" sx={{ color: 'primary.main', fontSize: 22, fontWeight: 700, lineHeight: 1 }}>
               {formatNaira(laptop.price)}
             </Typography>
             {laptop.compareAtPrice && (
-              <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 13 }}>
+              <Typography className="price" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 13 }}>
                 {formatNaira(laptop.compareAtPrice)}
               </Typography>
             )}
@@ -120,11 +120,11 @@ export function DealRow({ laptop, whatsappNumber }: { laptop: Laptop; whatsappNu
         </Typography>
         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
           <Stack direction="row" spacing={0.75} alignItems="baseline">
-            <Typography className="num" sx={{ color: 'primary.main', fontSize: 15, fontWeight: 700, lineHeight: 1 }}>
+            <Typography className="price" sx={{ color: 'primary.main', fontSize: 15, fontWeight: 700, lineHeight: 1 }}>
               {formatNaira(laptop.price)}
             </Typography>
             {laptop.compareAtPrice && (
-              <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 11 }}>
+              <Typography className="price" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 11 }}>
                 {formatNaira(laptop.compareAtPrice)}
               </Typography>
             )}

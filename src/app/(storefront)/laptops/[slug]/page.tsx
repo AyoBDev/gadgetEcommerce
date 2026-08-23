@@ -144,11 +144,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <Box sx={{ bgcolor: 'background.paper', color: 'text.primary', border: 1, borderColor: 'divider', borderRadius: 2.5, p: { xs: 2.5, md: 3 } }}>
                   <Stack spacing={2.5}>
                     <Stack direction="row" spacing={2} alignItems="baseline">
-                      <Typography className="num" sx={{ color: 'primary.main', fontSize: { xs: 32, md: 40 }, fontWeight: 700, lineHeight: 1 }}>
+                      <Typography className="price" sx={{ color: 'primary.main', fontSize: { xs: 32, md: 40 }, fontWeight: 700, lineHeight: 1 }}>
                         {formatNaira(laptop.price)}
                       </Typography>
                       {laptop.compareAtPrice && (
-                        <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 15 }}>
+                        <Typography className="price" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 15 }}>
                           {formatNaira(laptop.compareAtPrice)}
                         </Typography>
                       )}

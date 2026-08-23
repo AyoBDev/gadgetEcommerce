@@ -131,11 +131,11 @@ export function ProductCard({ laptop, whatsappNumber }: { laptop: Laptop; whatsa
 
         <Box sx={{ mt: 'auto' }}>
           <Stack direction="row" spacing={1} alignItems="baseline" sx={{ mb: 2 }}>
-            <Typography className="num" sx={{ color: 'primary.main', fontSize: { xs: 26, md: 30 }, fontWeight: 700, lineHeight: 1 }}>
+            <Typography className="price" sx={{ color: 'primary.main', fontSize: { xs: 26, md: 30 }, fontWeight: 700, lineHeight: 1 }}>
               {formatNaira(laptop.price)}
             </Typography>
             {laptop.compareAtPrice && (
-              <Typography className="num" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 13 }}>
+              <Typography className="price" sx={{ color: 'text.secondary', textDecoration: 'line-through', fontSize: 13 }}>
                 {formatNaira(laptop.compareAtPrice)}
               </Typography>
             )}
