@@ -25,7 +25,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
+  // 'latin-ext' carries U+20A0–U+20AB, which includes the Naira sign (₦, U+20A6).
+  // Without it the glyph falls back to a system font at a mismatched size.
+  subsets: ['latin', 'latin-ext'],
   weight: ['500', '700'],
   display: 'swap',
   variable: '--font-mono',
