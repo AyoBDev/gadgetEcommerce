@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
@@ -8,8 +10,10 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
 import { formatNaira } from '@/lib/money';
-import { buildWhatsAppLink } from '@/lib/whatsapp';
+import { useChatLauncher } from '@/components/chat/ChatContext';
 import type { Laptop } from '@/payload-types';
+
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000';
 
 function conditionLabel(condition: Laptop['condition']) {
   return { 'grade-a': 'Grade A', 'grade-b': 'Grade B', 'grade-c': 'Grade C' }[condition];
@@ -34,12 +38,10 @@ function specLine(laptop: Laptop): string {
 }
 
 /** Hero deal — large photo top, mono badge, price + Buy now. Mirrors the mockup's 2fr card. */
-export function DealHero({ laptop, whatsappNumber }: { laptop: Laptop; whatsappNumber: string }) {
+export function DealHero({ laptop }: { laptop: Laptop; whatsappNumber?: string }) {
   const discount = discountPercent(laptop.price, laptop.compareAtPrice);
-  const waHref = buildWhatsAppLink(
-    whatsappNumber,
-    `Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}). Is it still available?`,
-  );
+  const { openChat } = useChatLauncher();
+  const laptopUrl = `${SERVER_URL}/laptops/${laptop.slug}`;
 
   return (
     <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'column', height: '100%', position: 'relative', overflow: 'hidden' }}>
@@ -81,20 +83,26 @@ export function DealHero({ laptop, whatsappNumber }: { laptop: Laptop; whatsappN
           </Stack>
           <Button component={Link} href={`/laptops/${laptop.slug}`} variant="contained">Buy now</Button>
         </Stack>
-        <Typography sx={{ mt: 1.5, fontSize: 12, color: 'text.secondary' }}>
-          <a href={waHref} target="_blank" rel="noopener" style={{ color: 'inherit' }}>Or chat on WhatsApp →</a>
-        </Typography>
+        <Box
+          component="button"
+          onClick={() => openChat({ id: laptop.id, title: laptop.title, price: laptop.price, url: laptopUrl })}
+          sx={{
+            mt: 1.5, p: 0, border: 0, background: 'none', cursor: 'pointer',
+            font: 'inherit', fontSize: 12, color: 'text.secondary', textAlign: 'left',
+            '&:hover': { color: 'primary.main' },
+          }}
+        >
+          Or chat with us →
+        </Box>
       </Box>
     </Card>
   );
 }
 
-/** Compact horizontal deal — small photo left, price + WhatsApp button right. Mirrors the mockup's 1fr rows. */
-export function DealRow({ laptop, whatsappNumber }: { laptop: Laptop; whatsappNumber: string }) {
-  const waHref = buildWhatsAppLink(
-    whatsappNumber,
-    `Hi, I'm interested in the ${laptop.title} (${formatNaira(laptop.price)}). Is it still available?`,
-  );
+/** Compact horizontal deal — small photo left, price + chat button right. Mirrors the mockup's 1fr rows. */
+export function DealRow({ laptop }: { laptop: Laptop; whatsappNumber?: string }) {
+  const { openChat } = useChatLauncher();
+  const laptopUrl = `${SERVER_URL}/laptops/${laptop.slug}`;
 
   return (
     <Card variant="outlined" sx={{ display: 'flex', gap: 2, alignItems: 'center', p: { xs: 1.75, md: 2 } }}>
@@ -129,7 +137,9 @@ export function DealRow({ laptop, whatsappNumber }: { laptop: Laptop; whatsappNu
               </Typography>
             )}
           </Stack>
-          <IconButton component="a" href={waHref} target="_blank" rel="noopener" aria-label="WhatsApp inquiry"
+          <IconButton
+            onClick={() => openChat({ id: laptop.id, title: laptop.title, price: laptop.price, url: laptopUrl })}
+            aria-label="Chat with us"
             sx={{ width: 32, height: 32, bgcolor: 'success.main', color: 'white', borderRadius: '50%', '&:hover': { bgcolor: 'success.dark' } }}>
             <ChatIcon sx={{ fontSize: 16 }} />
           </IconButton>
