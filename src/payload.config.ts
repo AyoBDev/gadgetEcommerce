@@ -28,6 +28,10 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET ?? '',
   sharp,
   db: postgresAdapter({
+    // Never auto-diff/push the schema on boot. Schema changes go through Payload
+    // migrations (src/migrations, `pnpm migrate`). Dev push is off so an
+    // out-of-sync branch can't propose destructive DROPs against a shared DB.
+    push: false,
     pool: {
       connectionString: process.env.DATABASE_URL,
       // Managed Postgres (Railway public URL, Supabase, etc.) terminates TLS

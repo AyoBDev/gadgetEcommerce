@@ -80,7 +80,7 @@ export default function AddonsSection({
                     </Box>
                     <Stack>
                       <Typography variant="h3">{addon.name}</Typography>
-                      <Typography variant="button" sx={{ color: 'secondary.main' }}>
+                      <Typography variant="button" className="price" sx={{ color: 'secondary.main' }}>
                         +{formatNaira(addon.price)}
                       </Typography>
                     </Stack>

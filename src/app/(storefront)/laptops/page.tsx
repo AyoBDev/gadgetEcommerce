@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
 import type { Where } from 'payload';
 import { getPayloadClient } from '@/lib/payload';
 import { LaptopFilters } from '@/components/LaptopFilters';
+import { PageHero } from '@/components/PageHero';
 import { ProductCard } from '@/components/ProductCard';
+import { Reveal } from '@/components/Reveal';
+import { SectionBand } from '@/components/SectionBand';
 import { buildBreadcrumbJsonLd } from '@/lib/seo';
 import { getSettings, resolveWhatsAppNumber } from '@/lib/settings';
 
@@ -65,32 +69,52 @@ export default async function LaptopsPage({ searchParams }: { searchParams: Prom
   ]);
 
   return (
-    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-      <Stack spacing={4}>
-        <Stack spacing={1}>
-          <Typography variant="h1">Shop UK used laptops</Typography>
-          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-            <Box component="span" className="num" sx={{ color: 'text.primary', fontWeight: 700 }}>{laptopsRes.totalDocs}</Box> in stock
-          </Typography>
-        </Stack>
+      <PageHero
+        title="Shop UK used laptops"
+        subtitle={
+          <>
+            <Box component="span" className="num" sx={{ color: 'night.contrastText', fontWeight: 700 }}>
+              {laptopsRes.totalDocs}
+            </Box>{' '}in stock
+          </>
+        }
+      />
+      <SectionBand tone="white">
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 3 }}>
             <LaptopFilters brands={brandsRes.docs} useCases={useCasesRes.docs} />
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
             {laptopsRes.docs.length === 0 ? (
-              <Typography variant="body1">No laptops match those filters. Try clearing one.</Typography>
+              <Box className="grain" sx={{
+                position: 'relative', overflow: 'hidden', bgcolor: 'tint.main',
+                borderRadius: 2, textAlign: 'center', py: { xs: 6, md: 10 }, px: 3,
+              }}>
+                {/* NOTE: no <StudioWash /> here — that wash is dark-on-black and
+                    won't read on this light tint card. Plain tint + grain only. */}
+                <Stack spacing={2} sx={{ position: 'relative', alignItems: 'center' }}>
+                  <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                    No laptops match those filters. Try clearing one.
+                  </Typography>
+                  <Button variant="contained" component={Link} href="/laptops">Clear filters</Button>
+                </Stack>
+              </Box>
             ) : (
               <Grid container spacing={3}>
-                {laptopsRes.docs.map((laptop) => (
-                  <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 4 }}><ProductCard laptop={laptop} whatsappNumber={whatsappNumber} /></Grid>
+                {laptopsRes.docs.map((laptop, i) => (
+                  <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 4 }}>
+                    <Reveal delay={i * 60}>
+                      <ProductCard laptop={laptop} whatsappNumber={whatsappNumber} />
+                    </Reveal>
+                  </Grid>
                 ))}
               </Grid>
             )}
           </Grid>
         </Grid>
-      </Stack>
-    </Container>
+      </SectionBand>
+    </>
   );
 }

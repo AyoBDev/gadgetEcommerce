@@ -30,10 +30,23 @@ p, li {
   text-wrap: pretty;
 }
 
-/* Numeric UI — anywhere a class="num" appears (prices, counts, stats).
-   Also enable tabular figures so lists of numbers line up. */
+/* Numeric UI — anywhere a class="num" appears (counts, stats, specs).
+   Also enable tabular figures so lists of numbers line up.
+   NOTE: do NOT use .num for prices — JetBrains Mono has no Naira glyph
+   (₦, U+20A6), so the sign falls back to a mismatched, oversized system
+   font. Prices use .price below. */
 .num, [data-num] {
   font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' on;
+  letter-spacing: -0.01em;
+}
+
+/* Prices — the body font (Instrument Sans) has a real ₦ glyph, so the sign
+   and digits render in one matched font at the same size. Tabular figures
+   keep price columns aligned. */
+.price {
+  font-family: var(--font-inter), 'Instrument Sans', system-ui, sans-serif;
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' on;
   letter-spacing: -0.01em;

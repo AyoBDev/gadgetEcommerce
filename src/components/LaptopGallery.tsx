@@ -4,7 +4,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
+import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import type { Media } from '@/payload-types';
 
 export function LaptopGallery({ images }: { images: { image: Media }[] }) {
@@ -14,7 +16,15 @@ export function LaptopGallery({ images }: { images: { image: Media }[] }) {
   return (
     <Stack spacing={2}>
       <Box sx={{ position: 'relative', aspectRatio: '3/2', bgcolor: 'grey.50', border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden' }}>
-        {main && <Image src={mainUrl} alt={main.alt} fill priority sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'contain' }} />}
+        {main ? (
+          <Image src={mainUrl} alt={main.alt} fill priority sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'contain' }} />
+        ) : (
+          <Stack aria-hidden alignItems="center" justifyContent="center" spacing={1}
+            sx={{ position: 'absolute', inset: 0, color: 'text.disabled' }}>
+            <LaptopMacIcon sx={{ fontSize: 56 }} />
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>Photo coming soon</Typography>
+          </Stack>
+        )}
       </Box>
       {images.length > 1 && (
         <Stack direction="row" spacing={1} sx={{ overflowX: 'auto' }}>

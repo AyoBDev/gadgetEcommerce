@@ -47,7 +47,7 @@ export function SmartFinder({ useCases }: { useCases: Category[] }) {
             <Stack spacing={2}>
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h3" sx={{ fontSize: 18 }}>Budget</Typography>
-                <Typography variant="button" sx={{ color: 'primary.main' }}>{formatNaira(budget * 100)}</Typography>
+                <Typography variant="button" className="price" sx={{ color: 'primary.main' }}>{formatNaira(budget * 100)}</Typography>
               </Stack>
               <Slider value={budget} onChange={(_, v) => setBudget(v as number)} min={100_000} max={1_000_000} step={50_000} />
             </Stack>
