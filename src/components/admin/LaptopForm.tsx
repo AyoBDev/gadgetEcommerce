@@ -52,7 +52,7 @@ export function LaptopForm({ initial, brands, categories, media }: Props) {
   const [description, setDescription] = useState(
     initial?.description && typeof initial.description === 'string' ? initial.description : '',
   );
-  const [warrantyDays, setWarrantyDays] = useState(initial?.warrantyDays != null ? String(initial.warrantyDays) : '7');
+  const [warrantyDays, setWarrantyDays] = useState(initial?.warrantyDays != null ? String(initial.warrantyDays) : '30');
   const [stock, setStock] = useState(initial?.stock != null ? String(initial.stock) : '1');
   const [status, setStatus] = useState(initial?.status ?? 'draft');
   const [seo, setSeo] = useState({

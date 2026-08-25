@@ -6,7 +6,7 @@ import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 const TRUST_ITEMS = [
-  { icon: <VerifiedIcon fontSize="small" />, label: '7-Day Warranty' },
+  { icon: <VerifiedIcon fontSize="small" />, label: '30-Day Warranty' },
   { icon: <BatteryChargingFullIcon fontSize="small" />, label: 'Verified Battery' },
   { icon: <LocalShippingIcon fontSize="small" />, label: 'Nationwide Delivery' },
 ] as const;
@@ -35,7 +35,7 @@ export function TrustBanner() {
   return (
     <Box sx={{ bgcolor: 'grey.50', borderBottom: 1, borderColor: 'divider', py: 1.5, overflow: 'hidden' }}>
       <Box
-        aria-label="7-Day Warranty, Verified Battery, Nationwide Delivery"
+        aria-label="30-Day Warranty, Verified Battery, Nationwide Delivery"
         sx={{
           display: 'flex',
           width: 'max-content',

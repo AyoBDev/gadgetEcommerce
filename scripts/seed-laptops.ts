@@ -135,7 +135,7 @@ async function main() {
         ...(l.compareAtPrice ? { compareAtPrice: l.compareAtPrice } : {}),
         condition: l.condition,
         specs: l.specs ?? {},
-        warrantyDays: l.warrantyDays ?? 7,
+        warrantyDays: l.warrantyDays ?? 30,
         stock: l.stock ?? 1,
         status: l.status ?? 'published',
       } as unknown as Laptop,
