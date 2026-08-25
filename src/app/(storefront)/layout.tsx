@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     default: 'Certified UK Used Laptops in Nigeria | Jaysmart',
     template: '%s | Jaysmart',
   },
-  description: '300+ tested UK used laptops with 7-day warranty. Nationwide delivery across Nigeria.',
+  description: '300+ tested UK used laptops with 30-day warranty. Nationwide delivery across Nigeria.',
 };
 
 export default async function StorefrontLayout({ children }: { children: React.ReactNode }) {

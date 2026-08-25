@@ -13,7 +13,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 
 const REASONS = [
   { icon: <Inventory2Icon />, label: '300+ Tested Laptops', copy: 'Every laptop in stock passes a 20-point inspection before it hits our shelves.' },
-  { icon: <VerifiedIcon />, label: '7-Day Warranty', copy: 'Not happy in the first week? Return it for a full refund, no questions asked.' },
+  { icon: <VerifiedIcon />, label: '30-Day Warranty', copy: 'Not happy in the first 30 days? Return it for a full refund, no questions asked.' },
   { icon: <PhotoCameraIcon />, label: 'Real Device Photos', copy: 'What you see is exactly what ships. No stock images, no surprises on delivery.' },
   { icon: <LocalShippingIcon />, label: 'Fast Nationwide Delivery', copy: 'Same-day dispatch in Lagos, 24–72 hours to every state in Nigeria.' },
   { icon: <LockIcon />, label: 'Secure Payment', copy: 'Pay on delivery in Lagos, or via verified bank transfer nationwide.' },

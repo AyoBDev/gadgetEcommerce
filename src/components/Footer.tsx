@@ -13,7 +13,7 @@ const COLUMNS = [
   { title: 'Shop', links: [
     { label: 'All laptops', href: '/laptops' },
     { label: 'Deals', href: '/laptops?deals=true' },
-    { label: '7-Day Warranty', href: '/#warranty' },
+    { label: '30-Day Warranty', href: '/#warranty' },
   ]},
   { title: 'Help', links: [
     { label: 'FAQ', href: '/#faq' },
