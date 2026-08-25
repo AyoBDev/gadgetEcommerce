@@ -26,7 +26,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   else bits.push('UK Used laptops');
   if (p.useCase) bits.push(`for ${p.useCase.replaceAll('-', ' ')}`);
   const title = bits.join(' ');
-  const description = `Browse ${title.toLowerCase()} in Nigeria. 7-day warranty. Nationwide delivery.`;
+  const description = `Browse ${title.toLowerCase()} in Nigeria. 30-day warranty. Nationwide delivery.`;
   return { title, description, alternates: { canonical: '/laptops' } };
 }
 

@@ -28,7 +28,7 @@ export function HeroSection({ brands, useCases, whatsappNumber }: { brands: Cate
                 Buy Tested UK Used <Box component="span" sx={{ color: 'primary.main' }}>Laptops</Box> in Nigeria
               </Typography>
               <Typography variant="body1" sx={{ color: 'rgba(244,242,238,0.75)' }}>
-                300+ laptops in stock · 7-day warranty · Nationwide delivery
+                300+ laptops in stock · 30-day warranty · Nationwide delivery
               </Typography>
             </Stack>
             <QuickFinder brands={brands} useCases={useCases} />
