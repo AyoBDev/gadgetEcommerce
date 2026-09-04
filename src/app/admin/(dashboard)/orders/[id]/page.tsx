@@ -19,7 +19,7 @@ export default async function AdminOrderEditPage({ params }: Props) {
 
   const fields: AdminFieldConfig[] = [
     { key: 'laptop', label: 'Laptop', type: 'relationship', relationshipOptions: options, required: true },
-    { key: 'salePrice', label: 'Sale price (kobo)', type: 'number', required: true },
+    { key: 'salePrice', label: 'Sale price (₦)', type: 'money', required: true },
     { key: 'buyerName', label: 'Buyer name', type: 'text' },
     { key: 'buyerPhone', label: 'Buyer phone', type: 'text' },
     { key: 'saleDate', label: 'Sale date', type: 'date', required: true },

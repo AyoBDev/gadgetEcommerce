@@ -37,7 +37,7 @@ export default async function AdminAddonsPage({ searchParams }: { searchParams: 
 
   const columns: AdminColumn<Addon>[] = [
     { key: 'name', label: 'Add-on', render: (row) => <Typography variant="body2" fontWeight={600}>{row.name}</Typography> },
-    { key: 'price', label: 'Price', render: (row) => <Typography variant="body2">{formatNaira(row.price)}</Typography> },
+    { key: 'price', label: 'Price', align: 'right', render: (row) => <Typography variant="body2" fontWeight={600}>{formatNaira(row.price)}</Typography> },
     { key: 'icon', label: 'Icon', render: (row) => <Typography variant="body2">{row.icon || '—'}</Typography> },
     {
       key: 'active',

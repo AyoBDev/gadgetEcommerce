@@ -19,7 +19,7 @@ function serializeValue(key: string, value: unknown): string[] {
 
 export function buildQueryString({ sort, limit, page, where }: ListParams): string {
   const parts: string[] = [];
-  if (sort) parts.push(`sort=${sort}`);
+  if (sort) parts.push(`sort=${encodeURIComponent(sort)}`);
   if (limit) parts.push(`limit=${limit}`);
   if (page) parts.push(`page=${page}`);
   if (where) {

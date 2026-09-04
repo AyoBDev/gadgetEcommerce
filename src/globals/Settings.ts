@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload';
+import { validateKobo } from '@/lib/validate-kobo';
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
@@ -12,8 +13,8 @@ export const Settings: GlobalConfig = {
     { name: 'businessName', type: 'text', required: true, defaultValue: 'Jaysmart' },
     { name: 'businessAddress', type: 'textarea' },
     { name: 'businessPhone', type: 'text' },
-    { name: 'deliveryFeeLagos', type: 'number', required: true, defaultValue: 500_000, admin: { description: 'Kobo. 500,000 = ₦5,000' } },
-    { name: 'deliveryFeeOther', type: 'number', required: true, defaultValue: 1_500_000, admin: { description: 'Kobo. 1,500,000 = ₦15,000' } },
+    { name: 'deliveryFeeLagos', type: 'number', required: true, defaultValue: 500_000, min: 0, validate: validateKobo, admin: { description: 'Kobo. 500,000 = ₦5,000' } },
+    { name: 'deliveryFeeOther', type: 'number', required: true, defaultValue: 1_500_000, min: 0, validate: validateKobo, admin: { description: 'Kobo. 1,500,000 = ₦15,000' } },
     { name: 'supportEmail', type: 'email', required: true },
   ],
 };

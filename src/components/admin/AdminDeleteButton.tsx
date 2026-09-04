@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
+import { formatApiError } from '@/lib/api-error';
 
 type Props = {
   collection: string;
@@ -25,15 +26,21 @@ export function AdminDeleteButton({ collection, id, label = 'Delete' }: Props) {
   async function confirm() {
     setDeleting(true);
     setError(null);
-    const res = await fetch(`/api/${collection}/${id}`, { method: 'DELETE' });
-    if (!res.ok) {
-      const j = await res.json().catch(() => null);
-      setError(j?.errors?.[0]?.message ?? 'Delete failed.');
+    try {
+      const res = await fetch(`/api/${collection}/${id}`, { method: 'DELETE' });
+      if (!res.ok) {
+        const j = await res.json().catch(() => null);
+        setError(formatApiError(j, 'Delete failed.'));
+        return;
+      }
+      setOpen(false);
+      router.refresh();
+    } catch {
+      // Without this the dialog stays stuck on "Deleting…" after a network drop.
+      setError('Network error. Could not reach the API.');
+    } finally {
       setDeleting(false);
-      return;
     }
-    setOpen(false);
-    router.refresh();
   }
 
   return (

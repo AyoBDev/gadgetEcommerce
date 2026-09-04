@@ -53,6 +53,11 @@ export default buildConfig({
   },
   plugins: [
     s3Storage({
+      // Locally the S3 vars are usually unset; without this the plugin still
+      // takes over the media collection with an empty bucket and every upload
+      // fails. Disabled means Payload falls back to on-disk storage, which is
+      // what .env.example promises for local development.
+      enabled: Boolean(process.env.S3_BUCKET),
       collections: { media: true },
       bucket: process.env.S3_BUCKET ?? '',
       config: {

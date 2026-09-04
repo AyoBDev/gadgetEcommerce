@@ -21,4 +21,16 @@ describe('money', () => {
   it('throws on non-integer kobo', () => {
     expect(() => koboToNaira(1.5)).toThrow();
   });
+
+  // Regression: formatNaira used to propagate koboToNaira's throw, so a single
+  // decimal price saved from the admin crashed every storefront product card.
+  it('renders a non-integer kobo amount instead of throwing', () => {
+    expect(() => formatNaira(45_000_000.5)).not.toThrow();
+    expect(formatNaira(45_000_000.5)).toBe('₦450,000');
+  });
+
+  it('falls back to zero for non-finite amounts', () => {
+    expect(formatNaira(Number.NaN)).toBe('₦0');
+    expect(formatNaira(Number.POSITIVE_INFINITY)).toBe('₦0');
+  });
 });

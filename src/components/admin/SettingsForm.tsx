@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
+import { koboToNaira, nairaToKobo, formatNaira } from '@/lib/money';
 
 export type SettingsData = {
   whatsappNumber: string;
@@ -29,8 +30,8 @@ export function SettingsForm({ initial, onSave }: Props) {
   const [businessName, setBusinessName] = useState(initial.businessName);
   const [businessAddress, setBusinessAddress] = useState(initial.businessAddress ?? '');
   const [businessPhone, setBusinessPhone] = useState(initial.businessPhone ?? '');
-  const [deliveryFeeLagos, setDeliveryFeeLagos] = useState(String(initial.deliveryFeeLagos));
-  const [deliveryFeeOther, setDeliveryFeeOther] = useState(String(initial.deliveryFeeOther));
+  const [deliveryFeeLagos, setDeliveryFeeLagos] = useState(String(koboToNaira(initial.deliveryFeeLagos)));
+  const [deliveryFeeOther, setDeliveryFeeOther] = useState(String(koboToNaira(initial.deliveryFeeOther)));
   const [supportEmail, setSupportEmail] = useState(initial.supportEmail);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -47,8 +48,8 @@ export function SettingsForm({ initial, onSave }: Props) {
         businessName,
         businessAddress: businessAddress || null,
         businessPhone: businessPhone || null,
-        deliveryFeeLagos: Number(deliveryFeeLagos),
-        deliveryFeeOther: Number(deliveryFeeOther),
+        deliveryFeeLagos: nairaToKobo(Number(deliveryFeeLagos)),
+        deliveryFeeOther: nairaToKobo(Number(deliveryFeeOther)),
         supportEmail,
       });
       setSaved(true);
@@ -72,8 +73,26 @@ export function SettingsForm({ initial, onSave }: Props) {
           <TextField label="Business name" value={businessName} onChange={(e) => setBusinessName(e.target.value)} required fullWidth />
           <TextField label="Business address" value={businessAddress} onChange={(e) => setBusinessAddress(e.target.value)} multiline minRows={2} fullWidth />
           <TextField label="Business phone" value={businessPhone} onChange={(e) => setBusinessPhone(e.target.value)} fullWidth />
-          <TextField label="Delivery fee — Lagos (kobo)" type="number" value={deliveryFeeLagos} onChange={(e) => setDeliveryFeeLagos(e.target.value)} required fullWidth />
-          <TextField label="Delivery fee — other states (kobo)" type="number" value={deliveryFeeOther} onChange={(e) => setDeliveryFeeOther(e.target.value)} required fullWidth />
+          <TextField
+            label="Delivery fee — Lagos (₦)"
+            type="number"
+            inputProps={{ step: '0.01', min: 0 }}
+            value={deliveryFeeLagos}
+            onChange={(e) => setDeliveryFeeLagos(e.target.value)}
+            helperText={deliveryFeeLagos ? formatNaira(nairaToKobo(Number(deliveryFeeLagos))) : 'Enter the amount in Naira'}
+            required
+            fullWidth
+          />
+          <TextField
+            label="Delivery fee — other states (₦)"
+            type="number"
+            inputProps={{ step: '0.01', min: 0 }}
+            value={deliveryFeeOther}
+            onChange={(e) => setDeliveryFeeOther(e.target.value)}
+            helperText={deliveryFeeOther ? formatNaira(nairaToKobo(Number(deliveryFeeOther))) : 'Enter the amount in Naira'}
+            required
+            fullWidth
+          />
           <TextField label="Support email" type="email" value={supportEmail} onChange={(e) => setSupportEmail(e.target.value)} required fullWidth />
           <Box>
             <Button type="submit" variant="contained" size="large" disabled={saving}>

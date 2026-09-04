@@ -90,7 +90,8 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
     {
       key: 'salePrice',
       label: 'Sale price',
-      render: (row) => <Typography variant="body2">{formatNaira(row.salePrice)}</Typography>,
+      align: 'right' as const,
+      render: (row) => <Typography variant="body2" fontWeight={600}>{formatNaira(row.salePrice)}</Typography>,
     },
     {
       key: 'buyer',

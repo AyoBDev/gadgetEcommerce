@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -61,7 +61,7 @@ export default async function AdminDashboardPage() {
 
       <Grid container spacing={2} sx={{ mb: 4 }}>
         {cards.map((card) => (
-          <Grid key={card.label} xs={12} sm={6} md={4}>
+          <Grid key={card.label} size={{ xs: 12, sm: 6, md: 4 }}>
             <Card elevation={0} sx={{ border: 1, borderColor: 'divider', height: '100%' }}>
               <CardContent component={Link} href={card.href} sx={{ display: 'block', textDecoration: 'none' }}>
                 <Typography variant="body2" color="text.secondary">
@@ -77,7 +77,7 @@ export default async function AdminDashboardPage() {
       </Grid>
 
       <Grid container spacing={3}>
-        <Grid xs={12} lg={8}>
+        <Grid size={{ xs: 12, lg: 8 }}>
           <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
               <Typography variant="h6" fontWeight={700}>
@@ -131,7 +131,7 @@ export default async function AdminDashboardPage() {
             </TableContainer>
           </Card>
         </Grid>
-        <Grid xs={12} lg={4}>
+        <Grid size={{ xs: 12, lg: 4 }}>
           <Card elevation={0} sx={{ border: 1, borderColor: 'divider', mb: 3 }}>
             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
               <Typography variant="h6" fontWeight={700}>

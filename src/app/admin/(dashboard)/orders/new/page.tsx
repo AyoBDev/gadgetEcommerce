@@ -15,7 +15,7 @@ export default async function AdminOrderNewPage() {
 
   const fields: AdminFieldConfig[] = [
     { key: 'laptop', label: 'Laptop', type: 'relationship', relationshipOptions: options, required: true },
-    { key: 'salePrice', label: 'Sale price (kobo)', type: 'number', required: true, helperText: 'Actual sale price in kobo (Naira × 100)' },
+    { key: 'salePrice', label: 'Sale price (₦)', type: 'money', required: true, helperText: 'Actual sale price in Naira' },
     { key: 'buyerName', label: 'Buyer name', type: 'text' },
     { key: 'buyerPhone', label: 'Buyer phone', type: 'text', helperText: 'WhatsApp / phone' },
     { key: 'saleDate', label: 'Sale date', type: 'date', required: true },

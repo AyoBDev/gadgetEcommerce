@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { revalidatePath } from 'next/cache';
 import { generateSlug } from '@/lib/slug';
+import { validateKobo } from '@/lib/validate-kobo';
 
 export const Laptops: CollectionConfig = {
   slug: 'laptops',
@@ -58,9 +59,9 @@ export const Laptops: CollectionConfig = {
       filterOptions: { type: { equals: 'brand' } } },
     { name: 'category', type: 'relationship', relationTo: 'categories',
       filterOptions: { type: { equals: 'useCase' } } },
-    { name: 'price', type: 'number', required: true, min: 0,
+    { name: 'price', type: 'number', required: true, min: 0, validate: validateKobo,
       admin: { description: 'In kobo (Naira × 100)' } },
-    { name: 'compareAtPrice', type: 'number', min: 0,
+    { name: 'compareAtPrice', type: 'number', min: 0, validate: validateKobo,
       admin: { description: 'In kobo; renders as strike-through if set' } },
     { name: 'condition', type: 'select', required: true, options: [
       { label: 'Grade A (like new)', value: 'grade-a' },

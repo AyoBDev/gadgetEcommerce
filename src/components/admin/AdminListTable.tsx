@@ -14,6 +14,8 @@ import { AdminPagination } from '@/components/admin/AdminPagination';
 export type AdminColumn<T> = {
   key: string;
   label: string;
+  /** Right-align numeric columns (prices, counts) for easier scanning. */
+  align?: 'left' | 'right' | 'center';
   render: (row: T) => React.ReactNode;
 };
 
@@ -43,12 +45,43 @@ export function AdminListTable<T>({
   return (
     <Box>
       {toolbar && <Box sx={{ mb: 2 }}>{toolbar}</Box>}
-      <TableContainer sx={{ border: 1, borderColor: 'divider', borderRadius: 1, bgcolor: 'background.paper' }}>
-        <Table size="small">
+      <TableContainer
+        sx={{
+          border: 1,
+          borderColor: 'divider',
+          borderRadius: 2,
+          bgcolor: 'background.paper',
+          overflowX: 'auto',
+        }}
+      >
+        <Table
+          size="small"
+          sx={{
+            // Column separators are drawn only between cells, never on the
+            // outer edge, so they read as a grid inside the container border.
+            '& td, & th': { borderRight: 1, borderRightColor: 'divider' },
+            '& td:last-of-type, & th:last-of-type': { borderRight: 0 },
+          }}
+        >
           <TableHead>
-            <TableRow>
+            <TableRow
+              sx={{
+                bgcolor: 'grey.50',
+                '& th': {
+                  py: 1.5,
+                  fontWeight: 700,
+                  fontSize: 12,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  color: 'text.secondary',
+                  whiteSpace: 'nowrap',
+                  borderBottom: 2,
+                  borderBottomColor: 'divider',
+                },
+              }}
+            >
               {columns.map((c) => (
-                <TableCell key={c.key}>{c.label}</TableCell>
+                <TableCell key={c.key} align={c.align ?? 'left'}>{c.label}</TableCell>
               ))}
               {rowHref && <TableCell align="right">Actions</TableCell>}
             </TableRow>
@@ -56,21 +89,30 @@ export function AdminListTable<T>({
           <TableBody>
             {rows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={columns.length + (rowHref ? 1 : 0)}>
-                  <Typography color="text.secondary" sx={{ py: 2 }}>
+                <TableCell colSpan={columns.length + (rowHref ? 1 : 0)} sx={{ borderRight: 0 }}>
+                  <Typography color="text.secondary" align="center" sx={{ py: 5 }}>
                     {emptyText ?? 'No results.'}
                   </Typography>
                 </TableCell>
               </TableRow>
             )}
             {rows.map((row) => (
-              <TableRow key={rowKey(row)} hover>
+              <TableRow
+                key={rowKey(row)}
+                hover
+                sx={{
+                  '& td': { py: 1.5, borderBottom: 1, borderBottomColor: 'divider' },
+                  // The last row sits on the container border already.
+                  '&:last-of-type td': { borderBottom: 0 },
+                  transition: 'background-color 120ms ease',
+                }}
+              >
                 {columns.map((c) => (
-                  <TableCell key={c.key}>{c.render(row)}</TableCell>
+                  <TableCell key={c.key} align={c.align ?? 'left'}>{c.render(row)}</TableCell>
                 ))}
                 {rowHref && (
-                  <TableCell align="right">
-                    <Button size="small" component={Link} href={rowHref(row)}>
+                  <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
+                    <Button size="small" variant="outlined" component={Link} href={rowHref(row)}>
                       Edit
                     </Button>
                   </TableCell>

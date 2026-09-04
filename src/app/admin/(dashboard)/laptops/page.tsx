@@ -83,10 +83,11 @@ export default async function AdminLaptopsPage({ searchParams }: { searchParams:
       label: 'Brand',
       render: (row) => <Typography variant="body2">{(row.brand as Category)?.name ?? '—'}</Typography>,
     },
-    { key: 'price', label: 'Price', render: (row) => <Typography variant="body2">{formatNaira(row.price)}</Typography> },
+    { key: 'price', label: 'Price', align: 'right', render: (row) => <Typography variant="body2" fontWeight={600}>{formatNaira(row.price)}</Typography> },
     {
       key: 'stock',
       label: 'Stock',
+      align: 'right' as const,
       render: (row) => (
         <Chip
           label={String(row.stock)}
