@@ -15,7 +15,7 @@ export default async function AdminAddonEditPage({ params }: Props) {
 
   const fields: AdminFieldConfig[] = [
     { key: 'name', label: 'Name', type: 'text', required: true },
-    { key: 'price', label: 'Price (kobo)', type: 'number', required: true },
+    { key: 'price', label: 'Price (₦)', type: 'money', required: true },
     { key: 'icon', label: 'Icon', type: 'text' },
     { key: 'active', label: 'Active on storefront', type: 'checkbox', defaultValue: true },
   ];

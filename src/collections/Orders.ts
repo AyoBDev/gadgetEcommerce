@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { validateKobo } from '@/lib/validate-kobo';
 import { applySaleToStock } from '@/lib/inventory';
 
 export const Orders: CollectionConfig = {
@@ -64,7 +65,7 @@ export const Orders: CollectionConfig = {
   },
   fields: [
     { name: 'laptop', type: 'relationship', relationTo: 'laptops', required: true },
-    { name: 'salePrice', type: 'number', required: true, min: 0,
+    { name: 'salePrice', type: 'number', required: true, min: 0, validate: validateKobo,
       admin: { description: 'Actual sale price in kobo (Naira × 100)' } },
     { name: 'buyerName', type: 'text' },
     { name: 'buyerPhone', type: 'text', admin: { description: 'WhatsApp / phone' } },

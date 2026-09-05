@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,11 +15,14 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
+import { formatApiError } from '@/lib/api-error';
+import { koboToNaira, nairaToKobo, formatNaira } from '@/lib/money';
 
 export type AdminFieldConfig = {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'number' | 'select' | 'checkbox' | 'relationship' | 'password' | 'date';
+  /** `money` is entered in Naira and stored as integer kobo. */
+  type: 'text' | 'textarea' | 'number' | 'money' | 'select' | 'checkbox' | 'relationship' | 'password' | 'date';
   options?: { label: string; value: string }[];
   relationshipOptions?: { id: number | string; name: string }[];
   helperText?: string;
@@ -44,6 +46,8 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
     for (const f of fields) {
       const raw = initial[f.key];
       if (f.type === 'checkbox') v[f.key] = raw === undefined ? (f.defaultValue ?? false) : Boolean(raw);
+      // Money is stored as integer kobo but shown to admins in Naira.
+      else if (f.type === 'money') v[f.key] = raw == null ? '' : String(koboToNaira(Number(raw)));
       else if (f.type === 'number' || f.type === 'relationship') v[f.key] = raw == null ? '' : String(typeof raw === 'object' ? (raw as { id: number }).id : raw);
       else if (f.type === 'date') v[f.key] = raw == null ? new Date().toISOString().slice(0, 10) : String(raw).slice(0, 10);
       else if (f.type === 'select') v[f.key] = raw == null ? (f.options?.[0]?.value ?? '') : String(raw);
@@ -73,6 +77,12 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
         body[f.key] = Boolean(val);
         continue;
       }
+      if (f.type === 'money') {
+        const naira = val === '' ? null : Number(val);
+        if (!id && naira === null && !f.required) continue;
+        body[f.key] = naira === null ? null : nairaToKobo(naira);
+        continue;
+      }
       if (f.type === 'number' || f.type === 'relationship') {
         const num = val === '' ? null : Number(val);
         // On create, omit empty optional fields so Payload hooks (auto-slug)
@@ -90,15 +100,21 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
       body[f.key] = str;
     }
     const url = id ? `/api/${collection}/${id}` : `/api/${collection}`;
-    const res = await fetch(url, {
-      method: id ? 'PATCH' : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      const j = await res.json().catch(() => null);
-      const msg = j?.errors?.[0]?.message ?? `${id ? 'Update' : 'Create'} failed.`;
-      setError(msg);
+    try {
+      const res = await fetch(url, {
+        method: id ? 'PATCH' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => null);
+        setError(formatApiError(j, `${id ? 'Update' : 'Create'} failed.`));
+        setSaving(false);
+        return;
+      }
+    } catch {
+      // Without this the form stays stuck on "Saving…" after a network drop.
+      setError('Network error. Could not reach the API.');
       setSaving(false);
       return;
     }
@@ -150,6 +166,20 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
         return (
           <TextField label={f.label} type="password" value={value} onChange={(e) => set(f.key, e.target.value)} fullWidth required={f.required} helperText={f.helperText} />
         );
+      case 'money':
+        return (
+          <TextField
+            label={f.label}
+            type="number"
+            inputProps={{ step: '0.01', min: 0 }}
+            value={value}
+            onChange={(e) => set(f.key, e.target.value)}
+            fullWidth
+            required={f.required}
+            // Echo the parsed amount back so there's no doubt about the unit.
+            helperText={value ? formatNaira(nairaToKobo(Number(value))) : (f.helperText ?? 'Enter the amount in Naira')}
+          />
+        );
       case 'number':
         return (
           <TextField label={f.label} type="number" value={value} onChange={(e) => set(f.key, e.target.value)} fullWidth required={f.required} helperText={f.helperText} />
@@ -182,23 +212,19 @@ export function AdminEditForm({ collection, id, fields, initial = {}, cancelHref
         </Alert>
       )}
       <Paper elevation={0} sx={{ p: 3, border: 1, borderColor: 'divider' }}>
-        <Grid container spacing={2}>
+        <Stack spacing={3}>
           {fields.map((f) => (
-            <Grid key={f.key} xs={12}>
-              {renderField(f)}
-            </Grid>
+            <Box key={f.key}>{renderField(f)}</Box>
           ))}
-          <Grid xs={12}>
-            <Stack direction="row" spacing={2}>
-              <Button type="submit" variant="contained" disabled={saving}>
-                {saving ? 'Saving…' : 'Save'}
-              </Button>
-              <Button component={Link} href={cancelHref}>
-                Cancel
-              </Button>
-            </Stack>
-          </Grid>
-        </Grid>
+          <Stack direction="row" spacing={2}>
+            <Button type="submit" variant="contained" disabled={saving}>
+              {saving ? 'Saving…' : 'Save'}
+            </Button>
+            <Button component={Link} href={cancelHref}>
+              Cancel
+            </Button>
+          </Stack>
+        </Stack>
       </Paper>
     </Box>
   );

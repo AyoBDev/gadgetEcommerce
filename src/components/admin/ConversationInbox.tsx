@@ -18,9 +18,14 @@ type Message = {
 const TYPING_THROTTLE_MS = 2000;
 
 async function fetchConversation(conversationId: number): Promise<{ buyerTypingAt?: string | null } | null> {
-  const res = await fetch(`/api/conversations/${conversationId}`, { credentials: 'include' });
-  if (!res.ok) return null;
-  return res.json();
+  try {
+    const res = await fetch(`/api/conversations/${conversationId}`, { credentials: 'include' });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    // Polled every 2s — a transient failure should just skip this tick.
+    return null;
+  }
 }
 
 async function fetchMessages(conversationId: number): Promise<Message[]> {

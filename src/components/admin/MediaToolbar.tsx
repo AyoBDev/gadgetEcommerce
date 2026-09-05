@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import { formatApiError } from '@/lib/api-error';
 
 export function MediaToolbar() {
   const router = useRouter();
@@ -22,21 +23,35 @@ export function MediaToolbar() {
     setError(null);
     const form = new FormData();
     form.append('file', file);
-    form.append('alt', alt.trim() || file.name);
-    if (caption.trim()) form.append('caption', caption.trim());
-    const res = await fetch('/api/media', { method: 'POST', body: form });
-    if (!res.ok) {
-      const j = await res.json().catch(() => null);
-      setError(j?.errors?.[0]?.message ?? 'Upload failed.');
+    // Payload's REST API reads document fields from a JSON string in
+    // `_payload`; sibling form fields are ignored, which surfaces as
+    // "The following field is invalid: Alt".
+    const fallbackAlt = file.name.replace(/\.[^.]+$/, '').trim() || file.name || 'Image';
+    form.append(
+      '_payload',
+      JSON.stringify({
+        alt: alt.trim() || fallbackAlt,
+        ...(caption.trim() ? { caption: caption.trim() } : {}),
+      }),
+    );
+    try {
+      const res = await fetch('/api/media', { method: 'POST', body: form });
+      if (!res.ok) {
+        const j = await res.json().catch(() => null);
+        setError(formatApiError(j, 'Upload failed.'));
+        return;
+      }
+      setFile(null);
+      setAlt('');
+      setCaption('');
+      if (inputRef.current) inputRef.current.value = '';
+      router.refresh();
+    } catch {
+      // Without this the button stays stuck on "Uploading…" after a drop.
+      setError('Network error. Could not upload the image.');
+    } finally {
       setUploading(false);
-      return;
     }
-    setFile(null);
-    setAlt('');
-    setCaption('');
-    if (inputRef.current) inputRef.current.value = '';
-    router.refresh();
-    setUploading(false);
   }
 
   return (

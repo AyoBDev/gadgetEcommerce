@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { validateKobo } from '@/lib/validate-kobo';
 
 export const Addons: CollectionConfig = {
   slug: 'addons',
@@ -15,7 +16,7 @@ export const Addons: CollectionConfig = {
   },
   fields: [
     { name: 'name', type: 'text', required: true },
-    { name: 'price', type: 'number', required: true, min: 0,
+    { name: 'price', type: 'number', required: true, min: 0, validate: validateKobo,
       admin: { description: 'In kobo (Naira × 100)' } },
     { name: 'icon', type: 'text',
       admin: { description: 'Supported keyword: work/bag, mouse, memory/ram, keyboard, headphones, cable/charger, storage/ssd, laptop. Anything else shows a cart icon.' } },

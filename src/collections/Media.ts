@@ -1,3 +1,4 @@
+import path from 'path';
 import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
@@ -10,6 +11,9 @@ export const Media: CollectionConfig = {
     delete: ({ req }) => Boolean(req.user),
   },
   upload: {
+    // Used only when the S3 plugin is disabled (no S3_BUCKET), i.e. local dev.
+    // Kept out of git — see .gitignore.
+    staticDir: path.resolve(process.cwd(), 'public/uploads'),
     mimeTypes: ['image/*'],
     imageSizes: [
       { name: 'thumbnail', width: 400, height: 400, position: 'centre' },

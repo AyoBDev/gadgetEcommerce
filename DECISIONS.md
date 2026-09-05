@@ -1,5 +1,11 @@
 # Decisions
 
+## 2026-09-05 — Admin product management fixes
+
+Complaint: images couldn't be added while creating a product, admin form spacing was broken, prices had to be entered in kobo, and creating a laptop failed with a 500. Options considered for the inline media/relationship pickers: (1) adopt a form library (React Hook Form + a file-upload widget such as react-dropzone or Uppy) — rejected, the admin is a small set of hand-rolled MUI forms with no validation layer to justify the dependency, and Uppy/FilePond bring their own UI that would fight the existing MUI theme; (2) re-enable Payload's own admin UI for the media step — rejected, the project deliberately runs Payload headless with a bespoke MUI admin (see 2026-08-19), so bouncing admins into a second UI defeats that decision; (3) build two small MUI components (`MediaPickerField`, `CategoryPickerField`) that post to the existing Payload REST API. Chosen: option 3 — build. The upload and create endpoints already exist; what was missing was ~120 lines of UI, far cheaper than adopting a library whose look and data layer we'd have to re-skin and re-wire.
+
+Naira input: prices remain stored as integer kobo (avoids float drift); conversion happens only at the form edges, so no data migration was required.
+
 ## 2026-08-19 — Admin dashboard look & feel
 
 Complaint: Payload's admin UI feels like a generic CMS content manager, not an operations dashboard for running the store. Options considered: (1) deep-customize Payload's admin (stay inside its component system + CSS vars, marginal look improvement, weeks); (2) Directus pointed at the same Postgres (modern dashboard OOTB, ~1–2wks, but separate Vue app and the chat inbox/stat components become Vue extensions — loses embedded Next.js integration); (3) headless Payload + custom MUI admin in Next.js (full control of look-and-feel using the existing MUI theme, keeps auth/CRUD/uploads/chat REST intact, ~1–2 wks); (4) drop Payload entirely and rebuild CRUD+auth+uploads+rich text (~3–5 wks, discards working chat feature). Chosen: option 3 — headless Payload backend with a purpose-built MUI admin. Cheapest path to the required look-and-feel that preserves the already-built buyer-chat feature and its collections/API. See `docs/superpowers/specs/2026-08-19-custom-mui-admin-design.md`.

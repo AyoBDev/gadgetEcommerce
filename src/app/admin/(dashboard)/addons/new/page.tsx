@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 export default async function AdminAddonNewPage() {
   const fields: AdminFieldConfig[] = [
     { key: 'name', label: 'Name', type: 'text', required: true },
-    { key: 'price', label: 'Price (kobo)', type: 'number', required: true, helperText: 'In kobo (Naira × 100)' },
+    { key: 'price', label: 'Price (₦)', type: 'money', required: true, helperText: 'Enter the price in Naira' },
     { key: 'icon', label: 'Icon', type: 'text', helperText: 'Supported keyword: work/bag, mouse, memory/ram, keyboard, headphones, cable/charger, storage/ssd, laptop' },
     { key: 'active', label: 'Active on storefront', type: 'checkbox', defaultValue: true },
   ];

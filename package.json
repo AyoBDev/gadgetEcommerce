@@ -20,7 +20,8 @@
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
     "migrate:status": "payload migrate:status",
-    "seed:laptops": "payload run scripts/seed-laptops.ts"
+    "seed:laptops": "payload run scripts/seed-laptops.ts",
+    "admin:password": "payload run scripts/set-admin-password.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

@@ -16,3 +16,6 @@ test-results/
 # Local Claude Code config
 .claude/
 .gstack/
+
+# Local media uploads (S3 is used in production)
+public/uploads/
