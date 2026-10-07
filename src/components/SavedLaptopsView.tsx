@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useStore } from '@/components/StoreProvider';
 import { ProductCard } from '@/components/ProductCard';
+import { CompareTable } from '@/components/CompareTable';
 import { PageHero } from '@/components/PageHero';
 import { SectionBand } from '@/components/SectionBand';
 import { Reveal } from '@/components/Reveal';
@@ -102,10 +103,12 @@ export function SavedLaptopsView({
               <Button variant="contained" color="primary" component={Link} href="/laptops">Browse laptops</Button>
             </Stack>
           </Box>
+        ) : mode === 'compare' ? (
+          <CompareTable laptops={laptops} />
         ) : (
           <Grid container spacing={3}>
             {laptops.map((laptop, i) => (
-              <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: mode === 'compare' ? 3 : 4 }}>
+              <Grid key={laptop.id} size={{ xs: 12, sm: 6, lg: 4 }}>
                 <Reveal delay={i * 60}>
                   <ProductCard laptop={laptop} whatsappNumber={whatsappNumber} />
                 </Reveal>
