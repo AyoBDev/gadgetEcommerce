@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-10-07 — Compare page side-by-side table
+
+Complaint: `/compare` promised "side by side" but rendered the same card grid as the wishlist, so specs couldn't be lined up. Options considered: (1) adopt a data-table library (TanStack Table, MUI X DataGrid) — rejected, we need a static ~10-row spec matrix with no sorting/filtering/pagination, and DataGrid adds a heavy dependency (and a paid tier for some features) to the MUI stack we already use; (2) keep the cards and add a spec list to each — rejected, still not comparable at a glance; (3) a small `CompareTable` built on MUI `Table` (already installed) with a sticky label column, horizontal scroll on phones, per-column remove, and best-value highlighting. Chosen: option 3 — build. About 150 lines on existing primitives; no new dependency.
+
 ## 2026-09-05 — Admin product management fixes
 
 Complaint: images couldn't be added while creating a product, admin form spacing was broken, prices had to be entered in kobo, and creating a laptop failed with a 500. Options considered for the inline media/relationship pickers: (1) adopt a form library (React Hook Form + a file-upload widget such as react-dropzone or Uppy) — rejected, the admin is a small set of hand-rolled MUI forms with no validation layer to justify the dependency, and Uppy/FilePond bring their own UI that would fight the existing MUI theme; (2) re-enable Payload's own admin UI for the media step — rejected, the project deliberately runs Payload headless with a bespoke MUI admin (see 2026-08-19), so bouncing admins into a second UI defeats that decision; (3) build two small MUI components (`MediaPickerField`, `CategoryPickerField`) that post to the existing Payload REST API. Chosen: option 3 — build. The upload and create endpoints already exist; what was missing was ~120 lines of UI, far cheaper than adopting a library whose look and data layer we'd have to re-skin and re-wire.
